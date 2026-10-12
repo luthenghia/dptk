@@ -1,0 +1,1891 @@
+<!doctype html>
+<html lang="vi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Đấu Phá Thương Khung · Tiêu Viêm (Bản Trọn Vẹn)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<!-- ========================================================== -->
+<!-- 1. CSS GIAO DIỆN & HIỆU ỨNG (STYLES)                       -->
+<!-- ========================================================== -->
+<style>
+:root{
+  --bg:#f4ece1;--pn:#e8dcbe;--ink:#23180d;--mut:#756143;--gd:#b47818;--hp:#c0392b;--mp:#2574a9;--xp:#d97706;--bd:#bfa26b;
+  --q0:#8a8a8a;--q1:#d97706;--q2:#8b5cf6;--q3:#e11d48;--q4:#f59e0b;--q5:#ec4899;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)
+}
+@media(prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){--bg:#15100b;--pn:#241a12;--ink:#f3e8d2;--mut:#a49372;--gd:#e5b45b;--bd:#5e482b}
+}
+:root[data-theme="dark"]{--bg:#15100b;--pn:#241a12;--ink:#f3e8d2;--mut:#a49372;--gd:#e5b45b;--bd:#5e482b}
+*{box-sizing:border-box}
+
+html{overflow-y:scroll;scrollbar-gutter:stable}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Be Vietnam Pro',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh; user-select:none;-webkit-user-select:none;}
+#app{width:100%;max-width:540px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;position:relative}
+
+header{padding:10px 14px;background:var(--pn);border-bottom:2px solid var(--bd);position:relative;z-index:20;min-height:68px}
+header .r{display:flex;justify-content:space-between;align-items:center;gap:6px}
+.bar{height:9px;background:rgba(0,0,0,.22);border-radius:5px;overflow:hidden;margin:4px 0}.bar i{display:block;height:100%;width:0;transition:width .3s}
+small{color:var(--mut)}main{flex:1;padding:10px;padding-bottom:120px}
+
+nav.bot-nav{
+  position:fixed;bottom:0;left:0;right:0;max-width:540px;margin:auto;
+  background:var(--pn);border-top:2px solid var(--bd);z-index:25;
+  display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(2,auto);
+  box-shadow:0 -4px 12px rgba(0,0,0,.15);
+}
+nav.bot-nav button{
+  padding:8px 2px;border:0;background:none;color:var(--ink);
+  font:inherit;font-size:11px;font-weight:600;text-align:center;border-radius:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+}
+nav.bot-nav button.on{color:var(--gd);background:rgba(180,120,24,.14);border-top:2px solid var(--gd)}
+
+.card{background:var(--pn);border:1px solid var(--bd);border-radius:8px;padding:10px;margin-bottom:10px;line-height:1.55;overflow:hidden}
+button{font:inherit;cursor:pointer;border:1px solid var(--bd);background:var(--pn);color:var(--ink);border-radius:6px;padding:4px 8px;font-weight:500;transition:.15s}
+button:active{transform:scale(.97)}
+.pri{background:var(--gd);color:#fff;border:0;padding:9px 14px;font-weight:700;width:100%;margin:6px 0;border-radius:6px}
+.ghost{width:100%;opacity:.75}
+.zs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}.zb.on{background:var(--gd);color:#fff;font-weight:700}
+.arena{display:flex;align-items:center;gap:6px;background:var(--pn);border:1px solid var(--bd);border-radius:8px;padding:12px;min-height:160px}
+.unit{flex:1;text-align:center;position:relative;min-width:0}.em{font-size:44px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:clip}.vs{font-size:20px;font-weight:800;color:var(--mut)}
+.fl-w{position:absolute;left:0;right:0;top:0;pointer-events:none}
+.fl{position:absolute;left:50%;top:5px;font-weight:800;color:var(--hp);animation:up .9s forwards;white-space:nowrap;text-shadow:1px 1px 2px rgba(0,0,0,0.5)}.fl.cr{color:var(--xp);font-size:20px}.fl.hl{color:#2a9d4a}.fl.md{color:#b03a8a}
+@keyframes up{to{transform:translate(-50%,-55px);opacity:0}}
+.log{font-size:12.5px;color:var(--mut);margin-top:8px;height:125px;overflow:hidden;line-height:1.5;border-top:1px dashed var(--bd);padding-top:6px}
+.sl{padding:5px 0;border-bottom:1px dashed var(--bd);display:flex;justify-content:space-between;align-items:center;gap:6px}
+.inv{display:grid;grid-template-columns:repeat(auto-fill,minmax(72px,1fr));gap:6px;margin-top:8px}
+.it{border:2px solid;border-radius:7px;padding:4px;text-align:center;font-size:18px;cursor:pointer;position:relative;background:rgba(0,0,0,.03);transition:.15s}
+.it small{font-size:10.5px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600}
+.it .lk-icon{position:absolute;top:2px;right:3px;font-size:10px}
+
+/* ====== PHÂN CẤP HIỆU ỨNG TRANG BỊ & CHỮ ====== */
+.it.q-2{box-shadow:0 0 6px rgba(139,92,246,.5)}
+.it.q-3{border-color:#e11d48 !important;animation:diaGlow 2.2s infinite alternate ease-in-out;}
+@keyframes diaGlow{0%{box-shadow:0 0 5px #e11d48,inset 0 0 3px rgba(225,29,72,.3);border-color:#e11d48}50%{box-shadow:0 0 12px #8b5cf6,inset 0 0 6px rgba(139,92,246,.4);border-color:#a855f7}100%{box-shadow:0 0 16px #e11d48,0 0 6px #f43f5e,inset 0 0 8px rgba(225,29,72,.6);border-color:#f43f5e}}
+.it.q-4,.it.q-5{border-color:#f59e0b !important;animation:thienGlow 1.6s infinite alternate ease-in-out;}
+@keyframes thienGlow{0%{box-shadow:0 0 10px #f59e0b,inset 0 0 6px rgba(245,158,11,.5);border-color:#f59e0b}50%{box-shadow:0 0 20px #ef4444,0 0 8px #f59e0b,inset 0 0 10px rgba(239,68,68,.6);border-color:#fbbf24}100%{box-shadow:0 0 26px #ff0055,0 0 14px #fbbf24,inset 0 0 14px rgba(255,255,255,.8);border-color:#ffffff}}
+
+/* CSS Gradient động bằng RequestAnimationFrame */
+.txt-q1, .txt-q2, .txt-q3, .txt-q4, .txt-q5, .rb-txt, 
+.p-txt4, .p-txt5, .p-txt6, .p-txt7, .p-txt8,
+.f-txt1, .f-txt2, .f-txt3, .f-txt4, .f-txt5, .f-txt6, .f-txt7 {
+    background-position: var(--bg-x, 0%) 50% !important;
+}
+
+.txt-q0 { color: #8a8a8a; }
+.txt-q1 { background: linear-gradient(90deg, #d97706, #fcd34d, #d97706); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700; }
+.txt-q2 { background: linear-gradient(90deg, #8b5cf6, #c4b5fd, #8b5cf6); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700; }
+.txt-q3 { background: linear-gradient(90deg, #e11d48, #fda4af, #e11d48); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700; }
+.txt-q4 { background: linear-gradient(90deg, #f59e0b, #fde047, #f59e0b); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700; }
+.txt-q5 { background: linear-gradient(90deg, #ec4899, #f9a8d4, #ec4899); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700; }
+.rb-txt { background: linear-gradient(90deg, #ff0000, #ff7f00, #eedd00, #00ff00, #00bbff, #8b00ff, #ff0000); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 900; }
+
+/* ====== HIỆU ỨNG ĐAN DƯỢC (1-9 PHẨM) ====== */
+.p-txt0 { color: #22c55e; font-weight: 600; } /* Nhất */
+.p-txt1 { color: #0ea5e9; font-weight: 600; } /* Nhị */
+.p-txt2 { color: #a855f7; font-weight: 600; } /* Tam */
+.p-txt3 { color: #f59e0b; text-shadow: 0 0 5px rgba(245,158,11,0.4); font-weight: 700; } /* Tứ */
+.p-txt4 { background: linear-gradient(90deg, #ef4444, #f87171, #ef4444); background-size: 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700; } /* Ngũ */
+.p-txt5 { background: linear-gradient(90deg, #10b981, #34d399, #10b981); background-size: 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800; filter: drop-shadow(0 0 3px rgba(16,185,129,0.5)); } /* Lục */
+.p-txt6 { background: linear-gradient(90deg, #8b5cf6, #d946ef, #8b5cf6); background-size: 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800; filter: drop-shadow(0 0 4px rgba(217,70,239,0.6)); } /* Thất */
+.p-txt7 { background: linear-gradient(90deg, #f43f5e, #fbbf24, #f43f5e); background-size: 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 900; filter: drop-shadow(0 0 5px rgba(244,63,94,0.7)); } /* Bát */
+.p-txt8 { background: linear-gradient(90deg, #ff0055, #fbbf24, #00ffaa, #00bbff, #8b00ff, #ff0055); background-size: 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 900; filter: drop-shadow(0 0 6px rgba(255,255,255,0.8)); } /* Cửu */
+
+/* ====== HIỆU ỨNG DỊ HỎA (7 TIER ĐỘC LẬP) ====== */
+.f-t1 { border-color: #65a30d !important; box-shadow: 0 0 8px rgba(101, 163, 13, 0.4); }
+.f-txt1 { background: linear-gradient(90deg, #65a30d, #d9f99d, #65a30d); background-size: 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800;}
+.f-t2 { border-color: #0ea5e9 !important; box-shadow: 0 0 8px rgba(14, 165, 233, 0.4); }
+.f-txt2 { background: linear-gradient(90deg, #0ea5e9, #bae6fd, #0ea5e9); background-size: 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800;}
+.f-t3 { border-color: #6366f1 !important; box-shadow: 0 0 10px rgba(99, 102, 241, 0.5); }
+.f-txt3 { background: linear-gradient(90deg, #4f46e5, #c7d2fe, #4f46e5); background-size: 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800;}
+.f-t4 { border-color: #d946ef !important; box-shadow: 0 0 12px rgba(217, 70, 239, 0.6); }
+.f-txt4 { background: linear-gradient(90deg, #d946ef, #f5d0fe, #d946ef); background-size: 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800;}
+.f-t5 { border-color: #f43f5e !important; box-shadow: 0 0 14px rgba(244, 63, 94, 0.7); animation: pulse-f5 2s infinite alternate; }
+@keyframes pulse-f5 { 0% {box-shadow: 0 0 10px #f43f5e} 100% {box-shadow: 0 0 20px #fbbf24, inset 0 0 10px rgba(251,191,36,0.5)} }
+.f-txt5 { background: linear-gradient(90deg, #e11d48, #fbbf24, #e11d48); background-size: 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 900; }
+.f-t6 { border-color: #e879f9 !important; box-shadow: 0 0 18px rgba(232, 121, 249, 0.8); animation: pulse-f6 1.5s infinite alternate; }
+@keyframes pulse-f6 { 0% {box-shadow: 0 0 12px #e879f9, inset 0 0 8px #a855f7} 100% {box-shadow: 0 0 25px #ffffff, inset 0 0 15px #e879f9} }
+.f-txt6 { background: linear-gradient(90deg, #e879f9, #ffffff, #a855f7, #ffffff, #e879f9); background-size: 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 900; }
+.de-viem-card {
+    position: relative;
+    border: none !important;
+    padding: 12px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(255, 0, 85, 0.5);
+    margin-bottom: 10px;
+}
+.de-viem-card::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%; width: 200%; height: 200%;
+    background: conic-gradient(from var(--rot-deg, 0deg), transparent, transparent, #ff0055, #fbbf24, #ff0055, transparent, transparent);
+    z-index: 0;
+}
+.de-viem-card::after {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    background: var(--pn);
+    border-radius: 5px;
+    z-index: 1;
+}
+.de-viem-content { position: relative; z-index: 2; }
+.f-txt7 {
+    background: linear-gradient(90deg, #ff0055, #fbbf24, #00ffaa, #00bbff, #8b00ff, #ff0055);
+    background-size: 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    font-weight: 900; font-size: 1.15em;
+}
+
+#ov{position:fixed;inset:0;background:rgba(0,0,0,.68);display:flex;align-items:center;justify-content:center;padding:16px;z-index:35}#ov[hidden]{display:none}
+.box{background:var(--pn);border:2px solid var(--gd);border-radius:10px;max-width:480px;width:100%;padding:14px;line-height:1.6;max-height:85vh;overflow-y:auto}
+.box b{color:var(--gd)}
+
+/* Tooltip (Hover) bám chuột */
+#tp{position:fixed; z-index:9999; background:var(--pn); border:2px solid var(--gd); border-radius:8px; padding:9px 12px; font-size:12.5px; line-height:1.5; pointer-events:none; box-shadow:0 6px 20px rgba(0,0,0,.35); max-width:300px; width:max-content}
+#tp[hidden]{display:none}
+[data-tip]{cursor:help}
+
+#ts{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);background:var(--gd);color:#fff;padding:6px 16px;border-radius:20px;z-index:40;opacity:0;transition:.3s;font-size:13px;font-weight:600;box-shadow:0 4px 12px rgba(0,0,0,.25);pointer-events:none !important}
+#ts.on{opacity:1}
+
+.flash{position:fixed;inset:0;background:radial-gradient(circle,#ffd27a,#ff7a2a 65%,transparent);animation:fl 1.2s forwards;z-index:32;pointer-events:none}@keyframes fl{0%{opacity:0}30%{opacity:.95}100%{opacity:0}}
+.shake{animation:sk .3s ease-in-out}@keyframes sk{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(7px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+.mat-tag{display:inline-block;padding:2px 6px;border-radius:4px;border:1px solid var(--bd);font-size:11px;margin:2px;cursor:pointer}
+.adm-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px}
+
+/* Fullscreen Effect Luyện Đan Bậc Cao */
+.craft-fx { position:fixed; inset:0; z-index:99999; display:flex; flex-direction:column; align-items:center; justify-content:center; pointer-events:none; overflow:hidden; }
+.craft-fx .c-bg { position:absolute; inset:-50%; animation: c-pulse 2s forwards; opacity: 0; mix-blend-mode: screen; }
+.craft-fx .c-txt { position:relative; z-index:2; text-align:center; animation: c-text-pop 2.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; text-shadow: 0 4px 15px rgba(0,0,0,0.8); }
+.craft-fx h2 { font-size: 24px; color: #fff; margin:0 0 10px 0; }
+.craft-fx h1 { font-size: 38px; margin:0; line-height:1.2; padding: 0 20px;}
+@keyframes c-pulse { 0% {transform: scale(0.5); opacity: 0;} 20% {transform: scale(1); opacity: 0.9;} 80% {transform: scale(1.1); opacity: 0.8;} 100% {transform: scale(1.5); opacity: 0;} }
+@keyframes c-text-pop { 0% {transform: scale(0.1) translateY(50px); opacity: 0;} 15% {transform: scale(1.2) translateY(0); opacity: 1;} 25% {transform: scale(1);} 80% {transform: scale(1) translateY(0); opacity: 1;} 100% {transform: scale(1.5) translateY(-50px); opacity: 0;} }
+
+/* Con trỏ chuột tùy biến */
+body.cur-default, body.cur-default *{cursor:default !important}
+body.cur-default button, body.cur-default [data-a], body.cur-default .it{cursor:pointer !important}
+body.cur-xich, body.cur-xich *{cursor:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path d="M4 28 L28 4 L24 2 L2 24 Z" fill="%231a1a1a" stroke="%23c0392b" stroke-width="2"/><circle cx="5" cy="27" r="3" fill="%23c0392b"/></svg>') 4 28, auto !important}
+body.cur-thanhlien, body.cur-thanhlien *{cursor:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path d="M16 2 C10 12 4 16 8 26 C12 32 20 32 24 26 C28 16 22 12 16 2 Z" fill="%2322c55e" stroke="%2314532d" stroke-width="2"/><circle cx="16" cy="22" r="4" fill="%2386efac"/></svg>') 16 2, auto !important}
+body.cur-vanlac, body.cur-vanlac *{cursor:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path d="M16 2 C12 10 2 16 6 26 C10 32 22 32 26 26 C30 16 20 10 16 2 Z" fill="%23f97316" stroke="%237c2d12" stroke-width="2"/><path d="M16 8 C14 14 8 18 10 24 C13 28 19 28 22 24 Z" fill="%23fde047"/></svg>') 16 2, auto !important}
+body.cur-cotu, body.cur-cotu *{cursor:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path d="M16 2 C10 12 2 16 6 26 C10 32 22 32 26 26 C30 16 22 12 16 2 Z" fill="%2338bdf8" stroke="%23ffffff" stroke-width="2"/><circle cx="16" cy="20" r="5" fill="%23ffffff"/></svg>') 16 2, auto !important}
+body.cur-devien, body.cur-devien *{cursor:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><polygon points="16,1 20,11 31,12 23,19 25,30 16,24 7,30 9,19 1,12 12,11" fill="%23eab308" stroke="%23ea580c" stroke-width="2"/><circle cx="16" cy="16" r="3" fill="%23ffffff"/></svg>') 16 16, auto !important}
+</style></head><body class="cur-default">
+
+<!-- ========================================================== -->
+<!-- 2. KHUNG HTML GIAO DIỆN CHÍNH (LAYOUT)                     -->
+<!-- ========================================================== -->
+<div id="app">
+<header>
+  <div class="r">
+    <div style="display:flex;align-items:center;gap:6px">
+      <b id="hdr_name">Tiêu Viêm</b> <small id="diff_tag" style="font-weight:700"></small>
+      <button type="button" data-a="tgsnd" id="btn_snd" style="padding:2px 7px;font-size:12px;font-weight:700">🔊</button>
+      <button type="button" data-a="tab" data-v="setting" style="padding:2px 8px;font-size:11px;font-weight:700;background:var(--gd);color:#fff">⚙️ Thiết lập</button>
+    </div>
+    <span id="rl" style="font-weight:700"></span>
+  </div>
+  <div class="bar"><i id="xb" style="background:var(--xp)"></i></div>
+  <div class="r"><small id="xt"></small><small id="gd"></small></div>
+</header>
+
+<main id="main"></main>
+
+<nav class="bot-nav">
+  <button data-a="tab" data-v="fight"><span>⚔️</span>Chiến đấu</button>
+  <button data-a="tab" data-v="hero"><span>🧒</span>Nhân vật</button>
+  <button data-a="tab" data-v="skl"><span>🌀</span>Đấu kỹ</button>
+  <button data-a="tab" data-v="alc"><span>⚗️</span>Luyện đan</button>
+  <button data-a="tab" data-v="fire"><span>🔥</span>Dị hỏa</button>
+  <button data-a="tab" data-v="pet"><span>🐾</span>Ma thú</button>
+  <button data-a="tab" data-v="quest"><span>📜</span>Nhiệm vụ</button>
+  <button data-a="tab" data-v="story"><span>📚</span>Tàng thư</button>
+</nav>
+</div>
+<div id="tp" hidden></div><div id="ov" hidden></div><div id="ts"></div>
+
+<!-- Input File để Load Save Dữ Liệu Ẩn -->
+<input type="file" id="load_file" style="display:none" accept=".json">
+
+<!-- ========================================================== -->
+<!-- 3. HỆ THỐNG CỐT LÕI (CORE ENGINE)                          -->
+<!-- ========================================================== -->
+<script id="core">
+(()=>{
+// Khởi chạy Animation độc lập 60FPS bằng JS
+let bgX = 0, rotDeg = 0;
+function runGradientAnim() {
+    bgX = (bgX - 0.7) % 200;
+    rotDeg = (rotDeg + 1.5) % 360;
+    document.documentElement.style.setProperty('--bg-x', bgX + '%');
+    document.documentElement.style.setProperty('--rot-deg', rotDeg + 'deg');
+    requestAnimationFrame(runGradientAnim);
+}
+requestAnimationFrame(runGradientAnim);
+
+const $=id=>document.getElementById(id);
+const R=['Đấu Chi Khí','Đấu Giả','Đấu Sư','Đại Đấu Sư','Đấu Linh','Đấu Vương','Đấu Hoàng','Đấu Tông','Đấu Tôn','Bán Thánh','Đấu Thánh','Đấu Đế'];
+const QN=['Phàm','Hoàng','Huyền','Địa','Thiên','Thần','Thần'],QM=[1,1.4,2.2,3.4,5.2,7.5,10];
+const QC=['#8a8a8a','#d97706','#8b5cf6','#e11d48','#f59e0b','#ec4899','#ff0000'];
+const PL_QN=['Nhất Phẩm','Nhị Phẩm','Tam Phẩm','Tứ Phẩm','Ngũ Phẩm','Lục Phẩm','Thất Phẩm','Bát Phẩm','Cửu Phẩm']; // Hệ thống 9 Phẩm Đan Dược
+const SL={w:'Vũ khí',h:'Mũ',a:'Giáp',g:'Găng',b:'Giày',t:'Đai',n:'Dây chuyền',c:'Nhẫn'},NM={w:['Mộc Côn','Thiết Kiếm','Trường Đao','Huyền Trọng Xích'],h:['Khăn Vải','Mũ Da','Mũ Thiết','Thần Hỏa Quán'],a:['Bố Y','Da Giáp','Thiết Giáp','Đoán Viêm Bào'],g:['Găng Vải','Găng Da','Găng Thiết','Lôi Đình Thủ'],b:['Giày Vải','Ủng Da','Chiến Ngoa','Hóa Dực Hài'],t:['Dây Vải','Đai Da','Đai Thiết','Thanh Liên Đới'],n:['Hạt Gỗ','Ngọc Bội','Huyền Liên','Tâm Hỏa Tỏa'],c:['Nhẫn Đồng','Nhẫn Bạc','Giới Chỉ','U Hồn Giới']},IC={w:'🗡️',h:'🪖',a:'🛡️',g:'🧤',b:'👢',t:'🎗️',n:'📿',c:'💍'};
+const G=window.G={ch:[],end:'Đã hết nội dung hiện có. Hãy chờ đón các chương kế tiếp!',addChapter(c){this.ch.push(c);this.ch.sort((a,b)=>a.order-b.order)}};
+
+const TR = {lang:{dg:10},xa:{ps:1},hung:{ar:1,st:15},bang:{cr:15,dg:8},ninh:{en:1,cr:20,st:15},plang:{dg:15},htrung:{ar:1},huyet:{cr:20,rg:2},kim:{st:20,ar:1},vong:{en:1,st:25,ar:1,rg:2}, dtac:{cr:15,dg:8},kiemsu:{dg:15,cr:15},hove:{ar:1,st:15},kh:{ar:1,rg:1},hxa:{ps:1,cr:10},hthu:{ar:1,en:1},tlh:{en:1,rg:2,ps:1,cr:20,st:20},satt:{dg:20,cr:25,ps:1},ma:{en:1,st:15,ar:1},hgc:{en:1,st:20,cr:25,rg:2,ar:1},vlt:{en:1,st:30,dg:15,cr:30,ar:1,rg:2}, ts_gn:{dg:15,cr:12},ls_hs:{ar:1,st:15,cr:15},sathe:{ar:1,st:25,en:1},lahau:{cr:25,dg:18,en:1},th_tt:{ps:1,rg:2,en:1},bachtr:{ar:1,cr:20,st:20},lieuk:{cr:30,dg:15,en:1},tunhien:{en:1,st:35,ar:1,rg:2},phamlao:{ps:1,cr:25,rg:2},kimgn:{ar:1,rg:3,st:25,en:1},hanphong:{en:1,st:25,cr:35,rg:2,ar:1},hm_vl:{en:1,st:40,cr:35,ar:1,rg:3}};
+G.TR = TR;
+const mk = (id,n,e,L,k,b)=>({id,n,e,boss:b,tr:TR[id]||{},hp:Math.round((10+4*L)*12*k*(b?3.2:1)),a:Math.round((9+3.2*L)*k*(b?1.35:1)),d:Math.round((2+1.2*L)*k*(b?1.2:1)),x:Math.round(1.8*(L+1)**2*k*(b?4.5:1))+3,g:[L+2,2*L+5]});
+G.mk = mk;
+const X = L=>Math.round((60+60*L*L)*.5);
+G.X = X;
+
+const SAVE='dpck_save_v12';
+let S,Q,Z,M,P,mob=null,php=0,pmp=0,dead=0,tab='fight',logs=[],actx=null;
+
+function updateInner(id, html) {
+    const el = $(id);
+    if (el && el.innerHTML !== html) el.innerHTML = html;
+}
+
+function snd(t){
+  if(!S.snd)return;
+  try{
+    if(!actx)actx=new(window.AudioContext||window.webkitAudioContext)();
+    if(actx.state==='suspended')actx.resume();
+    const cur=actx.currentTime;
+    if(t==='hit'){
+      const o=actx.createOscillator(),g=actx.createGain();o.type='triangle';o.frequency.setValueAtTime(140,cur);o.frequency.exponentialRampToValueAtTime(35,cur+0.07);g.gain.setValueAtTime(0.12,cur);g.gain.linearRampToValueAtTime(0.01,cur+0.07);o.connect(g);g.connect(actx.destination);o.start(cur);o.stop(cur+0.07);
+    }else if(t==='crit'){
+      const o=actx.createOscillator(),g=actx.createGain();o.type='sawtooth';o.frequency.setValueAtTime(220,cur);o.frequency.exponentialRampToValueAtTime(30,cur+0.16);g.gain.setValueAtTime(0.25,cur);g.gain.linearRampToValueAtTime(0.01,cur+0.16);o.connect(g);g.connect(actx.destination);o.start(cur);o.stop(cur+0.16);
+    }else if(t==='drop'){
+      const o=actx.createOscillator(),g=actx.createGain();o.type='sine';o.frequency.setValueAtTime(659,cur);o.frequency.setValueAtTime(880,cur+0.06);g.gain.setValueAtTime(0.12,cur);g.gain.linearRampToValueAtTime(0.01,cur+0.15);o.connect(g);g.connect(actx.destination);o.start(cur);o.stop(cur+0.15);
+    }else if(t==='up'){
+      [523,659,784,1046].forEach((f,idx)=>{
+        const o=actx.createOscillator(),g=actx.createGain();o.type='sine';o.frequency.setValueAtTime(f,cur+idx*0.08);g.gain.setValueAtTime(0.15,cur+idx*0.08);g.gain.linearRampToValueAtTime(0.01,cur+idx*0.08+0.2);o.connect(g);g.connect(actx.destination);o.start(cur+idx*0.08);o.stop(cur+idx*0.08+0.22);
+      });
+    }else if(t==='craft'){
+      const o=actx.createOscillator(),g=actx.createGain();o.type='sine';o.frequency.setValueAtTime(880,cur);o.frequency.exponentialRampToValueAtTime(1320,cur+0.15);g.gain.setValueAtTime(0.18,cur);g.gain.linearRampToValueAtTime(0.01,cur+0.18);o.connect(g);g.connect(actx.destination);o.start(cur);o.stop(cur+0.18);
+    }
+  }catch(e){}
+}
+
+const newS=()=>({
+  fire:{},pq:0,bg:0,sbg:0,tox:0,skl:{dkq:1},eq:['dkq'],mat:{},pl:{},bf:{},cfa:'',al:0,
+  L:2,exp:0,gold:1000,pots:10,gear:{},inv:[],qi:0,qs:'new',pr:0,done:{},fl:{},zone:'dvt',
+  uid:1,kills:0,snd:1,diff:1,cursor:'default',recipes:{hq:1,tkt:1,tcl:1},storyLog:[],afkStash:[],lastT:Date.now(),
+  pets:[],actPet:null,cages:3,sideDone:{},sidePr:{},actPoint:0,actClaimed:0,lastDay:new Date().toDateString(),dailyQuests:[]
+});
+const save=()=>{try{S.lastT=Date.now();localStorage.setItem(SAVE,JSON.stringify(S))}catch(e){}};
+const cap=()=>Math.max(...G.ch.map(c=>c.cap));
+const need=L=>Math.round(80 + 100 * Math.pow(L, 2.3));
+const lv=L=>{const r=Math.floor(L/9);return (R[r]||'Cảnh giới '+r)+' '+(L%9+1)+(r?' tinh':' đoạn')};
+const getFireCount = () => Object.keys(S.fire || {}).length;
+const pm=k=>Object.keys(S.fl).filter(f=>!P[f].cf||f==S.cfa).reduce((m,f)=>m*((P[f].st?P[f].st[Math.min(f==='phanquyet'?getFireCount():(S.pq||0),P[f].st.length-1)]:P[f])[k]||1),1);
+let SETS=[],SK={},RC=[],MT={},CD={},FR={},psn=0,stn=0,sh=0;
+
+const ALL_FIRES = G.ALL_FIRES = [
+  {id:'de_viem',rk:1,n:'Đế Viêm',d:'Dị Hỏa tối cao, hình thành khi dung hợp 22 loại Dị Hỏa còn lại. Có khả năng áp chế các loại hỏa diễm khác.',b:{at:300,xp:400,fd:250,cr:50}},
+  {id:'hu_vo',rk:2,n:'Hư Vô Thôn Viêm',d:'Thôn phệ năng lượng, có linh trí cực cao và có thể hoạt động độc lập ở mức độ đáng sợ.',b:{at:250,xp:300,fd:200,pn:60}},
+  {id:'tinh_lien',rk:3,n:'Tịnh Liên Yêu Hỏa',d:'Sức mạnh tịnh hóa cực kỳ đáng sợ, có thể tạo ra không gian huyễn cảnh, thao túng nhận thức.',b:{at:200,xp:250,fd:160,cr:40}},
+  {id:'kim_de',rk:4,n:'Kim Đế Phần Thiên Viêm',d:'Có thể trực tiếp thiêu đốt đấu khí, khiến đối thủ mất đi nguồn năng lượng.',b:{at:150,xp:200,fd:120,pn:50}},
+  {id:'sinh_linh',rk:5,n:'Sinh Linh Chi Diễm',d:'Liên hệ mật thiết với sinh mệnh, khả năng nuôi dưỡng và thúc đẩy sự phát triển của sinh vật.',b:{at:120,xp:150,fd:90,rg:15}},
+  {id:'bat_hoang',rk:6,n:'Bát Hoang Phá Diệt Diễm',d:'Thiên về sức mạnh hủy diệt trên diện rộng.',b:{at:110,xp:140,fd:85,cr:30}},
+  {id:'cuu_u_kim',rk:7,n:'Cửu U Kim Tổ Hỏa',d:'Dị Hỏa cấp cao mang sắc thái kim sắc và uy lực mạnh mẽ của Viêm tộc.',b:{at:100,xp:130,fd:80,kn:40}},
+  {id:'hong_lien',rk:8,n:'Hồng Liên Nghiệp Hỏa',d:'Hỏa diễm đỏ như hoa sen, sức công kích mạnh, phát huy uy lực lớn.',b:{at:90,xp:120,fd:75,pn:40}},
+  {id:'tam_thien',rk:9,n:'Tam Thiên Diễm Viêm Hỏa',d:'Hấp thu tinh lực để tăng sức mạnh, có khả năng hồi phục rất mạnh.',b:{at:85,xp:110,fd:70,rg:10}},
+  {id:'cuu_u_phong',rk:10,n:'Cửu U Phong Viêm',d:'Gắn với phong thuộc tính, có tính chất khó nắm bắt và khả năng tạo áp lực lên đối thủ.',b:{at:80,xp:100,fd:65,ds:25}},
+  {id:'cot_linh',rk:11,n:'Cốt Linh Lãnh Hỏa',d:'Lửa trắng lạnh lẽo như sương băng, kết hợp tính chất cực hàn với sức thiêu đốt.',b:{at:75,xp:95,fd:60,kc:40}},
+  {id:'cuu_long',rk:12,n:'Cửu Long Lôi Cương Hỏa',d:'Kết hợp hỏa diễm với sức mạnh lôi điện, thường được thể hiện qua hình tượng chín con rồng.',b:{at:70,xp:90,fd:55,cr:25}},
+  {id:'quy_linh',rk:13,n:'Quy Linh Địa Hỏa',d:'Gắn với địa khí và hình tượng linh quy.',b:{at:65,xp:85,fd:50,kn:35}},
+  {id:'vl',rk:14,n:'Vẫn Lạc Tâm Viêm',evo:2,d:'Tạo ra "tâm hỏa", giúp người tu luyện không ngừng rèn luyện đấu khí từ bên trong cơ thể.',b:{at:60,xp:80,fd:45,mg:5,cr:15}},
+  {id:'hai_tam',rk:15,n:'Hải Tâm Diễm',d:'Hỏa diễm màu xanh lam, một Dị Hỏa mạnh có giá trị trong chiến đấu và luyện dược.',b:{at:55,xp:70,fd:40,ls:20}},
+  {id:'hoa_van',rk:16,n:'Hỏa Vân Thủy Viêm',d:'Loại Dị Hỏa kết hợp hình tượng hỏa và thủy.',b:{at:50,xp:65,fd:35,rg:6}},
+  {id:'hoa_son',rk:17,n:'Hỏa Sơn Thạch Diễm',d:'Gắn với núi lửa, đá và dung nham.',b:{at:45,xp:60,fd:30,kn:25}},
+  {id:'phong_loi',rk:18,n:'Phong Lôi Nộ Diễm',d:'Kết hợp hình tượng gió, sấm sét và hỏa diễm.',b:{at:40,xp:55,fd:28,cr:15}},
+  {id:'tl',rk:19,n:'Thanh Liên Địa Tâm Hỏa',evo:1,d:'Hình thành sâu trong lòng đất, sức thiêu đốt mạnh, gây biến động dung nham.',b:{at:35,xp:50,fd:25,cr:10}},
+  {id:'u_minh',rk:20,n:'U Minh Độc Hỏa',d:'Gắn với độc khí và năng lượng có tính ăn mòn.',b:{at:30,xp:45,fd:22,kc:15}},
+  {id:'am_duong',rk:21,n:'Âm Dương Song Viêm',d:'Gắn với hai mặt âm và dương, sự đối lập và cân bằng năng lượng.',b:{at:25,xp:40,fd:18,rg:4,mg:5}},
+  {id:'van_thu',rk:22,n:'Vạn Thú Linh Hỏa',d:'Gắn với năng lượng linh thú và dấu ấn của nhiều loài ma thú.',b:{at:20,xp:35,fd:15,ls:5}},
+  {id:'huyen_hoang',rk:23,n:'Huyền Hoàng Viêm',d:'Hỏa diễm sắc vàng nâu đại diện cho năng lượng nguyên sơ.',b:{at:15,xp:30,fd:10,gp:25}}
+];
+
+const SLS='whagbtnc',KS={w:[4,0,0],h:[0,1,6],a:[0,2,10],g:[2,0,0],b:[0,1.5,5],t:[0,1,8],n:[1,0,6],c:[1.5,0,5]};
+const AF=[['cr',1.5],['cd',4],['lk',2],['ds',1.2],['kn',1.5],['ls',1],['xp',3],['gp',3],['rg',.8],['at',2],['pn',2],['kc',3],['mg',.4]],STK=AF.map(a=>a[0]),SBV=[4,10,6,3,4,3,8,8,2,6,5,8,1];
+const STT={at:['⚔️','Công kích %','Tăng % sát thương gây ra','%'],cr:['🎯','Bạo kích','Xác suất bạo kích (gốc 10%)','%'],cd:['💢','Bạo thương','Sát thương khi bạo kích (gốc 150%)','%'],pn:['🗡️','Xuyên giáp','Bỏ qua % phòng thủ của quái (tối đa 70%)','%'],ls:['🩸','Hút máu','Hồi máu bằng % sát thương gây ra','%'],fd:['🔥','Hỏa sát','Tăng % toàn bộ sát thương (từ dị hỏa)','%'],kn:['🛡️','Kháng tính','Giảm % sát thương nhận (tối đa 60%)','%'],ds:['💨','Né tránh','Xác suất né hoàn toàn đòn của quái','%'],kc:['🧿','Kháng choáng/độc','Giảm xác suất bị choáng và sát thương độc (tối đa 80%)','%'],rg:['💚','Hồi phục','Mỗi nhịp hồi (giá trị/2)% máu tối đa',''],lk:['🍀','May mắn','Tăng tỉ lệ rơi đồ, phẩm chất, dược liệu; tăng tỉ lệ luyện đan và đột phá',''],xp:['📖','Ngộ tính','Tăng % đấu khí nhận được','%'],gp:['🪙','Tài lộc','Tăng % kim tệ nhận được','%'],mg:['🔷','Hồi đấu khí','Hồi thêm đấu khí mỗi nhịp để tung đấu kỹ','']};
+const TRI={dg:['💨','Né tránh','Có xác suất né đòn của bạn'],ar:['🛡️','Giáp dày','Phòng thủ ×1.5 (xuyên giáp giảm tác dụng)'],rg:['💚','Hồi phục','Tự hồi máu mỗi nhịp'],cr:['⚡','Bạo kích','Có thể đánh bạo kích 180% sát thương'],ps:['☠️','Độc','Có thể gây độc 4 nhịp'],st:['💫','Choáng','Có thể làm bạn choáng 1 nhịp'],en:['😡','Cuồng nộ','Dưới 40% máu: tấn công +40%']};
+
+const bagC=()=>50+10*Math.min(20,S.bg||0);
+const stashC=()=>50+10*Math.min(20,S.sbg||0);
+
+const DIFF_DATA=[
+  null,
+  {n:'Bình thường',hpM:1,atkM:1,defM:1,dropM:1,goldM:1,expM:1,desc:'Chuẩn nguyên tác cân bằng.'},
+  {n:'Khổ Tu',hpM:1.6,atkM:1.35,defM:1.2,dropM:1.4,goldM:1.5,expM:1.4,desc:'Quái mạnh hơn. Thưởng: +40% rớt đồ, +50% Vàng, +40% Đấu khí.'},
+  {n:'Địa Ngục',hpM:2.5,atkM:1.8,defM:1.5,dropM:2.0,goldM:2.2,expM:2.0,desc:'Cực khó! Thưởng: +100% rớt đồ, +120% Vàng, +100% Đấu khí.'}
+];
+
+const SB=(i,j)=>{const x=(i+j*3)%STK.length;return[STK[x],+(SBV[x]*(1+.25*SETS[i].t)*(1+.5*j)).toFixed(1)]};
+const ex=()=>{
+  const E={cr:0,cd:0,lk:0,ds:0,kn:0,ls:0,xp:0,gp:0,rg:0,at:0,pn:0,kc:0,mg:0,fd:0,s:[],src:{}},A=(k,v,l)=>{E[k]+=v;(E.src[k]=E.src[k]||[]).push(l+' +'+(+v.toFixed(1)))},g={},c={};
+  for(const k in S.gear){const it=S.gear[k];if(it){for(const a in it.x||{})g[a]=(g[a]||0)+it.x[a];if(it.set!=null)c[it.set]=(c[it.set]||0)+1}}
+  for(const a in g)A(a,g[a],'Trang bị');
+  for(const i in c){const t=SETS[i];if(!t)continue;E.s.push(t.n+' '+c[i]+'/8');for(let j=0;j<3;j++)if(c[i]>=2*(j+1)){const b=SB(+i,j);A(b[0],b[1],'Bộ '+t.n+' ('+2*(j+1)+')')}}
+  for(const f in S.fire){const d=FR[f];if(d)for(const k in d.b)A(k,d.b[k],'Dị hỏa '+d.n)}
+  for(const k in S.bf)A(k,S.bf[k].v,'Đan dược');
+  
+  // Nạp ĐẦY ĐỦ các chỉ số phong phú từ Phần Quyết 
+  if(S.fl.phanquyet && P.phanquyet && P.phanquyet.st) {
+      const fCount = getFireCount();
+      const pqStats = P.phanquyet.st[Math.min(fCount, P.phanquyet.st.length - 1)];
+      // Khai báo load đủ các chỉ số mới thêm
+      ['cr','cd','ls','fd','pn','kn','ds','rg','mg'].forEach(k => { 
+          if(pqStats[k]) A(k, pqStats[k], 'Phần Quyết tiến hóa'); 
+      });
+  }
+  return E;
+};
+
+const crate=r=>Math.max(5,Math.min(95,Math.round(r.s+(S.al/6|0)*3+ex().lk/4+(Object.keys(S.fire).length?8:0))));
+const BK=()=>{
+  const L=S.L,r=Math.floor(L/9),star=L%9,maj=star==8,mt=['tt','pl','ld','hl','tc','vh'][Math.min(r,5)],mats={};mats[mt]=maj?6+r*3:2+star+r;
+  return{maj,r,star,gold:Math.round(need(L)*(maj?.5:.12)),mats,pill:maj?'pc'+r:null,rate:Math.max(20,Math.round((maj?62-r*7:92-r*4-star*2)+ex().lk/6))};
+};
+const itip=it=>{
+  if(!it) return '';
+  const g=gs(it),x=Object.keys(it.x||{}).map(k=>STT[k][0]+' '+STT[k][1]+' +'+it.x[k]+STT[k][3]).join('<br>'),t=it.set!=null?SETS[it.set]:null;
+  return `<b class="${it.q>=6?'rb-txt':'txt-q'+it.q}">${it.n}${it.e?' +'+it.e:''}${it.lock?' 🔒':''}</b><br>${SL[it.s]} · Bậc ${it.t} · ${QN[it.q]} giai<br>${[g.a?'⚔️ Công '+g.a:'',g.d?'🛡️ Thủ '+g.d:'',g.h?'❤️ Máu '+g.h:''].filter(Boolean).join(' · ')}${x?'<br>'+x:''}${t?'<br>🧩 Bộ '+t.n+': '+[0,1,2].map(j=>{const b=SB(it.set,j);return 2*(j+1)+' món '+STT[b[0]][1]+' +'+b[1]+STT[b[0]][3]}).join(' · '):''}<br>Giá bán ${val(it)}🪙`.replace(/"/g,'&quot;');
+};
+const stl=(k,E)=>{const d=STT[k],v=(k=='cr'?10:k=='cd'?150:0)+E[k],src=(E.src[k]||[]).join('<br>');return `<div data-tip="<b>${d[1]}</b><br>${d[2]}${src?'<br><small>Nguồn:<br>'+src+'</small>':''}">${d[0]} ${d[1]}: <b>${+(k=='kn'?Math.min(60,v):v).toFixed(1)}${d[3]}</b></div>`};
+const cfTxt = () => {
+    const f = P.phanquyet;
+    if (!f || !S.fl.phanquyet) return '<small>Chưa học công pháp</small>';
+    
+    const fCount = Object.keys(S.fire || {}).length;
+    const g = f.st[Math.min(fCount, f.st.length - 1)];
+    
+    // Gom các chỉ số phụ và làm tròn 1 chữ số thập phân
+    const extraStats = [];
+    if (g.cr) extraStats.push(`Bạo kích +${+(g.cr).toFixed(1)}%`);
+    if (g.cd) extraStats.push(`Bạo thương +${+(g.cd).toFixed(1)}%`);
+    if (g.ls) extraStats.push(`Hút máu +${+(g.ls).toFixed(1)}%`);
+    if (g.fd) extraStats.push(`Hỏa sát +${+(g.fd).toFixed(1)}%`);
+    if (g.pn) extraStats.push(`Xuyên giáp +${+(g.pn).toFixed(1)}%`);
+    if (g.kn) extraStats.push(`Kháng tính +${+(g.kn).toFixed(1)}%`);
+    if (g.ds) extraStats.push(`Né tránh +${+(g.ds).toFixed(1)}%`);
+    if (g.rg) extraStats.push(`Hồi phục +${+(g.rg).toFixed(1)}`);
+    if (g.mg) extraStats.push(`Hồi nội lực +${+(g.mg).toFixed(1)}`);
+
+    // Dùng nháy đơn (single quote) cho style='' để không làm vỡ data-tip=""
+    const extraHtml = extraStats.length ? `<br><small style='color:var(--gd)'>${extraStats.join(' · ')}</small>` : '';
+
+    return `<span data-tip="<b>Phần Quyết · ${g.n}</b><br>${g.d}<br>Đấu khí ×${g.exp} · Công ×${g.atk} · Máu ×${g.hp}${extraHtml}">📖 Phần Quyết · <span class="txt-q${Math.min(5, Math.floor(fCount / 4) + 1)}">${g.n}</span></span>`;
+};
+const setHtml=()=>{const c={};for(const k in S.gear){const i=S.gear[k]?.set;if(i!=null)c[i]=(c[i]||0)+1}const ks=Object.keys(c);return ks.length?ks.map(i=>`<div class="sl"><b>${SETS[i].n}</b> ${c[i]}/8`+[0,1,2].map(j=>{const b=SB(+i,j),on=c[i]>=2*(j+1);return `<br><small style="opacity:${on?1:.5}">${on?'✅':'⬜'} ${2*(j+1)} món: ${STT[b[0]][1]} +${b[1]}${STT[b[0]][3]}</small>`}).join('')+'</div>').join(''):'<small>Chưa mặc món nào thuộc bộ. Mỗi bộ gồm 8 món, thưởng mốc 2/4/6 món.</small>'};
+const skTxt=(k,l)=>{const m=k.m*(1+.15*(l-1)),y={d:'Gây '+m.toFixed(1)+'× sát thương',dot:'Gây '+m.toFixed(1)+'× sát thương + thiêu đốt 4 nhịp',h:'Hồi '+Math.round(m*100)+'% máu tối đa',sh:'Tạo khiên '+Math.round(m*100)+'% máu tối đa',cc:'Gây '+m.toFixed(1)+'× sát thương + làm choáng quái 2 nhịp',mh:'Đánh '+(k.n||3)+' đòn, tổng '+m.toFixed(1)+'× sát thương',br:'Gây '+m.toFixed(1)+'× sát thương + giảm 40% phòng thủ quái'}[k.t];return `${y}<br>Tốn ${k.mp} đấu khí · hồi chiêu ${k.cd||0} nhịp · Lv${l}/5`};
+const rtip=r=>{
+  const unl=S.recipes[r.id];
+  return `<b>${r.n}</b> [${PL_QN[r.g]}]<br>${r.d}<br>${r.fx?(r.fx=='hp'?'Hồi tức thì':r.fx=='cl'?'Giải sạch đan độc':'Hiệu lực '+(r.dur*.8|0)+' giây'):'Tự tiêu hao khi đột phá'}<br>Đan độc +${r.tx||0}<br>Tỉ lệ luyện: ${crate(r)}%${r.fire?' · Cần dị hỏa':''}${!unl?'<br><b style="color:var(--hp)">🔒 Chưa có Đan Phương (làm nhiệm vụ/săn boss để học)</b>':''}`;
+};
+const mtip=k=>{
+  const m=MT[k];if(!m)return '';
+  return `<b>${m.n}</b> · <span class="txt-q${Math.min(5,m.g)}">${QN[m.g]} giai</span><br>${m.d}<br>📍 <b>Nơi rơi:</b> ${m.drop}`;
+};
+const gs=it=>{if(!it)return {a:0,d:0,h:0};const m=1+.1*it.e;return{a:Math.round((it.a||0)*m),d:Math.round((it.d||0)*m),h:Math.round((it.h||0)*m)}};
+const st=()=>{const E=ex(),r=1+.2*Math.floor(S.L/9),tx=1-Math.max(0,(S.tox||0)-40)/150;let a=(8+S.L*3)*r,d=(2+S.L)*r,h=(100+S.L*25)*r;for(const k in S.gear){const g=gs(S.gear[k]);a+=g.a;d+=g.d;h+=g.h}return{a:Math.round(a*pm('atk')*(1+E.at/100)*tx),d:Math.round(d),h:Math.round(h*pm('hp')),m:30+S.L*5}};
+const sc=it=>{if(!it)return -1;const g=gs(it);return g.a*2+g.d*2+g.h*.2+Object.keys(it.x||{}).length*6+(it.set!=null?12:0)+(it.q*15)};
+const val=it=>Math.round(4*QM[it.q]*it.t*(1+it.e));
+const ec=it=>Math.round(25*(it.e+1)*it.t*(1+it.q*.5));
+const rnd=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+function log(t){logs.unshift(t);logs.length=Math.min(logs.length,7);const e=$('lg');if(e)e.innerHTML=logs.join('<br>')}
+function toast(t){const e=$('ts');e.textContent=t;e.className='on';setTimeout(()=>e.className='',2200)}
+function fx(side,txt,cls){const w=$('fl'+side);if(!w)return;const e=document.createElement('b');e.className='fl '+(cls||'');e.textContent=txt;w.appendChild(e);setTimeout(()=>e.remove(),900)}
+function shake(){const e=$('ar_box');if(e){e.classList.remove('shake');void e.offsetWidth;e.classList.add('shake');setTimeout(()=>e.classList.remove('shake'),320)}}
+
+function syncTab() {
+  const m = $('main');
+  if(!m) return;
+  const st = window.scrollY || document.documentElement.scrollTop;
+  if(tab !== 'fight') draw(); else upd();
+  window.scrollTo(0, st);
+}
+
+function setCursor(c){
+  S.cursor=c;
+  document.body.className='cur-'+c;
+  toast('Đã chọn trỏ chuột: '+(c=='default'?'Mặc định':c));
+}
+
+function gen(t,slot,minq){
+  slot=slot||SLS[rnd(0,7)];
+  const df=DIFF_DATA[S.diff||1];
+  const E=ex(),r=Math.random()-E.lk/600-(df.dropM>1?.04:0);
+  const q=Math.max(minq||0,r<.006+(S.diff==3?.015:0)+t*.003?4:r<.035?3:r<.15?2:r<.42?1:0);
+  const m=QM[q],ss=SETS.map((x,i)=>[x,i]).filter(a=>a[0].t==t),k=KS[slot];
+  const it={id:S.uid++,s:slot,q,t,e:0,x:{},lock:0};
+  if(ss.length&&Math.random()<.48)it.set=ss[rnd(0,ss.length-1)][1];
+  it.n=QN[q]+' '+(it.set!=null?SETS[it.set].n+' · '+SL[slot]:NM[slot][Math.min(t-1,NM[slot].length-1)]);
+  if(k[0])it.a=Math.round(k[0]*(1+.75*t)*m);if(k[1])it.d=Math.round(k[1]*(1+t)*m);if(k[2])it.h=Math.round(k[2]*(1+.8*t)*m);
+  const ks=AF.slice().sort(()=>Math.random()-.5);
+  for(let i=0;i<Math.min(5,q+(t>4?1:0)+(t>8?1:0));i++){const[a,b]=ks[i];it.x[a]=+(b*t*(.6+Math.random()*.8)*(1+q*.15)).toFixed(1)}
+  return it;
+}
+
+function give(it,isAfk){
+  const cu=S.gear[it.s];
+  if(!isAfk&&(!cu||sc(it)>sc(cu))){
+    if(cu)S.inv.push(cu);S.gear[it.s]=it;log('🎁 Tự mặc đồ mạnh hơn: '+it.n);snd('drop');
+  }else if(S.inv.length<bagC()){
+    S.inv.push(it);if(!isAfk){log('🎒 Nhặt: '+it.n);snd('drop');}
+  }else{
+    if(it.set!=null||it.q>=2){
+      if(!S.afkStash)S.afkStash=[];
+      if(S.afkStash.length<stashC()){
+        S.afkStash.push(it);if(!isAfk)toast('Nạp Giới đầy! Bảo vật '+it.n+' chuyển vào Rương Bế Quan.');return;
+      }
+    }
+    S.gold+=val(it);if(!isAfk)log('Nạp Giới đầy, tự bán '+it.n+' +'+val(it)+'🪙');
+  }
+}
+
+function addExp(n){S.exp=Math.min(need(S.L),S.exp+n)}
+function bt(){
+  const b=BK();if(S.exp<need(S.L)||S.L>=cap())return;
+  if(S.gold<b.gold||Object.keys(b.mats).some(k=>(S.mat[k]||0)<b.mats[k])||(b.pill&&!(S.pl[b.pill]>0)))return toast('Chưa đủ điều kiện đột phá');
+  S.gold-=b.gold;for(const k in b.mats)S.mat[k]-=b.mats[k];if(b.pill)S.pl[b.pill]--;
+  if(Math.random()*100<b.rate){
+    S.L++;S.exp=0;php=st().h;log('⚡ Đột phá thành công: '+lv(S.L));toast('Đột phá thành công! '+lv(S.L));snd('up');if(b.maj)flash();chk();
+  }else{
+    S.exp=Math.floor(S.exp*.7);toast('Đột phá thất bại! Tổn hao 30% đấu khí');
+  }
+  save();draw();
+}
+function flash(){const f=document.createElement('div');f.className='flash';document.body.appendChild(f);setTimeout(()=>f.remove(),1300)}
+
+// Hàm hiệu ứng luyện đan bậc cao (Lục Phẩm -> Cửu Phẩm)
+function epicCraftFx(tier, name, isFine) {
+    const colors = ['','','','','','#10b981','#8b5cf6','#f43f5e','#fbbf24']; 
+    const tName = PL_QN[tier];
+    const div = document.createElement('div');
+    div.className = `craft-fx`;
+    div.innerHTML = `
+        <div class="c-bg" style="background: radial-gradient(circle, ${colors[tier]} 0%, transparent 70%)"></div>
+        <div class="c-txt">
+            <h2>✨ ĐAN THÀNH! ✨</h2>
+            <h1 class="p-txt${tier}">[${tName}]<br>${name} ${isFine?'<br><small>(Thượng Phẩm)</small>':''}</h1>
+        </div>
+    `;
+    document.body.appendChild(div);
+
+    if(S.snd && actx) {
+        const cur = actx.currentTime;
+        const o = actx.createOscillator(), g = actx.createGain();
+        o.type = tier >= 7 ? 'sawtooth' : 'square';
+        o.frequency.setValueAtTime(110 * (tier-3), cur);
+        o.frequency.exponentialRampToValueAtTime(880 * (tier-4), cur + 0.8);
+        g.gain.setValueAtTime(0.2, cur);
+        g.gain.exponentialRampToValueAtTime(0.01, cur + 1.5);
+        o.connect(g); g.connect(actx.destination);
+        o.start(cur); o.stop(cur + 1.5);
+        
+        if (tier >= 7) {
+            const low = actx.createOscillator(); low.type = 'sine';
+            low.frequency.setValueAtTime(50, cur);
+            low.frequency.linearRampToValueAtTime(20, cur + 1.5);
+            const lowG = actx.createGain(); lowG.gain.setValueAtTime(0.4, cur); lowG.gain.linearRampToValueAtTime(0, cur+1.5);
+            low.connect(lowG); lowG.connect(actx.destination);
+            low.start(cur); low.stop(cur+1.5);
+        }
+    }
+    setTimeout(() => div.remove(), 2500);
+}
+
+function spawn(){
+  let z = Z.find(z=>z.id==S.zone);
+  if(!z) { z = Z[0]; S.zone = z.id; }
+  
+  let validMobs = z.mobs;
+  if(z.id === 'vanthu') {
+      validMobs = z.mobs.filter(mid => {
+          const mObj = M[mid];
+          if(!mObj) return false;
+          const ml = mObj.g[0] - 2; 
+          return S.L >= ml - 8; 
+      });
+      if(!validMobs.length) validMobs = [z.mobs[0]];
+  }
+  const id = validMobs[rnd(0, validMobs.length-1)];
+  const m = M[id];
+  
+  const df=DIFF_DATA[S.diff||1];
+  let isSwarm = false, isElite = false;
+  let petM = 1.0, aMod = 1.0, hMod = 1.0, xMod = 1.0;
+  let namePref = "", emMod = m.e;
+  
+  if (S.actPet) {
+      const r = Math.random();
+      if (r < 0.15) {
+          isSwarm = true; namePref = "<span style='color:#e11d48'>Bầy Đàn</span> "; emMod = m.e+m.e+m.e; hMod = 2.5; aMod = 1.6; xMod = 2.5;
+      } else if (r < 0.35) {
+          isElite = true; namePref = "<span style='color:#8b5cf6'>Cường Hóa</span> "; hMod = 1.8; aMod = 1.3; xMod = 1.8;
+      } else {
+          petM = 1.2; 
+      }
+  }
+
+  const hp=Math.round(m.hp * df.hpM * petM * hMod);
+  mob = {
+    ...m, hp, max: hp,
+    n: namePref + m.n,
+    e: emMod,
+    a: Math.round(m.a * df.atkM * (S.actPet ? 1.2 : 1) * aMod),
+    d: Math.round(m.d * df.defM),
+    x: Math.round(m.x * xMod),
+    g: [Math.round(m.g[0] * xMod), Math.round(m.g[1] * xMod)]
+  };
+}
+
+const QUEST_POOL = [
+  { t: 'kill_target', target: 'xa', name: 'Trừ Diệt Độc Xà', desc: 'Tiêu diệt 15 Thanh Văn Độc Xà', n: 15 },
+  { t: 'kill_target', target: 'lang', name: 'Săn Bắt Dã Lang', desc: 'Tiêu diệt 15 Dã Lang Rừng Núi', n: 15 },
+  { t: 'kill_target', target: 'hung', name: 'Thảo Phạt Cuồng Hùng', desc: 'Tiêu diệt 12 Thiết Giáp Cuồng Hùng', n: 12 },
+  { t: 'kill_target', target: 'plang', name: 'Xua Đuổi Phong Lang', desc: 'Tiêu diệt 18 Phong Lang Tốc Độ', n: 18 },
+  { t: 'kill_target', target: 'huyet', name: 'Trảm Sát Huyết Hổ', desc: 'Tiêu diệt 15 Huyết Văn Bạo Hổ', n: 15 },
+  { t: 'kill_target', target: 'th_tt', name: 'Dập Tắt Tâm Hỏa', desc: 'Tiêu diệt 15 Tâm Hỏa Thực Thể', n: 15 },
+  { t: 'kill_mob', name: 'Luyện Binh Rèn Kình', desc: 'Tiêu diệt 35 quái vật bất kỳ', n: 35 },
+  { t: 'kill_pet', name: 'Thám Hiểm Vạn Thú Cốc', desc: 'Tiêu diệt 15 Ma Thú tại Vạn Thú Cốc', n: 15 },
+  { t: 'craft_pill', target: 'hq', name: 'Tiếp Tế Hồi Huyết Đan', desc: 'Luyện 3 viên Hồi Huyết Đan', n: 3 },
+  { t: 'craft_pill', target: 'tkt', name: 'Ngưng Tụ Đấu Khí', desc: 'Luyện 3 viên Tụ Khí Tán', n: 3 },
+  { t: 'craft_pill', target: 'tcl', name: 'Tẩy Tủy Tôi Thể', desc: 'Luyện 2 bình Trúc Cơ Linh Dịch', n: 2 },
+  { t: 'craft_any', name: 'Đan Đạo Dưỡng Sinh', desc: 'Luyện 5 viên đan dược bất kỳ', n: 5 },
+  { t: 'feed_pet', name: 'Bồi Dưỡng Ma Thú', desc: 'Cho Ma Thú ăn Ma Hạch 2 lần', n: 2 },
+  { t: 'enh_gear', name: 'Đoán Tạo Binh Khí', desc: 'Cường hóa trang bị 3 lần', n: 3 }
+];
+
+function genRandomReward(){
+  const gold = 2000 + Math.floor(Math.random() * 4000);
+  const exp = 1500 + Math.floor(Math.random() * 3000);
+  const rwTypes = ['mat', 'pill', 'cage', 'mahach'];
+  const picked = rwTypes[Math.floor(Math.random() * rwTypes.length)];
+  const rw = { gold, exp };
+  
+  if(picked === 'mat'){
+    const mats = [
+      { id: 'tt', n: 'Thanh Tâm Thảo', c: 3 },
+      { id: 'xd', n: 'Xà Đảm', c: 2 },
+      { id: 'pl', n: 'Phong Linh Thảo', c: 2 },
+      { id: 'hv', n: 'Huyết Vân Thảo', c: 2 },
+      { id: 'tc', n: 'Thiên Cương Thảo', c: 2 }
+    ];
+    rw.mat = mats[Math.floor(Math.random() * mats.length)];
+  } else if(picked === 'pill'){
+    const pills = [
+      { id: 'hq', n: 'Hồi Huyết Đan', c: 2 },
+      { id: 'tkt', n: 'Tụ Khí Tán', c: 1 },
+      { id: 'cth', n: 'Cường Thể Đan', c: 1 },
+      { id: 'btd', n: 'Băng Tâm Đan', c: 1 }
+    ];
+    rw.pill = pills[Math.floor(Math.random() * pills.length)];
+  } else if(picked === 'cage'){
+    rw.cages = 1 + Math.floor(Math.random() * 2);
+  } else if(picked === 'mahach'){
+    rw.mahach = 2 + Math.floor(Math.random() * 3);
+  }
+  return rw;
+}
+
+function genDailyQuests(){
+  const shuffled = QUEST_POOL.slice().sort(() => Math.random() - 0.5);
+  S.dailyQuests = shuffled.slice(0, 4).map((q, idx) => ({
+    ...q,
+    id: 'dq_' + Date.now() + '_' + idx,
+    rw: genRandomReward()
+  }));
+  S.sideDone = {};
+  S.sidePr = {};
+}
+
+function chk(){
+  const q=Q[S.qi];if(!q||S.qs!='active')return;
+  const g=q.goal;
+  if(g.t=='lv'?S.L>=g.v:S.pr>=g.n){S.qs='ready';toast('📜 Nhiệm vụ chính hoàn thành!');snd('up')}
+}
+
+function chkSide(type, target, amt){
+  if(!S.dailyQuests) return;
+  S.dailyQuests.forEach(sq => {
+    if(S.sideDone[sq.id]) return;
+    const matchType = (sq.t === type);
+    const matchTarget = (!sq.target || sq.target === target);
+    if(matchType && matchTarget){
+      S.sidePr[sq.id] = (S.sidePr[sq.id] || 0) + (amt || 1);
+      if(S.sidePr[sq.id] >= sq.n){
+        S.sideDone[sq.id] = 1;
+        S.gold += sq.rw.gold || 0;
+        addExp(sq.rw.exp || 0);
+        if(sq.rw.mat) S.mat[sq.rw.mat.id] = (S.mat[sq.rw.mat.id] || 0) + sq.rw.mat.c;
+        if(sq.rw.pill) S.pl[sq.rw.pill.id] = (S.pl[sq.rw.pill.id] || 0) + sq.rw.pill.c;
+        if(sq.rw.cages) S.cages = (S.cages || 0) + sq.rw.cages;
+        if(sq.rw.mahach) S.mat['mahach'] = (S.mat['mahach'] || 0) + sq.rw.mahach;
+        S.actPoint = Math.min(100, (S.actPoint || 0) + 25);
+        toast(`🎖️ Hoàn thành: ${sq.name} (+25 Năng Động)!`);
+        snd('up');
+      }
+    }
+  });
+}
+
+function kill(){
+  const z=Z.find(z=>z.id==S.zone)||Z[0]; S.kills++; const df=DIFF_DATA[S.diff||1];
+  const E=ex(),g=Math.round(rnd(...mob.g)*(1+E.gp/100)*df.goldM);
+  S.gold+=g;addExp(Math.round(mob.x*(1+E.xp/100)*df.expM));log(`Hạ ${mob.n.replace(/<[^>]*>?/gm, '')}: +${Math.round(mob.x*df.expM)} ĐK, +${g}🪙`);
+  
+  if(Math.random()<(mob.boss?1:.24+E.lk/400))give(gen(z.t));
+  if(z.mat&&Math.random()<.14+E.lk/400)S.mat[z.mat]=(S.mat[z.mat]||0)+1;
+  
+  if (Math.random() < 0.04 + E.lk/1000) {
+      S.cages = (S.cages || 0) + 1;
+      toast('🪤 Lồng Bắt Thú rớt ra từ quái vật!');
+  }
+
+  if(z.id=='vanthu'){
+    if(Math.random()<.45)S.mat['mahach']=(S.mat['mahach']||0)+1;
+    if(Math.random()<.25)S.mat['thudan']=(S.mat['thudan']||0)+1;
+    if(Math.random()<.08)S.mat['tvh']=(S.mat['tvh']||0)+1;
+    if(Math.random()<.15){S.cages=(S.cages||0)+1;toast('Nhặt được 1 Lồng Bắt Thú!');}
+    chkSide('kill_pet',mob.id,1);
+  }
+  
+  chkSide('kill_mob',mob.id,1);
+  chkSide('kill_target',mob.id.replace('Bầy Đàn ','').replace('Cường Hóa ',''),1);
+  
+  const cleanMobName = mob.n.replace(/<[^>]*>?/gm, '').replace('Bầy Đàn ','').replace('Cường Hóa ','').trim();
+  const q=Q[S.qi];if(S.qs=='active'&&q.goal.t=='kill'&&(q.goal.m==mob.id||cleanMobName.includes(M[q.goal.m].n))){S.pr++;chk()}
+  mob=null;spawn();save();
+}
+
+function tick(){
+  if(!$('ov').hidden)return;
+  const s=st(),E=ex();addExp(.6*pm('exp')*(1+E.xp/100));
+  for(const i in S.bf)if(--S.bf[i].t<=0)delete S.bf[i];
+  for(const i in CD)if(CD[i]>0)CD[i]--;
+  S.tox=Math.max(0,(S.tox||0)-.06);
+  if(dead>0){if(--dead==0){php=s.h;spawn()} syncTab(); return}
+  if(!mob)spawn();
+  pmp=Math.min(s.m,pmp+3+E.mg);const tr=mob.tr||{};
+  if(php<s.h*.35&&S.pots>0){S.pots--;php=Math.min(s.h,php+s.h*.45*pm('heal'));fx('p','+'+Math.round(s.h*.45*pm('heal')),'hl')}
+  if(psn>0){psn--;const d=Math.round(s.h*.02*(1-Math.min(.8,E.kc/100)));php-=d;fx('p','☠'+d,'md')}
+  if(stn>0){stn--;fx('p','💫','md')}else{
+    let k=1,hits=1;
+    for(const id of S.eq){
+      const sk=SK[id],l=S.skl[id]||1;if(!sk||pmp<sk.mp||CD[id]>0)continue;
+      pmp-=sk.mp;CD[id]=sk.cd||0;const mm=sk.m*(1+.15*(l-1)),T=sk.t;
+      if(T=='h'){const h=s.h*mm;php=Math.min(s.h,php+h);fx('p','+'+Math.round(h),'hl')}
+      else if(T=='sh'){sh=s.h*mm;fx('p','🛡'+Math.round(sh),'hl')}
+      else{k=T=='mh'?mm/(sk.n||3)*1.2:mm;if(T=='mh')hits=sk.n||3;if(T=='dot')mob.burn={n:4,d:Math.round(s.a*.35*k)};if(T=='cc')mob.stun=2;if(T=='br')mob.brk=1}
+      break;
+    }
+    const md0=mob.d*(tr.ar?1.5:1)*(1-Math.min(.7,E.pn/100))*(mob.brk?.6:1);
+    for(let h=0;h<hits;h++){
+      if(Math.random()<(tr.dg||0)/100){fx('m','Né','hl');continue}
+      const cr=Math.random()<.1+E.cr/100,dm=Math.max(1,Math.round((s.a*k*(.85+Math.random()*.3)-md0)*(cr?1.5+E.cd/100:1)*(1+E.fd/100)));
+      mob.hp-=dm;fx('m',(k>1?'💥':'')+dm,cr?'cr':'');
+      if(cr){snd('crit');shake();}else{snd('hit');}
+      if(E.ls)php=Math.min(s.h,php+dm*E.ls/100);
+    }
+    
+    if(S.actPet){
+      const p=S.pets.find(x=>x.id==S.actPet);
+      if(p&&Math.random()<(p.rate/100)){
+        const pDmg=Math.max(1,Math.round(p.atk*(.8+Math.random()*.4)));
+        mob.hp-=pDmg;fx('m','🐾'+pDmg,'hl');
+        p.exp+=2;if(p.exp>=p.maxExp&&p.lv<(5+p.q*15)){p.lv++;p.exp=0;p.maxExp=Math.round(p.maxExp*1.35);p.atk=Math.round(p.atk*1.15);p.hp=Math.round(p.hp*1.15);toast(`🐾 Ma Thú ${p.n} thăng cấp Lv.${p.lv}!`);}
+      }
+    }
+    
+    if(mob.burn&&mob.burn.n-->0){mob.hp-=mob.burn.d;fx('m','🔥'+mob.burn.d)}
+  }
+  if(tr.rg)mob.hp=Math.min(mob.max,mob.hp+mob.max*tr.rg/100);
+  if(mob.hp<=0){kill(); syncTab(); return;}
+  if(mob.stun>0){mob.stun--;fx('m','💫')}else if(Math.random()<E.ds/100)fx('p','Né!','hl');else{
+    let a=mob.a;if(tr.en&&mob.hp<mob.max*.4)a*=1.4;
+    const c=Math.random()<(tr.cr||0)/100;
+    let md=Math.max(1,Math.round((a*(.85+Math.random()*.3)*(c?1.8:1)-s.d)*(1-Math.min(.6,E.kn/100))));
+    if(sh>0){const ab=Math.min(sh,md);sh-=ab;md-=ab}
+    php-=md;fx('p',(c?'⚡':'-')+md,'md');if(c)shake();
+    if(tr.ps&&Math.random()<.3)psn=4;if(tr.st&&Math.random()<tr.st/100*(1-Math.min(.8,E.kc/100)))stn=1;
+  }
+  php=Math.min(s.h,php+s.h*E.rg/200);
+  
+  if(php<=0){
+      php=0; dead=4; mob=null; psn=stn=sh=0;
+      S.exp=Math.floor(S.exp*.85);
+      if (S.gold > 1000) {
+          S.gold = Math.max(1000, Math.floor(S.gold*.9));
+      }
+      log('💀 Bại trận! Tổn thất 15% đấu khí' + (S.gold > 1000 ? ' và 10% kim tệ' : ''));
+  }
+  upd();
+}
+
+function upd(){
+  const s=st(),n=need(S.L),set=(i,f)=>{const e=$(i);if(e)f(e)};
+  
+  // Realtime cập nhật trạng thái Icon Âm Thanh trên Header
+  set('btn_snd', e => { const t = S.snd ? '🔊' : '🔇'; if(e.textContent !== t) e.textContent = t; });
+
+  $('rl').textContent=lv(S.L);$('xb').style.width=Math.min(100,S.exp/n*100)+'%';
+  $('xt').textContent=S.exp>=n&&S.L<cap()?'✅ Đủ đấu khí, đột phá ngay':`Đấu khí ${Math.floor(S.exp)}/${n}`;
+  
+  $('gd').innerHTML=`<span data-tip='Kim tệ'>🪙${S.gold}</span> · <span data-tip='Hồi Huyết Tán'>🧪×${S.pots}</span> <button data-a="buy" data-tip="<b>Hồi Huyết Tán</b><br>Giá: 30🪙<br>Hồi 45% máu tối đa ngay lập tức" style="font-size:10px;padding:1px 5px">+Mua</button>`;
+  
+  const df=DIFF_DATA[S.diff||1];$('diff_tag').textContent='['+df.n+']';
+  
+  set('hp',e=>e.style.width=php/s.h*100+'%');set('hpt',e=>e.textContent=`${Math.round(php)}/${s.h}`);
+  set('mp',e=>e.style.width=pmp/s.m*100+'%');
+
+  set('me',e=>e.textContent=mob?mob.e:'💤');
+  updateInner('mn', mob ? mob.n : '');
+  updateInner('mtr', mob ? Object.keys(mob.tr||{}).map(k=>`<span data-tip="<b>${TRI[k][1]}</b>: ${TRI[k][2]}">${TRI[k][0]}</span>`).join(' ') : '');
+  set('mh',e=>e.style.width=mob?mob.hp/mob.max*100+'%':'0');set('mt',e=>e.textContent=mob?Math.max(0,mob.hp)+'/'+mob.max:'');
+
+  set('btn_catch', e => e.textContent = `🪤 Tung Lồng Bắt Ma Thú (Còn ${S.cages||0})`);
+
+  const actP = S.pets.find(x=>x.id==S.actPet);
+  updateInner('pet_ui', actP ? `<span style="font-size:13px; font-weight:900;" class="${actP.q>=6?'rb-txt':'txt-q'+Math.min(5,actP.q)}">🐾 ${actP.n}</span>` : '');
+
+  const rIdx = Math.min(11, Math.floor(S.L / 9));
+  const AV = ['🧒','👦','🥋','🗡️','⚔️','🦅','🔥','🌪️','🌌','☯️','✨','👑'];
+  const rankToQ = [0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 6];
+  const heroQ = rankToQ[rIdx];
+  const cls = heroQ >= 6 ? 'rb-txt' : 'txt-q' + Math.min(5, heroQ);
+  
+  set('hero_av', e => e.textContent = AV[rIdx] || '🧒');
+  set('hero_name', e => { if(e.className !== cls) e.className = cls; });
+  set('hdr_name', e => { if(e.className !== cls) e.className = cls; });
+
+  if(tab=='hero'){
+    const lbBag=$('lb_bag');if(lbBag)lbBag.textContent=`Nạp Giới (${S.inv.length}/${bagC()})`;
+    const btnStash=$('btn_stash');if(btnStash)btnStash.textContent=`📦 Rương bế quan (${(S.afkStash||[]).length}/${stashC()})`;
+  }
+}
+
+function story(lines,title,cb){
+  let i=0;const ov=$('ov');
+  if(title&&!S.storyLog.some(x=>x.t==title)){
+    S.storyLog.push({t:title,d:lines.map(l=>(l[0]?l[0]+': ':'')+l[1]).join('\n')});
+  }
+  const show=()=>{
+    if(i>=lines.length){ov.hidden=true;cb&&cb();return}
+    const[sp,tx]=lines[i++];ov.hidden=false;
+    ov.innerHTML=`<div class="box" data-a="nx">${sp?'<b>'+sp+'</b>':''}<p>${tx}</p><small>Chạm bất kỳ đâu để tiếp tục ▶</small></div>`;
+  };ov._n=show;show();
+}
+
+function begin(){const q=Q[S.qi];if(q&&S.qs=='new')story(q.intro,q.t,()=>{S.qs='active';S.pr=0;chk();save();draw()})}
+const rw=r=>`${r.gold||0}🪙 ${r.exp||0} ĐK${r.fl?' + '+P[r.fl].n:''}${r.rec?' + Đan Phương: '+(RC.find(x=>x.id==r.rec)?.n||'Đan Dược'):''}${r.item?' + Trang bị':''}`;
+function claim(){
+  const q=Q[S.qi];if(!q||S.qs!='ready')return;
+  story(q.outro,q.t+' (Kết)',()=>{
+    const r=q.rw;S.gold+=r.gold||0;S.pots+=r.pots||0;
+    if(r.fl){S.fl[r.fl]=1;if(P[r.fl].cf)S.cfa=r.fl}
+    if(r.fire){S.fire[r.fire]=1;const f=FR[r.fire];if(f&&f.evo)S.pq=Math.max(S.pq||0,f.evo)}
+    if(r.rec){S.recipes[r.rec]=1;toast('📜 Đã học Đan Phương: '+(RC.find(x=>x.id==r.rec)?.n||'Mới'))}
+    if(r.sk&&!S.skl[r.sk]){S.skl[r.sk]=1;if(S.eq.length<3)S.eq.push(r.sk)}
+    if(r.item)give(gen(r.item.t,r.item.s,r.item.q));
+    S.done[q.id]=1;S.qi++;S.qs='new';addExp(r.exp||0);save();begin();draw();
+  });
+}
+
+function checkAfk(){
+  const now=Date.now(),diff=Math.min(now-(S.lastT||now),12*3600*1000);
+  if(diff>60000){
+    const mins=Math.floor(diff/60000);
+    const z=Z.find(z=>z.id==S.zone)||Z[0],m=M[z.mobs[0]];
+    const df=DIFF_DATA[S.diff||1];
+    const expGain=Math.round(mins*m.x*1.5*pm('exp')*df.expM);
+    const goldGain=Math.round(mins*m.g[1]*1.2*df.goldM);
+    const herbGain=z.mat?Math.floor(mins/15):0;
+    addExp(expGain);S.gold+=goldGain;
+    if(herbGain&&z.mat)S.mat[z.mat]=(S.mat[z.mat]||0)+herbGain;
+    let newItems=0;
+    const rolls=Math.min(10,Math.floor(mins/25));
+    for(let i=0;i<rolls;i++){
+      const it=gen(z.t);
+      if(it.set!=null||it.q>=2){
+        if(!S.afkStash)S.afkStash=[];
+        if(S.afkStash.length<stashC()){S.afkStash.push(it);newItems++}
+      }else S.gold+=val(it);
+    }
+    setTimeout(()=>{
+      const ov=$('ov');ov.hidden=false;
+      ov.innerHTML=`<div class="box">
+        <b>🧘 Bế Quan Kết Thúc!</b>
+        <p>Bế quan tu luyện được: <b>${Math.floor(mins/60)} giờ ${mins%60} phút</b>.<br>
+        Thu hoạch: <b>+${expGain}</b> Đấu khí, <b>+${goldGain}</b> 🪙 Kim tệ${herbGain?`, <b>+${herbGain}</b> ${MT[z.mat]?.n||'Dược Thảo'}`:''}.<br>
+        ${newItems>0?`Tìm thấy <b>${newItems}</b> bảo vật quý lưu vào Rương Bế Quan!`:''}</p>
+        <button class="pri" data-a="clsov">Tiếp tục tu hành</button>
+      </div>`;
+    },500);
+  }
+  S.lastT=Date.now();
+}
+
+function checkDailyReset(){
+  const today = new Date().toDateString();
+  if(!S.dailyQuests || !S.dailyQuests.length || S.lastDay !== today){
+    S.lastDay = today;
+    genDailyQuests();
+    S.actPoint = 0;
+    S.actClaimed = 0;
+    toast('🌅 Ngày mới đã tới! Nhiệm vụ hằng ngày đã được đổi mới.');
+  }
+}
+
+const bar=(id,c)=>`<div class="bar"><i id="${id}" style="background:${c}"></i></div>`;
+const T={
+fight(){
+  const normalZones = Z.filter(z=> (!z.req||S.done[z.req]) && z.id !== 'vanthu');
+  const vtZone = Z.find(z=> z.id === 'vanthu');
+  
+  return `<div class="zs">${normalZones.map(z=>`<button class="zb ${z.id==S.zone?'on':''}" data-a="zone" data-v="${z.id}">${z.n}</button>`).join('')}</div>
+  ${vtZone ? `<button class="zb ${vtZone.id==S.zone?'on':''}" data-a="zone" data-v="${vtZone.id}" style="width:100%; border:2px solid var(--gd); background: linear-gradient(45deg, #1e3a8a, #312e81); color:#fff; font-weight:bold; margin-bottom:8px;">🌲 ${vtZone.n}</button>` : ''}
+  <div class="arena" id="ar_box">
+    <div class="unit">
+      <div class="fl-w" id="flp"></div>
+      <div id="pet_ui" style="position:absolute; top:-10px; left:0; right:0; text-align:center; z-index:10; white-space:nowrap; overflow:visible; filter: drop-shadow(1px 1px 2px rgba(255,255,255,0.7));"></div>
+      <div class="em" id="hero_av" style="margin-top:10px;">🧒</div>
+      <b id="hero_name">Tiêu Viêm</b>
+      ${bar('hp','var(--hp)')}<small id="hpt"></small>
+      <div data-tip="<b>Đấu khí nội tức</b><br>Hồi theo mỗi nhịp đánh, dùng để tung Đấu Kỹ">${bar('mp','var(--mp)')}</div>
+    </div>
+    <div class="vs">⚔️</div>
+    <div class="unit">
+      <div class="fl-w" id="flm"></div>
+      <div class="em" id="me" style="margin-top:10px;">💤</div>
+      <b id="mn"></b>
+      <div id="mtr"></div>
+      ${bar('mh','var(--hp)')}<small id="mt"></small>
+    </div>
+  </div>
+  ${S.zone === 'vanthu' && mob ? `<div style="margin-top:6px;display:flex;gap:6px"><button id="btn_catch" class="pri" data-a="catch_pet" style="margin:0;background:#2574a9">🪤 Tung Lồng Bắt Ma Thú (Còn ${S.cages||0})</button></div>` : ''}
+  <div id="lg" class="log">${logs.join('<br>')}</div>`;
+},
+hero(){
+  const s=st(),E=ex(),b=BK(),ok=S.exp>=need(S.L)&&S.L<cap(),c=[['⚔️ Tấn công',['at','cr','cd','pn','ls','fd']],['🛡️ Phòng thủ',['kn','ds','kc','rg']],['🍀 Thu hoạch',['lk','xp','gp']],['🔷 Nội tức',['mg']]];
+  const pObj = b.pill ? RC.find(r=>r.id==b.pill) : null;
+  const pillText = pObj ? pObj.n : (b.pill || '');
+  const cond=`<div class="sl"><span>🪙 Kim tệ:</span><span>${S.gold}/${b.gold}</span></div>`+Object.keys(b.mats).map(k=>`<div class="sl"><span>${MT[k]?MT[k].n:k}:</span><span>${S.mat[k]||0}/${b.mats[k]}</span></div>`).join('')+(b.pill?`<div class="sl"><span>${pillText}:</span><span>${S.pl[b.pill]||0}/1</span></div>`:'');
+  
+  // Render Dị Hỏa với Tooltip + Hiệu ứng chữ (Đã FIX escape HTML)
+  const fireHtml = Object.keys(S.fire).length ? Object.keys(S.fire).map(f => {
+    const d = FR[f];
+    if(!d) return '';
+    let ft = 1;
+    if (d.rk === 1) ft = 7;
+    else if (d.rk <= 3) ft = 6;
+    else if (d.rk <= 8) ft = 5;
+    else if (d.rk <= 13) ft = 4;
+    else if (d.rk <= 17) ft = 3;
+    else if (d.rk <= 20) ft = 2;
+    const stats = Object.keys(d.b||{}).map(k=>`${STT[k][0]} ${STT[k][1]} +${d.b[k]}${STT[k][3]}`).join('<br>');
+    const rawTip = `<b>🔥 ${d.n}</b><br><small>${d.d}</small><br>${stats}`;
+    return `<span data-tip="${rawTip.replace(/"/g, '&quot;')}" class="f-txt${ft}" style="font-weight:bold;cursor:pointer">🔥 ${d.n}</span>`;
+  }).join(' · ') : '<small>Chưa thu phục dị hỏa</small>';
+
+  return `<div class="card"><b>${lv(S.L)}</b> · ${b.maj?'Đột phá Đại cảnh giới':'Đột phá Tiểu cảnh giới'}<br>${S.L>=cap()?'<small>Đã đạt cảnh giới cao nhất của phiên bản này.</small>':ok?`<b>Đủ đấu khí! Điều kiện lên ${lv(S.L+1)}:</b>${cond}Tỉ lệ thành công: <b>${b.rate}%</b> · thất bại tổn hao 30% đấu khí<button class="pri" data-a="bt">Đột phá</button>`:`<small>Đấu khí: ${Math.floor(S.exp)}/${need(S.L)}. Yêu cầu: ${b.gold}🪙, ${Object.keys(b.mats).map(k=>(MT[k]?MT[k].n:k)+' ×'+b.mats[k]).join(', ')}${b.pill?', '+pillText:''} · tỉ lệ ${b.rate}%</small>`}</div>
+  <div class="card"><b>Căn bản</b><br><span data-tip="Công kích">⚔️ ${s.a}</span> · <span data-tip="Phòng thủ">🛡️ ${s.d}</span> · <span data-tip="Máu tối đa">❤️ ${s.h}</span> · <span data-tip="Đấu khí nội tức">🔷 ${s.m}</span>${S.tox>1?`<br><span data-tip="Đan độc cao >40 giảm công kích, dùng Thanh Chấn Đan để tẩy sạch">☠️ Đan độc ${S.tox|0}/100</span>`:''}</div>
+  ${c.map(x=>`<div class="card"><b>${x[0]}</b>${x[1].map(k=>stl(k,E)).join('')}</div>`).join('')}
+  <div class="card"><b>Công pháp &amp; Dị hỏa</b><br>${cfTxt()}<br>${fireHtml}${Object.keys(S.bf).length?'<br><b>Dược lực:</b> '+Object.keys(S.bf).map(k=>`<span data-tip="Còn ${S.bf[k].t*.8|0}s">${STT[k][0]}${STT[k][1]} +${+S.bf[k].v.toFixed(1)}</span>`).join(' · '):''}</div>
+  <div class="card"><b>Trang bị</b>${SLS.split('').map(k=>{const it=S.gear[k];return `<div class="sl"><span>${IC[k]} <b>${SL[k]}</b></span><span>${it?`<span data-tip="${itip(it)}" class="${it.q>=6?'rb-txt':'txt-q'+Math.min(5,it.q)}">${it.n}${it.e?' +'+it.e:''}${it.lock?' 🔒':''}</span> <button data-a="lockit" data-v="${it.id}">${it.lock?'Mở':'Khóa'}</button> ${it.e<12?`<button data-a="enh" data-v="${k}">+ ${ec(it)}🪙</button>`:''}`:'<small>trống</small>'}</span></div>`}).join('')}</div>
+  <div class="card"><b>Bộ trang bị</b>${setHtml()}</div>
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;gap:6px;flex-wrap:wrap">
+      <b id="lb_bag">Nạp Giới (${S.inv.length}/${bagC()})</b>
+      <div style="display:flex;gap:6px">
+        <button data-a="openstash" id="btn_stash" style="background:var(--gd);color:#fff">📦 Rương bế quan (${(S.afkStash||[]).length}/${stashC()})</button>
+      </div>
+    </div>
+    <div style="display:flex;gap:6px;margin-bottom:8px">
+      <button data-a="sellall_confirm" style="color:var(--hp);font-weight:700;flex:1">Bán tất cả chưa khóa</button>
+      <button data-a="auto_eq" class="pri" style="width:auto; margin:0; flex:1">⚡ Mặc đồ tốt nhất</button>
+    </div>
+    <div class="inv" id="inv_grid">${S.inv.map(it=>`<div class="it q-${it.q}" data-tip="${itip(it)}" style="border-color:${QC?.[it.q]||'#8a8a8a'}" data-a="eq" data-v="${it.id}">${it.lock?'<span class="lk-icon">🔒</span>':''}${IC[it.s]}<small>${it.n}</small></div>`).join('')}</div>
+    <div style="display:flex;gap:6px;margin-top:8px">
+      <button data-a="bag">Mở rộng Nạp Giới (+10 ô) ${500*((S.bg||0)+1)**2}🪙</button>
+    </div>
+    <small>Chạm vào đồ để mặc; chỉ đồ chưa Khóa mới bị bán khi ấn "Bán tất cả".</small>
+  </div>
+  
+  <!-- Hệ thống Save / Load / Delete tách biệt -->
+  <div style="display:flex; gap:6px; margin-top:10px; margin-bottom:15px;">
+      <button style="flex:1; background:#0ea5e9; color:#fff; border:1px solid #0284c7; font-weight:bold" data-a="sys_save">💾 Save</button>
+      <button style="flex:1; background:var(--gd); color:#fff; border:1px solid #925f0e; font-weight:bold" data-a="sys_load">📂 Load</button>
+      <button style="flex:1; background:var(--hp); color:#fff; border:1px solid #991b1b; font-weight:bold" data-a="sys_del">🗑️ Delete</button>
+  </div>`;
+},
+skl(){
+  return `<div class="card"><b>Đấu kỹ xuất chiến (tối đa 3)</b></div>
+  ${Object.keys(S.skl).map(id=>{const k=SK[id],l=S.skl[id];return `<div class="card" data-tip="<b>${k.n}</b><br>${skTxt(k,l)}"><b class="txt-q${Math.min(5,k.g)}">${k.n}</b> <small>${QN[k.g]} giai · Lv${l}/5 · 🔷${k.mp}</small><br><small>${skTxt(k,l)}</small><br><button data-a="skeq" data-v="${id}">${S.eq.includes(id)?'Bỏ dùng ('+(S.eq.indexOf(id)+1)+')':'Dùng'}</button> ${l<5?`<button data-a="skup" data-v="${id}">Nâng cấp ${k.u*l}🪙</button>`:''}</div>`}).join('')}`;
+},
+alc(){
+  const F=Object.keys(S.fire).length;
+  return `<div class="card">
+    <b>Luyện Dược Sư Cấp ${1+(S.al/6|0)}</b> (${S.al} lần luyện) · 🪙${S.gold}${F?' · 🔥 '+F+' Dị hỏa':''}<br>
+    ${S.tox>1?`<span data-tip="Đan độc cao giảm công kích">☠️ Đan độc: ${S.tox|0}/100</span><br>`:''}
+    <b>Dược thảo hiện có (chạm để xem nơi tìm):</b><br>
+    ${Object.keys(MT).map(k=>`<span class="mat-tag" data-tip="${mtip(k).replace(/"/g,'&quot;')}" style="border-color:${MT[k]?(QC?.[MT[k].g]||'#ccc'):'#ccc'}">${MT[k]?MT[k].n:k} ×${S.mat[k]||0}</span>`).join(' ')}
+  </div>
+  ${RC.map(r=>{
+    const unl=S.recipes[r.id];
+    return `<div class="card" style="${unl?'':'opacity:.6'}" data-tip="${rtip(r).replace(/"/g,'&quot;')}">
+      <b class="p-txt${r.g}">${r.n}</b> <small>${PL_QN[r.g]} · ${r.d}</small><br>
+      <small>${Object.keys(r.need).map(k=>(MT[k]?MT[k].n:k)+' ×'+r.need[k]).join(', ')} + ${r.c}🪙 · tỉ lệ ${crate(r)}%${r.fire?' · Cần dị hỏa':''}</small><br>
+      ${unl?`<button data-a="craft" data-v="${r.id}">Luyện đan</button>`:'<small style="color:var(--hp)">🔒 Chưa có Đan Phương</small>'}
+      ${r.pc?`<small>Có: ${S.pl[r.id]||0} viên</small>`:[r.id,r.id+'*'].filter(i=>S.pl[i]>0).map(i=>`<button data-a="use" data-v="${i}">${i.endsWith('*')?'Thượng phẩm':'Dùng'} ×${S.pl[i]}</button>`).join(' ')}
+    </div>`;
+  }).join('')}`;
+},
+fire(){
+  const f=P.phanquyet, ownedCount=Object.keys(S.fire||{}).length;
+  const g=f&&f.st?f.st[Math.min(ownedCount,f.st.length-1)]:null;
+  const hasPQ = !!(S.fl && S.fl.phanquyet);
+  
+  let extraHtml = '';
+  if (hasPQ && g) {
+      const extraStats = [];
+      if (g.cr) extraStats.push(`Bạo kích +${+(g.cr).toFixed(1)}%`);
+      if (g.cd) extraStats.push(`Bạo thương +${+(g.cd).toFixed(1)}%`);
+      if (g.ls) extraStats.push(`Hút máu +${+(g.ls).toFixed(1)}%`);
+      if (g.fd) extraStats.push(`Hỏa sát +${+(g.fd).toFixed(1)}%`);
+      if (g.pn) extraStats.push(`Xuyên giáp +${+(g.pn).toFixed(1)}%`);
+      if (g.kn) extraStats.push(`Kháng tính +${+(g.kn).toFixed(1)}%`);
+      if (g.ds) extraStats.push(`Né tránh +${+(g.ds).toFixed(1)}%`);
+      if (g.rg) extraStats.push(`Hồi phục +${+(g.rg).toFixed(1)}`);
+      if (g.mg) extraStats.push(`Hồi nội lực +${+(g.mg).toFixed(1)}`);
+      
+      extraHtml = extraStats.length ? `<br><small style="color:var(--gd); margin-top:4px; display:inline-block">${extraStats.join(' · ')}</small>` : '';
+  }
+
+  const pqHtml = hasPQ && g ? `
+    <div class="card">
+      <b>📖 Phần Quyết · <span class="txt-q${Math.min(5,Math.floor(ownedCount/4)+1)}">${g.n}</span></b><br>
+      <small>${g.d}</small><br>
+      Đấu khí ×${g.exp} · Công ×${g.atk} · Máu ×${g.hp}
+      ${extraHtml}
+    </div>` : `
+    <div class="card">
+      <b>📖 Công pháp: Chưa có</b><br>
+      <small style="color:var(--mut)">Chưa thức tỉnh Phần Quyết. Hãy hoàn thành nhiệm vụ "Bí Mật Chiếc Nhẫn Đen".</small>
+    </div>`;
+
+  const listHtml = G.ALL_FIRES.map(d=>{
+    const isOwned=!!(S.fire && S.fire[d.id]);
+    let ft = 1;
+    if (d.rk === 1) ft = 7;
+    else if (d.rk <= 3) ft = 6;
+    else if (d.rk <= 8) ft = 5;
+    else if (d.rk <= 13) ft = 4;
+    else if (d.rk <= 17) ft = 3;
+    else if (d.rk <= 20) ft = 2;
+
+    if (ft === 7) {
+        return `<div class="de-viem-card" style="${isOwned?'':'opacity:.65; filter:grayscale(0.8)'}">
+            <div class="de-viem-content">
+                <div class="sl">
+                    <b>🔥 Hạng 1: <span class="f-txt7">${d.n}</span></b>
+                    <span style="font-weight:700;color:${isOwned?'#2a9d4a':'var(--mut)'}">${isOwned?'Đã thu phục':'Chưa thu phục'}</span>
+                </div>
+                <small>${d.d}</small><br>
+                ${Object.keys(d.b||{}).map(k=>`<span data-tip="${STT[k][2]}">${STT[k][0]} ${STT[k][1]} +${d.b[k]}${STT[k][3]}</span>`).join(' · ')}
+            </div>
+        </div>`;
+    }
+
+    return `<div class="card f-t${ft}" style="${isOwned?'':'opacity:.65'}">
+      <div class="sl">
+        <b>🔥 Hạng ${d.rk}: <span class="f-txt${ft}">${d.n}</span></b>
+        <span style="font-weight:700;color:${isOwned?'#2a9d4a':'var(--mut)'}">${isOwned?'Đã thu phục':'Chưa thu phục'}</span>
+      </div>
+      <small>${d.d}</small><br>
+      ${Object.keys(d.b||{}).map(k=>`<span data-tip="${STT[k][2]}">${STT[k][0]} ${STT[k][1]} +${d.b[k]}${STT[k][3]}</span>`).join(' · ')}
+    </div>`;
+  }).join('');
+
+  return pqHtml + `
+    <div class="card">
+      <b>🔥 Dị Hỏa Bảng Đại Lục (Đã thu phục ${ownedCount}/23)</b><br>
+      <small>Thu phục Dị Hỏa giúp Phần Quyết tiến hóa, tăng vọt Đấu khí và Chiến lực.</small>
+    </div>` + listHtml;
+},
+pet(){
+  const act=S.pets.find(x=>x.id==S.actPet);
+  return `<div class="card">
+    <b>🐾 Hệ Thống Ma Thú &amp; Tiến Giai</b><br>
+    <small>Ma Thú xuất chiến trợ công uy lực. Thú xuất chiến sẽ kích động quái vật, tăng tỷ lệ gặp quái "Cường Hóa" hoặc "Bầy Đàn" để farm nhiều tài nguyên hơn!</small>
+    <div class="sl"><span>Lồng Bắt Thú: <b>${S.cages||0}</b></span><button data-a="zone" data-v="vanthu">Tới Vạn Thú Cốc</button></div>
+    <div class="sl"><span>Ma Hạch: <b>${S.mat['mahach']||0}</b></span><span>Thú Linh Đan: <b>${S.mat['thudan']||0}</b></span><span>Thú Vương Huyết: <b>${S.mat['tvh']||0}</b></span></div>
+  </div>
+  ${act?`<div class="card" style="border:2px solid var(--gd)">
+    <b>Đang xuất chiến: <span class="${act.q>=6?'rb-txt':'txt-q'+Math.min(5,act.q)}">🐾 ${act.n}</span></b> <small>[${QN[act.q]} Giai · Lv.${act.lv}]</small><br>
+    ⚔️ Công trợ chiến: <b>+${act.atk}</b> · ❤️ Sinh lực: <b>+${act.hp}</b> · Trợ công: <b>${act.rate}%</b><br>
+    <div class="bar"><i style="background:var(--xp);width:${(act.exp/act.maxExp)*100}%"></i></div>
+    <small>Kinh nghiệm: ${act.exp}/${act.maxExp}</small><br>
+    <button data-a="feedpet" data-v="${act.id}">Cho ăn Ma Hạch (+50 EXP)</button>
+    <button data-a="unpet">Thu hồi</button>
+  </div>`:'' }
+  <div class="card">
+    <b>Danh Sách Ma Thú Đã Thu Phục (${S.pets.length})</b>
+    ${S.pets.length?S.pets.map(p=>`<div class="sl">
+      <span><span class="${p.q>=6?'rb-txt':'txt-q'+Math.min(5,p.q)}">🐾 <b>${p.n}</b></span><br><small>[${QN[p.q]} Giai] Lv.${p.lv}</small></span>
+      <div style="text-align:right">
+        <button data-a="callpet" data-v="${p.id}">${S.actPet==p.id?'Đang chiến':'Xuất chiến'}</button><br>
+        <button data-a="evopet" data-v="${p.id}" style="margin-top:4px">Tiến Giai</button>
+      </div>
+    </div>`).join(''):'<br><small>Chưa bắt được Ma Thú nào. Hãy đến Vạn Thú Cốc dùng Lồng Bắt Thú để săn!</small>'}
+  </div>`;
+},
+quest(){
+  const q=Q[S.qi],g=q&&q.goal,p=q?g.t=='craft'?`Luyện ${Math.min(S.pr,g.n)}/${g.n} viên đan`:g.t=='kill'?`Hạ ${Math.min(S.pr,g.n)}/${g.n} ${M[g.m].n}`:`Đạt ${lv(g.v)} (hiện tại: ${lv(S.L)})`:'';
+  const cur=q?`<div class="card"><small>${q.ch}</small><h3 style="margin:4px 0">${q.t}</h3><p>${q.d}</p><p>🎯 ${S.qs=='new'?'Chưa nhận':p}</p>${S.qs=='ready'?'<button class="pri" data-a="claim">Hoàn thành &amp; Nhận thưởng</button>':''}<small>Thưởng: ${rw(q.rw)}</small></div>`:`<div class="card"><b>${G.end}</b></div>`;
+  
+  const chProgress=G.ch.map(c=>{
+    const cQuests=Q.filter(x=>x.cid==c.id);
+    const cDone=cQuests.filter(x=>S.done[x.id]).length;
+    return `<div class="card">
+      <b>${c.name}</b>: <b>${cDone}/${cQuests.length}</b> nhiệm vụ
+      <div style="font-size:12px;margin-top:4px">${cQuests.map(x=>`<div class="sl"><span>${S.done[x.id]?'✅':'⬜'} ${x.t}</span><small>${S.done[x.id]?'Đã xong':(q&&q.id==x.id?'Đang làm':'Chưa tới')}</small></div>`).join('')}</div>
+    </div>`;
+  }).join('');
+
+  const actPts = S.actPoint || 0;
+  const listDaily = S.dailyQuests || [];
+  const sideHtml = `<div class="card">
+    <div class="sl">
+      <b>🎯 Nhiệm Vụ Hằng Ngày &amp; Năng Động</b>
+      <button data-a="ref_daily">Đổi mới (500🪙)</button>
+    </div>
+    <div style="margin:6px 0">
+      <small>Độ năng động hôm nay: <b>${actPts}/100</b></small>
+      <div class="bar"><i style="background:var(--xp);width:${actPts}%"></i></div>
+      ${actPts>=100&&!S.actClaimed?`<button class="pri" data-a="claim_act">Nhận Rương Năng Động (5000🪙 + 2 Lồng + 5 Ma Hạch)</button>`:actPts>=100?'<small style="color:#2a9d4a">Đã nhận rương thưởng hôm nay</small>':''}
+    </div>
+    ${listDaily.map(sq=>{
+      const isDone = S.sideDone && S.sideDone[sq.id];
+      const curPr = Math.min(sq.n, (S.sidePr && S.sidePr[sq.id]) || 0);
+      const r = sq.rw || {};
+      const rBonus = r.mat ? ` · 🌿 ${r.mat.n} ×${r.mat.c}` : r.pill ? ` · 🧪 ${r.pill.n} ×${r.pill.c}` : r.cages ? ` · 🪤 Lồng ×${r.cages}` : r.mahach ? ` · 💎 Ma Hạch ×${r.mahach}` : '';
+      return `<div class="sl">
+        <div>
+          <b>${sq.name}</b><br>
+          <small>${sq.desc} (${curPr}/${sq.n})</small><br>
+          <small style="color:var(--gd)">Thưởng: 🪙${r.gold||0}${rBonus}</small>
+        </div>
+        <div>${isDone?'<span style="color:#2a9d4a;font-weight:700">Đã xong</span>':`<small>+25 NĐ</small>`}</div>
+      </div>`;
+    }).join('')}
+  </div>`;
+
+  return cur+chProgress+sideHtml;
+},
+story(){
+  return `<div class="card"><b>📚 Tàng Thư Các · Biên Niên Sử Đấu Phá</b><br><small>Kể lại chi tiết toàn bộ cốt truyện và các mốc nhiệm vụ để bạn nắm vững nguyên tác.</small></div>
+  <div class="card">
+    <h3 style="margin:4px 0;color:var(--gd)">Chương 1: Ô Thản Thành &amp; Ma Thú Sơn Mạch</h3>
+    <p style="font-size:12.5px;line-height:1.6">
+    <b>1. Đấu Chi Khí Tam Đoạn:</b> Tiêu Viêm từng là thiên tài 11 tuổi thành Đấu Giả, đột nhiên đấu khí biến mất suốt 3 năm, rớt về Tam Đoạn, chịu đủ lời cười chê khinh bỉ của tộc nhân Tiêu gia.<br>
+    <b>2. Dược Lão Thức Tỉnh:</b> Bí mật chiếc nhẫn đen của người mẹ quá cố được hé lộ: hồn thể của Dược Trần (Dược Tôn Giả - Đệ nhất Luyện dược sư đại lục) hút đấu khí để hồi sinh, sau đó nhận Tiêu Viêm làm đồ đệ và truyền thụ công pháp thôn phệ dị hỏa thần bí <i>Phần Quyết</i>.<br>
+    <b>3. Trúc Cơ &amp; Đấu Giá Hội:</b> Dược Lão chế ra Trúc Cơ Linh Dịch cho Tiêu Viêm tẩy tủy. Hắn khoác áo hắc bào đến Đấu giá hội Mễ Đặc Nhĩ, gặp gỡ mỹ nữ Nhã Phi để đấu giá linh dịch kiếm tiền mua dược liệu.<br>
+    <b>4. Nạp Lan Yên Nhiên Thối Hôn:</b> Nạp Lan Yên Nhiên cậy thế đại phái Vân Lam Tông đến cửa hủy hôn. Tiêu Viêm phẫn nộ viết hưu thư, thốt lên câu danh ngôn: <i>"Ba mươi năm Hà Đông, ba mươi năm Hà Tây, đừng khinh thiếu niên nghèo!"</i> và hẹn ước quyết đấu sau ba năm.<br>
+    <b>5. Tộc Thí Đài:</b> Tiêu Viêm khổ luyện trở lại cảnh giới Đấu Giả, dùng một quyền đánh bại thiên tài Tiêu Ninh trước sự kinh ngạc của toàn tộc.<br>
+    <b>6. Ma Thú Sơn Mạch &amp; Tiểu Y Tiên:</b> Tiêu Viêm vào rừng sâu sinh tử tu luyện, kết giao cùng nữ y sĩ Ách Nan Độc Thể Tiểu Y Tiên, tìm thấy Tử Vân Dực và bảo tàng trong vách núi, sau đó một mình đồ sát toàn bộ Lang Đầu Binh Đoàn.<br>
+    <b>7. Bát Cực Băng &amp; Thú Vương:</b> Lĩnh ngộ cận chiến đấu kỹ Bát Cực Băng với 8 tầng ám kình, chém giết Hắc Giáp Thú Vương, kết thúc hành trình rèn luyện đầu đời.
+    </p>
+  </div>
+  <div class="card">
+    <h3 style="margin:4px 0;color:var(--gd)">Chương 2: Sa Mạc Tháp Qua Nhĩ &amp; Đại Chiến Vân Lam</h3>
+    <p style="font-size:12.5px;line-height:1.6">
+    <b>1. Băng Hoàng Hải Ba Đông:</b> Đến Gia Mã Đế Đô, Tiêu Viêm tìm được tàn đồ Dị Hỏa tại sa mạc và kết giao Băng Hoàng Hải Ba Đông đang bị phong ấn tu vi.<br>
+    <b>2. Huyết Tẩy Mặc Gia Phủ:</b> Vì cứu cô bé xà nhân Thanh Lân bị bắt cóc mổ mắt đoạt Bích Xà Tam Hoa Đồng, Tiêu Viêm nộ hỏa xung thiên đánh sập phủ đệ Mặc gia, tiêu diệt Mặc Thừa.<br>
+    <b>3. Đoạt Thanh Liên Địa Tâm Hỏa:</b> Xuống lòng đất dung nham sa mạc, chứng kiến Nữ vương Mỹ Đỗ Toa dùng Dị Hỏa tiến hóa thành Thất Thải Thôn Thiên Mãng, Tiêu Viêm ngậm Băng Linh Hàn Tuyền, cắn răng nuốt ngọn Dị Hỏa đầu tiên vào cơ thể, tiến hóa Phần Quyết lên Huyền giai.<br>
+    <b>4. Quán Quân Luyện Dược Hội:</b> Cải danh Nham Kiêu, dùng Dị Hỏa luyện ra Tam Văn Thanh Linh Đan đoạt ngôi đầu Đại hội Luyện Dược Sư, đồng thời dùng lửa khử sạch Lạc Độc cứu sống Nạp Lan Kiệt.<br>
+    <b>5. Ba Năm Chi Ước Huyết Chiến:</b> Đúng hẹn, Tiêu Viêm vác Huyền Trọng Xích bước lên đỉnh Vân Lam Sơn Môn, dùng Phật Nộ Hỏa Liên đánh bại Nạp Lan Yên Nhiên trước sự chứng kiến của toàn thể cường giả đế quốc.<br>
+    <b>6. Vân Sơn Tông Chủ Truy Sát:</b> Đại Trưởng Lão Vân Lăng nhục nhã kết trận vây bắt, Tông chủ Đấu Tông Vân Sơn xuất quan. Dược Lão hao tổn linh hồn phá vây, Tiêu Viêm đào tẩu sang Hắc Giác Vực.
+    </p>
+  </div>
+  <div class="card">
+    <h3 style="margin:4px 0;color:var(--gd)">Chương 3: Già Nam Học Viện &amp; Vẫn Lạc Tâm Viêm</h3>
+    <p style="font-size:12.5px;line-height:1.6">
+    <b>1. Hắc Ấn Đấu Giá &amp; Tân Sinh:</b> Tiến vào vùng đất hỗn loạn Hắc Giác Vực, đoạt được thân pháp Địa giai Tam Thiên Lôi Động, dẫn đầu tân sinh bước vào Già Nam Học Viện.<br>
+    <b>2. Hỏa Năng Liệp Tái &amp; Bàn Môn:</b> Đánh bại hai đại đội Lão sinh Hắc Bạch Song Sát (Sa Thiết và La Hầu), cướp sạch thẻ Hỏa Năng. Cùng Huân Nhi, Hổ Gia, Ngô Hạo sáng lập thế lực Bàn Môn vững chắc.<br>
+    <b>3. Thiên Phần Luyện Khí Tháp:</b> Xuống tháp rèn luyện mượn lực tâm hỏa, Tiêu Viêm đột phá Đấu Vương (Hóa Dực), thượng đài Cường Giả Bảng đánh bại Bạch Trình và Liễu Kình.<br>
+    <b>4. Man Lực Vương Tử Nghiên:</b> Đệ Nhất Cường Giả Bảng là cô bé Thái Hư Cổ Long ham ăn đan dược, Tiêu Viêm dùng đan dược thu phục làm muội muội và được dẫn đi tìm ngọc dịch Địa Tâm Nhũ.<br>
+    <b>5. Hắc Minh Tập Kích &amp; Dị Hỏa Bạo Động:</b> Nghịch đồ Hàn Phong cùng Kim Ngân Song Lão tấn công cướp Dị Hỏa. Vẫn Lạc Tâm Viêm phá vỡ phong ấn hóa hình Hỏa Mãng khổng lồ, nuốt Tiêu Viêm xuống đáy nham thạch vạn trượng.<br>
+    <b>6. Dưới Đáy Nham Thạch Vạn Trượng:</b> Bị nhốt cùng Thải Lân (Mỹ Đỗ Toa), Dược Lão ngủ say, Tiêu Viêm liều chết thuần phục Vẫn Lạc Tâm Viêm, hóa giải ân oán cùng Thải Lân, Phần Quyết tiến hóa Địa giai cao cấp, phá cảnh Đấu Hoàng!<br>
+    <b>7. Diệt Sát Hàn Phong:</b> Trở lại nhân gian, tung Song Hỏa Phật Nộ Hỏa Liên tiêu diệt nghịch đồ Hàn Phong, đoạt lại Hải Tâm Diễm, hiệu triệu Tiêu Môn sẵn sàng trở về Gia Mã Đế Quốc rửa hận!
+    </p>
+  </div>
+  <div class="card">
+    <b>Hồi Ức Đã Ghi Lại Trong Trận (${S.storyLog.length})</b>
+    ${S.storyLog.length ? S.storyLog.map((s, idx) => ({s, idx})).reverse().map(({s, idx}) => `
+      <div class="sl">
+        <span><b>📜 ${s.t}</b></span>
+        <button type="button" data-a="view_story" data-v="${idx}">Xem lại</button>
+      </div>`).join('') : '<br><small>Chưa có đối thoại nào được lưu lại.</small>'}
+  </div>`;
+},
+setting(){
+  const cursors=[
+    {id:'default',n:'Mặc định (Hệ thống)',c:'#8a8a8a'},
+    {id:'xich',n:'Huyền Trọng Xích',c:'#c0392b'},
+    {id:'thanhlien',n:'Thanh Liên Hỏa',c:'#22c55e'},
+    {id:'vanlac',n:'Vẫn Lạc Tâm Viêm',c:'#f97316'},
+    {id:'cotu',n:'Cốt U Lãnh Hỏa',c:'#38bdf8'},
+    {id:'devien',n:'Đấu Đế Thần Kiếm',c:'#eab308'}
+  ];
+  return `<div class="card">
+    <b>⚙️ Thiết Lập Trò Chơi</b><br>
+    <div class="sl"><span>🔊 Hiệu ứng âm thanh:</span><button data-a="tgsnd">${S.snd?'Đang bật (🔊)':'Đang tắt (🔇)'}</button></div>
+    <div style="margin-top:10px">
+      <b>Biến Thể Con Trỏ Chuột Game:</b><br>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px">
+        ${cursors.map(c=>`<button class="${S.cursor==c.id?'pri':''}" data-a="setcur" data-v="${c.id}" style="border-left:4px solid ${c.c}">${c.n}</button>`).join('')}
+      </div>
+    </div>
+    <div style="margin-top:10px">
+      <b>Độ Khó Trò Chơi:</b><br>
+      ${[1,2,3].map(d=>{
+        const df=DIFF_DATA[d];
+        return `<div class="sl"><span><b>${df.n}</b><br><small>${df.desc}</small></span><button class="${S.diff==d?'pri':''}" data-a="setdiff" data-v="${d}">${S.diff==d?'Đang chọn':'Chọn'}</button></div>`;
+      }).join('')}
+    </div>
+  </div>
+  <div class="card" style="border:2px solid var(--hp)">
+    <b style="color:var(--hp)">🛠️ Bảng Điều Khiển Admin (Dành Cho Nhà Phát Triển Test Game)</b><br>
+    <div class="adm-grid">
+      <button data-a="adm" data-v="gold">+100,000 Kim Tệ</button>
+      <button data-a="adm" data-v="exp">+500,000 Đấu Khí</button>
+      <button data-a="adm" data-v="lvup">Tăng 1 Đại Cảnh Giới</button>
+      <button data-a="adm" data-v="mat">Full x99 Toàn Bộ Dược Liệu</button>
+      <button data-a="adm" data-v="rec">Mở Khóa Toàn Bộ Đan Phương</button>
+      <button data-a="adm" data-v="fire">Hấp Thụ Tất Cả Dị Hỏa</button>
+      <button data-a="adm" data-v="pet">Nhận Thần Thú Cầu Vồng</button>
+      <button data-a="adm" data-v="petitems">Nhận Nguyên Liệu Thú x10</button>
+      <button data-a="adm" data-v="thien">Nhận 1 Đồ Thiên Giai Bậc 14</button>
+      <button data-a="adm" data-v="skipq">Bỏ Qua Nhiệm Vụ Hiện Tại</button>
+      <button data-a="adm" data-v="heal">Hồi Đầy Máu &amp; Tẩy Độc</button>
+    </div>
+  </div>`;
+}};
+
+function draw(){
+  $('main').innerHTML=T[tab]();
+  document.querySelectorAll('nav.bot-nav button').forEach(b=>b.classList.toggle('on',b.dataset.v==tab));
+  upd();
+}
+
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-a]');if(!b)return;
+  const a=b.dataset.a,v=b.dataset.v;
+  if(a=='nx')return $('ov')._n();
+  if(a=='clsov')return $('ov').hidden=true;
+  if(a=='tab'){tab=v; draw();}
+  else if(a=='view_story'){
+    const item = S.storyLog[+v];
+    if(item){
+      const ov=$('ov'); ov.hidden=false;
+      ov.innerHTML=`<div class="box">
+        <b>📜 ${item.t}</b>
+        <div style="font-size:13px;line-height:1.6;white-space:pre-line;max-height:60vh;overflow-y:auto;margin:10px 0;padding-right:4px;color:var(--ink)">${item.d}</div>
+        <button class="pri" data-a="clsov">Đóng</button>
+      </div>`;
+    }
+  }
+  else if(a=='tgsnd'){S.snd=S.snd?0:1;toast(S.snd?'Đã bật âm thanh':'Đã tắt âm thanh');draw()}
+  else if(a=='setcur'){setCursor(v);draw()}
+  else if(a=='setdiff'){S.diff=+v;mob=null;spawn();toast('Đã chuyển độ khó: '+DIFF_DATA[S.diff].n);draw()}
+  else if(a=='zone'){S.zone=v;mob=null;spawn(); tab='fight'; draw();}
+  else if(a=='claim')return claim();
+  else if(a=='skeq'){const i=S.eq.indexOf(v);if(i>=0)S.eq.splice(i,1);else if(S.eq.length<3)S.eq.push(v);else toast('Chỉ mang tối đa 3 đấu kỹ')}
+  else if(a=='skup'){const c=SK[v].u*S.skl[v];if(S.gold>=c){S.gold-=c;S.skl[v]++;snd('up');syncTab();}else toast('Không đủ kim tệ')}
+  else if(a=='bt'){bt();return}
+  else if(a=='bag'){
+    const c=500*((S.bg||0)+1)**2;
+    if(S.gold>=c&&(S.bg||0)<20){S.gold-=c;S.bg=(S.bg||0)+1;toast('Nạp Giới mở rộng thêm 10 ô!');chkSide('up_bag',1,1);syncTab();}
+    else toast('Không đủ kim tệ hoặc đã đạt mốc tối đa');
+  }
+  else if(a=='up_stash'){
+    const c=500*((S.sbg||0)+1)**2;
+    if(S.gold>=c&&(S.sbg||0)<20){S.gold-=c;S.sbg=(S.sbg||0)+1;toast('Rương Bế Quan mở rộng thêm 10 ô!');$('ov').hidden=true;syncTab();}
+    else toast('Không đủ kim tệ hoặc đã đạt tối đa');
+  }
+  else if(a=='catch_pet'){
+    if(!mob || S.zone !== 'vanthu') return;
+    if((S.cages||0) <= 0) return toast('Đã hết Lồng Bắt Thú! Hãy đánh quái để nhặt thêm.');
+    S.cages--;
+    const hpPct = mob.hp / mob.max;
+    const rate = 25 + (hpPct < 0.3 ? 20 : hpPct < 0.6 ? 10 : 0);
+    if(Math.random() * 100 < rate){
+      const petQuality = (mob.id=='vt_long'?5 : mob.id=='vt_su'?4 : mob.id=='vt_lang'?3 : mob.id=='vt_ngac'?2 : 1);
+      const petObj = {
+        id: S.uid++,
+        n: mob.n.replace(/<[^>]*>?/gm, '').replace(' (Ấu)','').replace(' (Ấu Thú)','').replace('Bầy Đàn ','').replace('Cường Hóa ','').trim(),
+        q: petQuality,
+        lv: 1,
+        exp: 0,
+        maxExp: 100,
+        atk: Math.round(mob.a * 0.5),
+        hp: Math.round(mob.hp * 0.35),
+        rate: 30
+      };
+      if(!S.pets) S.pets = [];
+      S.pets.push(petObj);
+      if(!S.actPet) S.actPet = petObj.id;
+      toast(`🎉 Bắt thành công Ma Thú: ${petObj.n}!`);
+      snd('up');
+      mob = null;
+      spawn();
+    } else {
+      toast('Bắt thất bại! Ma Thú đã giãy giụa thoát khỏi lồng.');
+    }
+    syncTab();
+  }
+  else if(a=='evopet'){
+    const p = S.pets.find(x=>x.id==+v);
+    if(!p) return;
+    if(p.q >= 6) return toast('Ma thú đã đạt cảnh giới cao nhất (Thần Giai)!');
+    const reqLv = 5 + p.q * 5;
+    if(p.lv < reqLv) return toast(`Cần đạt Lv.${reqLv} để tiến giai!`);
+    const costTgd = 1, costTvh = p.q;
+    if((S.pl['tgd']||0) < costTgd || (S.mat['tvh']||0) < costTvh) {
+        return toast(`Thiếu nguyên liệu! Yêu cầu: ${costTgd} Tiến Giai Đan, ${costTvh} Thú Vương Huyết.`);
+    }
+    const rate = Math.max(10, 100 - p.q * 15);
+    const nxtQ = p.q + 1;
+    const cls = nxtQ >= 6 ? 'rb-txt' : 'txt-q' + Math.min(5, nxtQ);
+    const ov = $('ov'); ov.hidden = false;
+    ov.innerHTML = `<div class="box">
+        <b>🔥 Tiến Giai Ma Thú: <span class="${cls}">${p.n}</span></b>
+        <p>Tiến giai lên <b>${QN[nxtQ]} Giai</b>. Tỷ lệ thành công: <b>${rate}%</b>.</p>
+        <p>Tiêu hao: <b>${costTgd}</b> Tiến Giai Đan, <b>${costTvh}</b> Thú Vương Huyết.</p>
+        <small style="color:var(--mut)">Thất bại sẽ mất nguyên liệu, ma thú không bị giáng cấp.</small>
+        <div style="margin-top:12px; display:flex; gap:6px;">
+            <button class="pri" data-a="do_evo" data-v="${p.id}">Tiến Hành Khai Mở Huyết Mạch</button>
+            <button data-a="clsov">Hủy Bỏ</button>
+        </div>
+    </div>`;
+  }
+  else if(a=='do_evo'){
+    const p = S.pets.find(x=>x.id==+v);
+    $('ov').hidden = true;
+    if(!p) return;
+    const costTgd = 1, costTvh = p.q;
+    if((S.pl['tgd']||0) < costTgd || (S.mat['tvh']||0) < costTvh) return toast('Không đủ nguyên liệu!');
+    S.pl['tgd'] -= costTgd; S.mat['tvh'] -= costTvh;
+    const rate = Math.max(10, 100 - p.q * 15);
+    if(Math.random() * 100 < rate) {
+        p.q++;
+        p.atk = Math.round(p.atk * 1.8);
+        p.hp = Math.round(p.hp * 1.8);
+        p.rate = Math.min(80, p.rate + 5);
+        toast(`🎉 Chúc mừng! Ma thú ${p.n} đã đột phá lên ${QN[p.q]} Giai!`);
+        snd('up');
+        if (p.q === 6) flash();
+    } else {
+        toast('Tiến giai thất bại! Nguyên liệu đã hóa thành tro bụi.');
+    }
+    syncTab();
+  }
+  else if(a=='craft'){
+    const r=RC.find(x=>x.id==v),F=Object.keys(S.fire).length;
+    if(!S.recipes[r.id])toast('Chưa có Đan Phương, không thể luyện!');
+    else if(r.fire&&!F)toast('Cần sở hữu Dị Hỏa mới có thể luyện đan này');
+    else if(S.gold<r.c||Object.keys(r.need).some(k=>(S.mat[k]||0)<r.need[k]))toast('Thiếu dược liệu hoặc kim tệ');
+    else{
+      S.gold-=r.c;for(const k in r.need)S.mat[k]-=r.need[k];S.al++;
+      chkSide('craft_pill',r.id,1);
+      chkSide('craft_any',null,1);
+      if(Math.random()*100<crate(r)){
+        const fine=r.fx&&Math.random()<.12+S.al*.004+ex().lk/400,id=r.id+(fine?'*':'');
+        S.pl[id]=(S.pl[id]||0)+1;
+        
+        // Bật hiệu ứng Đan dược bậc cao (Ngũ Phẩm trở lên tương đương g >= 4)
+        if (r.g >= 4) {
+            epicCraftFx(r.g, r.n, fine);
+        } else {
+            toast('Luyện thành công'+(fine?' (Thượng phẩm!)':'')+': '+r.n);
+            snd('craft');
+        }
+
+        const q=Q[S.qi];if(S.qs=='active'&&q.goal.t=='craft'){S.pr++;chk()}
+      }else toast('Luyện đan thất bại! Đan dược hóa tro tàn');
+      syncTab();
+    }
+  }
+  else if(a=='use'){
+    const fine=v.endsWith('*'),r=RC.find(x=>x.id==v.replace('*','')),m=fine?1.3:1;
+    if(S.pl[v]>0&&r.fx){
+      S.pl[v]--;
+      if(r.fx=='cl'){S.tox=0;toast('Đã thanh lọc toàn bộ đan độc!')}
+      else{
+        S.tox=Math.min(100,(S.tox||0)+(r.tx||0));
+        if(r.fx=='hp')php=Math.min(st().h,php+st().h*r.v*m/100);
+        else{
+          const b=S.bf[r.fx],k=r.stk||1;
+          if(b&&b.id==r.id){if(b.n<k){b.n++;b.v=r.v*m*b.n}b.t=r.dur}
+          else S.bf[r.fx]={id:r.id,v:r.v*m,t:r.dur,n:1};
+        }
+      }
+      syncTab();
+    }
+  }
+  else if(a=='buy'){if(S.gold>=30){S.gold-=30;S.pots++;snd('drop');syncTab();}else toast('Không đủ kim tệ')}
+  else if(a=='eq'){
+    const i=S.inv.findIndex(x=>x.id==v);if(i<0)return;
+    const it=S.inv[i];
+    const ov=$('ov');ov.hidden=false;
+    ov.innerHTML=`<div class="box">
+      <div>${itip(it)}</div>
+      <div style="display:flex;gap:6px;margin-top:12px;flex-wrap:wrap">
+        <button class="pri" data-a="wearit" data-v="${it.id}">Mặc vào</button>
+        <button data-a="lockit" data-v="${it.id}">${it.lock?'Mở Khóa 🔓':'Khóa 🔒'}</button>
+        <button data-a="sellone" data-v="${it.id}" style="color:var(--hp)">Bán (${val(it)}🪙)</button>
+        <button data-a="clsov">Đóng</button>
+      </div>
+    </div>`;
+    return;
+  }
+  else if(a=='auto_eq'){
+    let changed = false;
+    let tempInv = [...S.inv];
+    for(let slot of SLS.split('')) {
+        let currentEq = S.gear[slot];
+        let bestScore = currentEq ? sc(currentEq) : -1;
+        let bestIndex = -1;
+        for(let i=0; i<tempInv.length; i++) {
+            let it = tempInv[i];
+            if(it.s === slot && !it.lock) {
+                let itScore = sc(it);
+                if(itScore > bestScore) {
+                    bestScore = itScore;
+                    bestIndex = i;
+                }
+            }
+        }
+        if(bestIndex !== -1) {
+            let newEq = tempInv.splice(bestIndex, 1)[0];
+            if(currentEq) tempInv.push(currentEq); 
+            S.gear[slot] = newEq;
+            changed = true;
+        }
+    }
+    if(changed) {
+        S.inv = tempInv;
+        toast('Đã tự động thay trang bị tốt nhất!');
+        snd('drop');
+        syncTab();
+    } else {
+        toast('Không có trang bị nào mạnh hơn trong Nạp Giới.');
+    }
+  }
+  else if(a=='wearit'){
+    const i=S.inv.findIndex(x=>x.id==v);
+    if(i>=0){
+      const it=S.inv[i],cu=S.gear[it.s];
+      S.inv.splice(i,1);if(cu)S.inv.push(cu);S.gear[it.s]=it;snd('drop');
+    }
+    $('ov').hidden=true; syncTab();
+  }
+  else if(a=='lockit'){
+    const it=S.inv.find(x=>x.id==v)||Object.values(S.gear).find(x=>x&&x.id==v)||(S.afkStash||[]).find(x=>x.id==v);
+    if(it){it.lock=it.lock?0:1;toast(it.lock?'Đã khóa trang bị 🔒':'Đã mở khóa 🔓');syncTab();}
+    $('ov').hidden=true;
+  }
+  else if(a=='sellone'){
+    const i=S.inv.findIndex(x=>x.id==v);
+    if(i>=0){
+      const it=S.inv[i];if(it.lock)return toast('Trang bị đang khóa!');
+      S.inv.splice(i,1);S.gold+=val(it);snd('drop');
+    }
+    $('ov').hidden=true; syncTab();
+  }
+  else if(a=='enh'){
+    const it=S.gear[v],c=ec(it);
+    if(S.gold>=c){S.gold-=c;it.e++;chkSide('enh_gear',null,1);snd('up');syncTab();}else toast('Không đủ kim tệ')
+  }
+  else if(a=='sellall_confirm'){
+    const sellables=S.inv.filter(x=>!x.lock);
+    if(!sellables.length)return toast('Nạp Giới không có trang bị nào chưa khóa để bán!');
+    const totalG=sellables.reduce((acc,x)=>acc+val(x),0);
+    const ov=$('ov');ov.hidden=false;
+    ov.innerHTML=`<div class="box">
+      <b>Xác nhận Bán Tất Cả trong Nạp Giới?</b>
+      <p>Sẽ bán toàn bộ <b>${sellables.length} trang bị</b> chưa khóa trong Nạp Giới.<br>
+      <small style="color:var(--mut)">* Đồ đang mặc trên người và đồ đã Khóa 🔒 sẽ được giữ lại an toàn.</small><br>
+      Tổng kim tệ thu về: <b>+${totalG}🪙</b> Kim tệ.</p>
+      <div style="display:flex;gap:8px;margin-top:12px">
+        <button class="pri" data-a="do_sellall" style="background:var(--hp)">Đồng ý Bán Hết</button>
+        <button data-a="clsov">Hủy Bỏ</button>
+      </div>
+    </div>`;
+    return;
+  }
+  else if(a=='do_sellall'){
+    let gold=0,cnt=0;
+    S.inv=S.inv.filter(it=>{if(it.lock)return true;cnt++;gold+=val(it);return false});
+    S.gold+=gold;toast(`Đã bán ${cnt} trang bị, thu về +${gold}🪙!`);snd('drop');
+    $('ov').hidden=true; syncTab();
+  }
+  else if(a=='openstash'){
+    const ov=$('ov');ov.hidden=false;
+    ov.innerHTML=`<div class="box">
+      <b>📦 Rương Bế Quan (${(S.afkStash||[]).length}/${stashC()})</b>
+      <div class="inv" style="max-height:220px;overflow-y:auto">${(S.afkStash||[]).map(it=>`<div class="it q-${it.q}" data-tip="${itip(it)}" style="border-color:${QC?.[it.q]||'#8a8a8a'}" data-a="takeit" data-v="${it.id}">${it.lock?'<span class="lk-icon">🔒</span>':''}${IC[it.s]}<small>${it.n}</small></div>`).join('')}</div>
+      <div style="display:flex;gap:6px;margin-top:12px;flex-wrap:wrap">
+        <button class="pri" data-a="takeall">Nhận hết vào Nạp Giới</button>
+        <button data-a="up_stash">Mở rộng Rương (+10 ô) ${500*((S.sbg||0)+1)**2}🪙</button>
+        <button data-a="clsov">Đóng</button>
+      </div>
+    </div>`;
+    return;
+  }
+  else if(a=='takeit'){
+    const idx=S.afkStash.findIndex(x=>x.id==v);
+    if(idx>=0){
+      if(S.inv.length>=bagC())return toast('Nạp Giới đã đầy');
+      const it=S.afkStash.splice(idx,1)[0];S.inv.push(it);toast('Đã nhận: '+it.n);snd('drop');
+    }
+    $('ov').hidden=true; syncTab();
+  }
+  else if(a=='takeall'){
+    let cnt=0;while(S.afkStash.length&&S.inv.length<bagC()){S.inv.push(S.afkStash.shift());cnt++}
+    toast(`Đã nhận ${cnt} món vào Nạp Giới`);$('ov').hidden=true; syncTab();
+  }
+  else if(a=='callpet'){S.actPet=+v;toast('Đã chọn Ma Thú xuất chiến!');syncTab();}
+  else if(a=='unpet'){S.actPet=null;toast('Đã thu hồi Ma Thú');syncTab();}
+  else if(a=='feedpet'){
+    const p=S.pets.find(x=>x.id==+v);
+    if((S.mat['mahach']||0)>=1){
+      S.mat['mahach']--;p.exp+=50;chkSide('feed_pet',null,1);toast(`Đã cho ${p.n} ăn Ma Hạch (+50 EXP)!`);
+      if(p.exp>=p.maxExp&&p.lv<(5+p.q*15)){p.lv++;p.exp=0;p.maxExp=Math.round(p.maxExp*1.35);p.atk=Math.round(p.atk*1.15);p.hp=Math.round(p.hp*1.15);toast(`🐾 Ma Thú ${p.n} thăng cấp Lv.${p.lv}!`);snd('up');}
+      syncTab();
+    }else toast('Không đủ Ma Hạch để nuôi Ma Thú!');
+  }
+  else if(a=='ref_daily'){
+    if(S.gold>=500){
+      S.gold-=500;
+      genDailyQuests();
+      S.actPoint=0;
+      S.actClaimed=0;
+      toast('Đã làm mới nhiệm vụ và phần thưởng hằng ngày!');
+      syncTab();
+    }else toast('Không đủ kim tệ!');
+  }
+  else if(a=='claim_act'){
+    if((S.actPoint||0)>=100&&!S.actClaimed){
+      S.actClaimed=1;S.gold+=5000;S.cages=(S.cages||0)+2;S.mat['mahach']=(S.mat['mahach']||0)+5;
+      toast('Nhận thưởng rương năng động thành công!');snd('up');syncTab();
+    }
+  }
+else if(a=='adm'){
+    if(v=='gold'){S.gold+=100000;toast('Admin: +100,000 Kim tệ!')}
+    else if(v=='exp'){addExp(500000);toast('Admin: +500,000 Đấu khí!')}
+    else if(v=='lvup'){S.L=Math.min(cap(),S.L+9);php=st().h;toast('Admin: Đã lên cấp '+lv(S.L))}
+    else if(v=='mat'){Object.keys(MT).forEach(k=>S.mat[k]=99);S.mat['mahach']=99;S.mat['thudan']=99;toast('Admin: Nhận x99 toàn bộ dược thảo!')}
+    else if(v=='rec'){
+      // Đảm bảo quét sạch toàn bộ mảng RC (Bao gồm Bát Phẩm và Cửu Phẩm ở Chương 3)
+      RC.forEach(r=>S.recipes[r.id]=1);
+      toast('Admin: Mở khóa TOÀN BỘ Đan Phương (Bao gồm Bát Phẩm & Cửu Phẩm)!')
+    }
+    else if(v=='fire'){
+      // Vòng lặp thu phục trọn vẹn 23 Dị Hỏa thay vì chỉ 2 loại
+      G.ALL_FIRES.forEach(f=>S.fire[f.id]=1);
+      toast('Admin: Hấp thụ thành công trọn bộ 23 loại Dị Hỏa!')
+    }
+    else if(v=='pet'){
+      const p={id:S.uid++,n:'Cửu Thải Thôn Thiên Mãng',q:6,lv:35,exp:0,maxExp:1500,atk:1000,hp:6000,rate:65};
+      S.pets.push(p);S.actPet=p.id;toast('Admin: Nhận Thần Thú Cầu Vồng Thôn Thiên Mãng!');
+    }
+    else if(v=='petitems'){
+      S.pl['tgd'] = (S.pl['tgd']||0) + 10;
+      S.mat['tvh'] = (S.mat['tvh']||0) + 10;
+      S.cages = (S.cages||0) + 10;
+      toast('Admin: Nhận x10 Lồng, Thú Vương Huyết, Tiến Giai Đan!');
+    }
+    else if(v=='thien'){give(gen(14,'w',4));toast('Admin: Nhận Vũ Khí Thiên Giai Bậc 14!')}
+    else if(v=='skipq'){
+      const q=Q[S.qi];if(q){S.qs='ready';claim();toast('Admin: Bỏ qua nhiệm vụ tức thì!')}
+    }
+    else if(v=='heal'){php=st().h;pmp=st().m;S.tox=0;toast('Admin: Đầy Máu & Nội lực, sạch đan độc!')}
+    syncTab();return;
+  }
+  else if(a=='sys_save'){
+      const data = JSON.stringify(S);
+      const blob = new Blob([data], {type: 'application/json'});
+      const url = URL.createObjectURL(blob);
+      const aTag = document.createElement('a');
+      aTag.href = url;
+      aTag.download = `DauPhaSave_${lv(S.L).replace(/ /g,'_')}_${new Date().getTime()}.json`;
+      document.body.appendChild(aTag);
+      aTag.click();
+      document.body.removeChild(aTag);
+      URL.revokeObjectURL(url);
+      toast('💾 Đã xuất file save về máy!');
+  }
+  else if(a=='sys_load'){
+      const input = document.getElementById('load_file');
+      input.onchange = e => {
+          const file = e.target.files[0];
+          if(!file) return;
+          const reader = new FileReader();
+          reader.onload = ev => {
+              try {
+                  const parsed = JSON.parse(ev.target.result);
+                  if(!parsed || typeof parsed.gold !== 'number' || typeof parsed.L !== 'number') throw new Error('File không hợp lệ');
+                  if(confirm('⚠️ CẢNH BÁO: Quá trình này sẽ GHI ĐÈ và xóa mất nhân vật hiện tại của bạn. Chắc chắn muốn tiếp tục?')) {
+                      S = Object.assign(newS(), parsed);
+                      localStorage.setItem(SAVE, JSON.stringify(S));
+                      tab = 'fight'; mob = null; spawn(); 
+                      toast('📂 Tải file save thành công!');
+                      draw();
+                  }
+              } catch(err) { alert('❌ File save không hợp lệ!'); }
+          };
+          reader.readAsText(file);
+          input.value = ''; 
+      };
+      input.click();
+  }
+  else if(a=='sys_del'){
+      if(confirm('🗑️ BẠN CÓ CHẮC CHẮN MUỐN XÓA TOÀN BỘ DỮ LIỆU?\n(Mọi tiến trình, Đấu Khí, Dị Hỏa, Ma Thú sẽ bị xóa sạch hoàn toàn)')){
+          localStorage.removeItem(SAVE);
+          localStorage.clear();
+          sessionStorage.clear();
+          S = newS(); // Cưỡng ép ghi đè RAM về trạng thái sơ khởi
+          save(); // Lưu đè cái sạch lên localStorage trước khi reload
+          window.location.replace(window.location.pathname); // Tải lại trang triệt để
+      }
+      return;
+  }
+  save();
+});
+
+// Tooltip (Hover) bám chuột
+const TP=()=>$('tp');
+document.addEventListener('mousemove', e => {
+  const t = e.target.closest('[data-tip]');
+  const btn = e.target.closest('button');
+  const tp = TP();
+
+  // Khử nhiễu: Nếu trỏ vào vùng nút không có tooltip, thì tắt
+  if (t && (!btn || btn === t)) {
+    if (tp.innerHTML !== t.dataset.tip) tp.innerHTML = t.dataset.tip;
+    tp.hidden = false;
+    let x = e.clientX + 15;
+    let y = e.clientY + 15;
+    if (x + tp.offsetWidth > window.innerWidth) x = e.clientX - tp.offsetWidth - 10;
+    if (y + tp.offsetHeight > window.innerHeight) y = e.clientY - tp.offsetHeight - 10;
+    tp.style.left = x + 'px';
+    tp.style.top = y + 'px';
+  } else {
+    tp.hidden = true;
+  }
+});
+
+G.start=()=>{
+  Q=G.ch.flatMap(c=>(c.quests||[]).map(q=>({...q,ch:c.name,cid:c.id})));
+  Z=G.ch.flatMap(c=>c.zones||[]);
+  SETS=G.ch.flatMap(c=>c.sets||[]);
+  FR={};G.ALL_FIRES.forEach(f=>FR[f.id]=f);
+  SK={};G.ch.forEach(c=>(c.skills||[]).forEach(k=>SK[k.id]=k));
+  RC=G.ch.flatMap(c=>c.recipes||[]);
+  MT=Object.assign({},...G.ch.map(c=>c.mats||{}));
+  M={};G.ch.forEach(c=>(c.mobs||[]).forEach(m=>M[m.id]=m));
+  P=Object.assign({},...G.ch.map(c=>c.perks||{}));
+  try{S=Object.assign(newS(),JSON.parse(localStorage.getItem(SAVE)))}catch(e){S=newS()}
+  if(!S.recipes)S.recipes={hq:1,tkt:1,tcl:1};
+  if(!S.storyLog)S.storyLog=[];
+  if(!S.afkStash)S.afkStash=[];
+  if(!S.pets)S.pets=[];
+  if(!S.sideDone)S.sideDone={};
+  if(!S.sidePr)S.sidePr={};
+  if(!S.cursor)S.cursor='default';
+  setCursor(S.cursor);
+  checkDailyReset();
+  php=st().h;pmp=st().m;spawn();draw();begin();checkAfk();
+  setInterval(tick,800);setInterval(save,10000);
+};
+})();
+</script>
+
+<!-- ========================================================== -->
+<!-- 4. KHU VỰC MA THÚ & DỊ HỎA TRỌN BỘ (MODULES)               -->
+<!-- ========================================================== -->
+<script id="pet_fire_module">
+(()=>{
+const mk=G.mk;
+G.addChapter({
+  id:'pet_zone',order:99,cap:99,name:'Khu Vực Ma Thú',
+  mats:{
+    mahach:{n:'Ma Hạch',g:2,d:'Tinh hoa năng lượng ngưng tụ trong đầu ma thú, dùng để nuôi thú cưng.',drop:'Vạn Thú Cốc'},
+    thudan:{n:'Thú Linh Đan',g:3,d:'Linh đan ngưng kết từ huyết nhục ma thú, tăng mạnh tu vi Ma Thú.',drop:'Vạn Thú Cốc'},
+    tvh:{n:'Thú Vương Huyết',g:4,d:'Huyết mạch tinh thuần của Ma Thú Vương, dùng làm nguyên liệu kích phát tiến giai.',drop:'Vạn Thú Cốc (Tỷ lệ cực hiếm)'}
+  },
+  recipes:[
+    // Tiến Giai Đan đổi sang Tứ Phẩm (g:3)
+    {id:'tgd',n:'Tiến Giai Đan',g:3,d:'Đan dược đả thông huyết mạch, giúp Ma Thú tiến hóa tăng cấp phẩm giai.',need:{mahach:8,thudan:3,tvh:1},c:8000,s:50,pc:1,fire:1}
+  ],
+  mobs:[
+    mk('vt_tho','Bạo Tẩu Phong Thố','🐇',5,1.0),
+    mk('vt_ho','Huyết Sí Dực Điểu','🦅',15,1.1),
+    mk('vt_ngac','Thiết Giáp Ngạc Vương','🐊',25,1.3),
+    mk('vt_lang','U Minh Lang Hoàng','🐺',35,1.4),
+    mk('vt_su','Tử Tinh Dực Sư Vương (Ấu)','🦁',48,1.7,1),
+    mk('vt_long','Hư Không Cổ Long Ma Ảnh','🐉',60,2.1,1)
+  ],
+  zones:[
+    {id:'vanthu',mat:'mahach',n:'Vạn Thú Cốc (Săn Ma Thú)',t:8,mobs:['vt_tho','vt_ho','vt_ngac','vt_lang','vt_su','vt_long']}
+  ]
+});
+})();
+</script>
+
+<!-- ========================================================== -->
+<!-- 5. CHƯƠNG 1: TAM ĐOẠN PHẾ VẬT (Ô THẢN THÀNH)               -->
+<!-- ========================================================== -->
+<script id="chapter1">
+(()=>{
+const mk = G.mk, X = G.X, V = 'Tiêu Viêm', D = 'Dược Lão';
+const q=(id,t,d,goal,intro,outro,rw)=>({id,t,d,goal,intro,outro,rw});
+
+const S1=[['Tiêu Gia Hộ Thể',1],['Hậu Sơn Liệp Nhân',1],['Diễn Võ Tân Binh',1],['Ô Thản Thành Vệ',2],['Hắc Bang Truy Kích',2],['Rừng Ngoại Ô Du Hiệp',2],['Ma Sơn Dũng Sĩ',3],['Phong Lang Khải',3],['Huyết Hổ Chiến Y',3],['Thú Vương Chiến Giáp',4]];
+
+G.addChapter({
+id:'c1',order:1,cap:17,name:'Chương 1 · Tam Đoạn Phế Vật',
+sets:S1.map(a=>({n:a[0],t:a[1]})),
+perks:{
+  phanquyet:{
+    n:'Phần Quyết',cf:1,
+    st: Array.from({length: 24}).map((_, i) => {
+      const tiers = ['Hoàng Giai Đê Cấp','Huyền Giai Đê Cấp','Huyền Giai Trung Cấp','Huyền Giai Cao Cấp','Địa Giai Đê Cấp','Địa Giai Trung Cấp','Địa Giai Cao Cấp','Thiên Giai Đê Cấp','Thiên Giai Trung Cấp','Thiên Giai Cao Cấp'];
+      let tName = i === 0 ? tiers[0] : i >= 23 ? 'Thần Giai (Đấu Đế Công Pháp)' : tiers[Math.min(9, Math.floor((i+1)/2.5))];
+      return {
+          n: tName,
+          d: i === 0 ? 'Công pháp căn bản, chưa nuốt Dị hỏa.' : `Đã dung hợp ${i} Dị hỏa. Cắn nuốt thiên địa, uy lực nghịch thiên!`,
+          exp: +(1.2 + i * 1.0).toFixed(1), // EXP vọt x24 ở max
+          atk: +(1.0 + i * 0.6).toFixed(1), // Công x14.8 ở max
+          hp: +(1.0 + i * 0.45).toFixed(1), // Máu x11.3 ở max
+          cr: i * 2.5,     // Bạo kích
+          cd: i * 15,      // Bạo thương khủng
+          ls: i * 2,       // Hút máu
+          fd: i * 25,      // Hỏa sát bá đạo
+          pn: Math.min(80, i * 4), // Xuyên giáp (max 80)
+          kn: Math.min(50, i * 2.5), // MỚI: Kháng sát thương tổng hợp (max 50%)
+          ds: Math.min(30, i * 1.5), // MỚI: Né tránh (max 30%)
+          rg: i * 1.2,     // MỚI: Hồi phục sinh lực tự động mỗi nhịp
+          mg: i * 0.6      // MỚI: Hồi nội lực đấu khí dùng chiêu liên tục
+      };
+    })
+  },
+  luyen:{n:'Luyện Dược Thuật',d:'Hiệu lực đan dược hồi phục +50%',heal:1.5},
+  batcuc:{n:'Đấu Kỹ: Bát Cực Băng',d:'Sát thương công kích +25%',atk:1.25}
+},
+skills:[{id:'dkq',n:'Đấu Khí Quyền',g:0,mp:12,m:2.2,t:'d',u:60},{id:'bato',n:'Phá Thạch Chưởng',g:0,mp:18,m:3,cd:2,t:'d',u:100},{id:'ptc',n:'Liệt Hỏa Chưởng',g:1,mp:26,m:2.5,t:'dot',cd:3,u:200},{id:'hxq',n:'Hồi Xuân Quyết',g:1,mp:25,m:.3,t:'h',cd:5,u:200},{id:'bcb',n:'Bát Cực Băng',g:2,mp:34,m:4.5,cd:3,t:'d',u:400},{id:'hdn',n:'Hộ Thể Đấu Khí',g:0,mp:20,m:.35,cd:8,t:'sh',u:80}],
+mats:{
+  tt:{n:'Thanh Tâm Thảo',g:0,d:'Thảo dược thanh nhiệt, ngưng thần tích khí.',drop:'Diễn Võ Trường, Hậu Sơn Tiêu Gia'},
+  xd:{n:'Xà Đảm',g:1,d:'Túi mật rắn độc, dùng luyện chế các loại đan trợ lực.',drop:'Rừng Ngoại Ô, Phố Ô Thản'},
+  pl:{n:'Phong Linh Thảo',g:2,d:'Hấp thu linh khí của gió, hỗ trợ tăng tốc độ và thân pháp.',drop:'Ngoại vi Ma Thú Sơn Mạch'},
+  hv:{n:'Huyết Vân Thảo',g:2,d:'Thảo dược đỏ như máu tươi, ngưng tụ sinh mệnh lực mạnh mẽ.',drop:'Nội vi Ma Thú Sơn Mạch, Hang Thú Vương'}
+},
+recipes:[
+  {id:'tcl',n:'Trúc Cơ Linh Dịch',g:0,d:'Dược dịch tôi thể trứ danh, tăng 100% đấu khí và giải bớt độc',need:{tt:2},c:15,s:90,fx:'xp',v:100,dur:200,tx:0},
+  {id:'hq',n:'Hồi Huyết Đan',g:0,d:'Hồi phục 70% máu tối đa ngay lập tức',need:{tt:3},c:20,s:80,fx:'hp',v:70,tx:3},
+  {id:'tkt',n:'Tụ Khí Tán',g:1,d:'Gia tăng 50% đấu khí thu được',need:{tt:2,xd:2},c:40,s:70,fx:'xp',v:50,dur:250,stk:1,tx:6},
+  {id:'btd',n:'Băng Tâm Đan',g:1,d:'Tâm thần thanh tịnh, tăng 35% kháng choáng và kháng độc',need:{tt:3,xd:1},c:70,s:65,fx:'kc',v:35,dur:250,stk:1,tx:2},
+  {id:'cth',n:'Cường Thể Đan',g:2,d:'Công kích +15% mỗi tầng (cộng dồn 3 lần)',need:{xd:3,pl:1},c:80,s:60,fx:'at',v:15,dur:250,stk:3,tx:9},
+  {id:'vkd',n:'Vận Khí Đan',g:2,d:'Tăng 30 điểm May Mắn',need:{pl:2,hv:1},c:200,s:55,fx:'lk',v:30,dur:300,stk:1,tx:5},
+  {id:'tdd',n:'Thanh Tâm Đan',g:2,d:'Kháng tính giảm sát thương +10% mỗi tầng',need:{hv:2},c:300,s:55,fx:'kn',v:10,dur:300,stk:2,tx:6},
+  {id:'pc0',n:'Phá Đoạn Đan',g:0,d:'Đan dược ắt có để đột phá Đấu Chi Khí 9 đoạn lên Đấu Giả',need:{tt:4,xd:3},c:300,s:60,pc:1},
+  {id:'pc1',n:'Phá Giả Đan',g:1,d:'Đan dược ắt có để đột phá Đấu Giả 9 tinh lên Đấu Sư',need:{pl:3,hv:3},c:1500,s:45,pc:1}
+],
+mobs:[mk('moc','Mộc Nhân Thử Lực','🪵',2,.6),mk('lang','Dã Lang Rừng Núi','🐺',3,.9),mk('xa','Thanh Văn Độc Xà','🐍',4,1),mk('hung','Thiết Giáp Cuồng Hùng','🐻',6,1.1),mk('bang','Hắc Bang Côn Đồ','🥷',7,1.1),mk('ninh','Đại Thiếu Gia · Tiêu Ninh','🥋',9,1.6,1),mk('plang','Phong Lang Tốc Độ','🐺',10,1.1),mk('htrung','Hắc Giáp Trùng Biển Ma','🪲',11,1.2),mk('huyet','Huyết Văn Bạo Hổ','🐯',13,1.2),mk('kim','Tam Nhãn Kim Cương Viên','🦍',14,1.3),mk('vong','Tam Đầu Hắc Giáp Thú Vương','🦏',15,1.7,1)],
+zones:[
+  {id:'dvt',mat:'tt',n:'Diễn Võ Trường',t:1,mobs:['moc']},
+  {id:'hs',mat:'tt',n:'Hậu Sơn Tiêu Gia',t:1,req:'q1',mobs:['lang','xa']},
+  {id:'ngoai',mat:'xd',n:'Rừng Ngoại Ô',t:2,req:'q3',mobs:['xa','hung']},
+  {id:'pt',mat:'xd',n:'Phố Ô Thản Thành',t:2,req:'q3',mobs:['bang']},
+  {id:'tt',n:'Tộc Thí Đài',t:2,req:'q10',mobs:['ninh']},
+  {id:'ms',mat:'pl',n:'Ma Thú Sơn Mạch · Ngoại Vi',t:3,req:'q11',mobs:['plang','htrung']},
+  {id:'nv',mat:'hv',n:'Ma Thú Sơn Mạch · Nội Vi',t:3,req:'q14',mobs:['huyet','kim']},
+  {id:'vv',mat:'hv',n:'Hang Thú Vương',t:4,req:'q17',mobs:['vong']}
+],
+quests:[
+q('q1','Kiểm Định Đấu Khí','Ra Diễn Võ Trường, đánh 10 Mộc Nhân thử quyền.',{t:'kill',m:'moc',n:10},[['','Ô Thản Thành, Tiêu gia. Tiếng người huyên náo bên bia đá trắc nghiệm.'],['Trắc Nghiệm Viên','Tiêu Viêm... Đấu Chi Khí: Tam Đoạn! Cấp bậc: Hạ đẳng!'],['Tộc nhân','Ha ha, thiên tài ngày xưa nay đúng thật chỉ là một tên phế vật.'],[V,'(Mười năm trước ta vang danh toàn thành, ba năm nay đấu khí lại không cánh mà bay... Không cam lòng!)']],[['V','Mộc nhân không biết nhạo báng. Nắm đấm này ta nhất định phải luyện lại!']],{gold:50,exp:X(2),pots:2}),
+q('q2','Bí Mật Chiếc Nhẫn Đen','Lên Hậu Sơn Tiêu Gia tu luyện, săn 15 Dã Lang.',{t:'kill',m:'lang',n:15},[['','Đêm khuya thanh vắng, Tiêu Viêm một mình ngồi trên đỉnh núi ngắm trăng sao.'],[V,'Chiếc nhẫn mẫu thân để lại... vì sao mỗi lần ta tụ khí nó đều hút sạch không còn một giọt?']],[['','Một làn khói trắng bay ra từ chiếc nhẫn, hóa thành một lão giả râu tóc bạc phơ.'],[D,'Khà khà, tiểu tử, ba năm qua nhờ có đấu khí của ngươi tẩm bổ mà linh hồn ta mới hồi phục được.'],[V,'Tên khốn kiếp! Ngươi hại ta trở thành trò cười cho thiên hạ suốt ba năm!'],[D,'Bái ta làm sư phụ, ta sẽ đền bù cho ngươi gấp trăm lần!']],{gold:90,exp:X(3),fl:'phanquyet',item:{s:'w',t:1,q:1}}),
+q('q3','Trúc Cơ Ngâm Thể','Luyện 2 bình Trúc Cơ Linh Dịch tôi rèn kinh mạch.',{t:'craft',n:2},[[D,'Ngươi thân thể suy nhược, phải ngâm Trúc Cơ Linh Dịch mới bù đắp được ba năm hao tổn. Bắt tay luyện chế đi!']],[[V,'Toàn thân ấm áp, kinh mạch được tẩy trừ tạp chất, sảng khoái vô cùng!']],{gold:100,exp:X(3),rec:'btd',pots:3}),
+q('q4','Đấu Giá Hội Mễ Đặc Nhĩ','Vào phố Ô Thản hạ 12 Hắc Bang Côn Đồ, mang Trúc Cơ Linh Dịch đi bán.',{t:'kill',m:'bang',n:12},[['','Phòng đấu giá Mễ Đặc Nhĩ. Nữ tổng quản Nhã Phi kiều diễm tuyệt trần tiếp đón hắc bào thần bí.'],['Nhã Phi','Dược dịch thần kỳ bực này quả là tác phẩm của Luyện Dược Đại Sư, Mễ Đặc Nhĩ chúng ta xin nhận đấu giá!']],[['V','Có tiền tài mua dược liệu rồi, Dược Lão quả nhiên không lừa ta!']],{gold:180,exp:X(4),pots:3}),
+q('q5','Nhập Môn Phần Quyết','Vận chuyển Phần Quyết, đạt Đấu Chi Khí 5 đoạn.',{t:'lv',v:4},[[D,'Phần Quyết là kỳ công cái thế, muốn tiến hóa phải nuốt Dị Hỏa. Cứ vững vàng đắp móng trước đã.']],[[V,'Kinh mạch ấm áp, tốc độ hấp thu đấu khí đã nhanh hơn gấp đôi!']],{gold:120,exp:X(4),pots:3}),
+q('q6','Thu Thập Xà Đảm','Hạ 15 Thanh Văn Độc Xà gom nguyên liệu luyện đan.',{t:'kill',m:'xa',n:15},[[D,'Muốn học luyện đan thì tay chân phải nhanh nhẹn. Đi lấy độc đảm Thanh Văn Xà về đây.']],[[D,'Tốt lắm! Độc đảm xanh biếc, hỏa hầu khống chế rất khá.']],{gold:150,exp:X(5),fl:'luyen',sk:'ptc'}),
+q('q7','Luyện Chế Tụ Khí Tán','Dùng dược thảo luyện thành 2 viên Tụ Khí Tán.',{t:'craft',n:2},[[D,'Luyện dược cần linh hồn cảm giác lực tinh vi. Ngươi hãy thử nhóm lửa đan lô.']],[[D,'Đan hương ngào ngạt, ngươi đích thực có thiên phú của Luyện Dược Sư!']],{gold:160,exp:X(5),pots:3}),
+q('q8','Đấu Chi Khí Bát Đoạn','Cố gắng khổ tu, đạt Đấu Chi Khí 8 đoạn.',{t:'lv',v:7},[[D,'Đấu khí ngưng tụ thành hình. Khí thế của ngươi đã bắt đầu lộ rõ rồi đó.']],[[V,'Tám đoạn! Ta đã bỏ xa đám tộc nhân cùng trang lứa!']],{gold:200,exp:X(7),pots:4}),
+q('q9','Nạp Lan Yên Nhiên Thối Hôn','Hạ 15 Hắc Bang Côn Đồ trong phố giải tỏa uất ức.',{t:'kill',m:'bang',n:15},[['','Đại sảnh Tiêu gia. Thiếu nữ kiêu kỳ khoác áo bào Vân Lam Tông ngạo nghễ bước vào.'],['Nạp Lan Yên Nhiên','Tiêu Viêm, ngươi là kẻ tàn phế không xứng với ta. Hôn ước này... hủy bỏ!'],[V,'Nạp Lan tiểu thư, hôm nay không phải ngươi hưu ta, mà là ta Tiêu Viêm hưu chi!'],[V,'Ba mươi năm Hà Đông, ba mươi năm Hà Tây, đừng khinh thiếu niên nghèo! Ba năm sau ta sẽ đích thân bước lên Vân Lam Tông!']],[['V','Ba năm chi ước... mối nhục hôm nay ta sẽ rửa sạch bằng nắm đấm!']],{gold:300,exp:X(8),rec:'cth',item:{s:'c',t:2,q:1}}),
+q('q10','Trở Lại Đấu Giả','Đạt Đấu Giả 1 tinh, ngưng tụ đấu khí lốc xoáy.',{t:'lv',v:9},[[D,'Đấu khí hóa thành vòng xoáy lốc xoáy trong đan điền. Đột phá Đấu Giả đi!']],[['','Khí xoáy thành hình! Tiêu Viêm chân chính trở lại cảnh giới Đấu Giả!']],{gold:350,exp:X(9),pots:5}),
+q('q11','Đại Náo Tộc Thí Đài','Đánh bại Tiêu Ninh trên lôi đài Tiêu Gia (Boss).',{t:'kill',m:'ninh',n:1},[['Tiêu Ninh','Tiêu Viêm! Huân Nhi muội muội không thuộc về ngươi, cút xuống lôi đài cho ta!']],[['Tiêu Ninh','Làm sao có thể... Thiết Sơn Quyền của ta sao lại thua một chưởng của hắn?'],['Tộc nhân','Tiêu Viêm... hắn thật sự đã trở lại thời kỳ hoàng kim!']],{gold:600,exp:X(9),item:{s:'w',t:3,q:2}}),
+q('q12','Tiến Vào Ma Thú Sơn Mạch','Hạ 20 Phong Lang Tốc Độ mở đường.',{t:'kill',m:'plang',n:20},[[D,'Ô Thản thành quá nhỏ bé. Muốn hóa rồng thì phải vào rừng sâu Ma Thú Sơn Mạch rèn luyện sinh tử.']],[[V,'Không khí tanh nồng mùi máu. Nơi này quả nhiên là địa ngục tu luyện!']],{gold:450,exp:X(11),pots:5}),
+q('q13','Gặp Gỡ Tiểu Y Tiên','Thu thập 15 Hắc Giáp Trùng bảo vệ đoàn hái thuốc.',{t:'kill',m:'htrung',n:15},[['','Thanh Sơn trấn. Tiêu Viêm tình cờ kết giao cùng thiếu nữ áo trắng thanh nhã Tiểu Y Tiên.'],['Tiểu Y Tiên','Ngươi cũng muốn vào sơn mạch hái thuốc sao? Đi cùng ta đi, ta biết một sơn động thần bí...']],[['V','Sơn động trên vách đá cheo leo, bên trong quả nhiên có bảo vật!']],{gold:500,exp:X(11),pots:4}),
+q('q14','Bát Cực Băng Nhập Môn','Đạt Đấu Giả 4 tinh, Dược Lão truyền trao Huyền giai đấu kỹ.',{t:'lv',v:12},[[D,'Bát Cực Băng: Cận chiến ám kình, quyền phát kình thấu xương tủy. Tiếp nhận khẩu quyết!']],[[V,'Quyền kình ẩn sâu tám tầng ám kình, uy lực kinh hồn!']],{gold:500,exp:X(12),fl:'batcuc',sk:'bcb'}),
+q('q15','Huyết Chiến Lang Đầu','Tiến vào nội vi, hạ 20 Huyết Văn Bạo Hổ.',{t:'kill',m:'huyet',n:20},[['','Lang Đầu Binh Đoàn đuổi giết đến sơn động hòng cướp đoạt Huyền Trọng Xích và Tử Vân Dực.'],[V,'Muốn cướp đồ của Tiêu Viêm ta? Đem mạng các ngươi ở lại đây!']],[['V','Đoàn trưởng Mục Xà đã đền tội, uy danh Ma Thú Sơn Mạch chấn động.']],{gold:700,exp:X(13),rec:'vkd',item:{s:'a',t:3,q:2}}),
+q('q16','Luyện Đan Vận Khí','Dùng Huyết Vân Thảo luyện 2 viên Vận Khí Đan.',{t:'craft',n:2},[[D,'Đan dược trung giai cần khống chế hỏa hầu cực chuẩn. Thử tài đi đồ nhi.']],[[V,'Đan dược thành hình, tỏa ra hào quang nhàn nhạt.']],{gold:600,exp:X(13),pots:4}),
+q('q17','Dấu Vết Thú Vương','Hạ 15 Tam Nhãn Kim Cương Viên dọn đường tới sào huyệt.',{t:'kill',m:'kim',n:15},[['','Mặt đất rung chuyển dữ dội. Thú Vương trong hang đang gầm thét thị uy.']],[[D,'Cẩn thận, con súc sinh này phòng ngự cực dày, phải dùng ám kình phá giáp!']],{gold:900,exp:X(14),pots:6}),
+q('q18','Trảm Sát Thú Vương','Đánh bại Tam Đầu Hắc Giáp Thú Vương (Đại Boss).',{t:'kill',m:'vong',n:1},[['','Thú Vương ba đầu toàn thân bọc giáp đen trồi lên từ lòng đất!']],[[V,'Phá cho ta! Bát Cực Băng ám kình bộc phát!'],['','Thú Vương ầm ầm gục ngã, máu tươi nhuộm đỏ đất rừng.']],{gold:1800,exp:X(15),rec:'pc1',item:{s:'c',t:4,q:3}}),
+q('q19','Đỉnh Phong Đấu Giả','Đạt Đấu Giả 9 tinh (cấp 17), hoàn thành Chương 1.',{t:'lv',v:17},[[D,'Khổ tu Ma Thú Sơn Mạch đã viên mãn. Phía trước là Gia Mã Đế Quốc rộng lớn, sẵn sàng chưa đồ nhi?'],[V,'Vân Lam Tông, Nạp Lan Yên Nhiên... Tiêu Viêm ta sắp đến rồi!']],[['','Hết Chương 1! Tiến vào Gia Mã Đế Quốc.']],{gold:2500,exp:0,pots:10})
+]});})();
+</script>
+
+<!-- ========================================================== -->
+<!-- 6. CHƯƠNG 2: GIA MÃ ĐẾ QUỐC & DỊ HỎA ĐẦU TIÊN              -->
+<!-- ========================================================== -->
+<script id="chapter2">
+(()=>{
+const mk = G.mk, X = G.X;
+const q=(id,t,d,goal,i,o,rw)=>({id,t,d,goal,intro:[['',i]],outro:[['',o]],rw});
+const S2=[['Gia Mã Cấm Vệ',5],['Mặc Gia Công Bộ',5],['Dược Sư Công Hội',5],['Thanh Liên Hỏa Y',6],['Địa Hỏa Chiến Phục',6],['Hắc Giác Sát Thủ',7],['Đấu Sư Chiến Bào',7],['Vân Lam Bảo Giáp',8],['Đấu Hoàng Chi Quang',8]];
+
+G.addChapter({
+id:'c2',order:2,cap:35,name:'Chương 2 · Rời Ô Thản, Gia Mã Đế Quốc',
+sets:S2.map(a=>({n:a[0],t:a[1]})),
+skills:[{id:'pvc',n:'Phần Viêm Chỉ',g:2,mp:45,m:4,t:'dot',cd:3,u:700},{id:'hlt',n:'Hỏa Liên Trảm',g:3,mp:60,m:7,cd:4,t:'d',u:1500},{id:'pnhl',n:'Phật Nộ Hỏa Liên',g:3,mp:85,m:12,cd:6,t:'d',u:3000}],
+mats:{
+  ld:{n:'Lục Đằng Thảo',g:3,d:'Dây leo xanh ngắt dẻo dai mọc ven hồ nước linh khí.',drop:'Gia Mã Thành, Mặc Gia Phủ'},
+  hl:{n:'Hỏa Linh Quả',g:3,d:'Trái cây đỏ rực chứa đầy hỏa diễm tinh hoa dưới lòng đất sa mạc.',drop:'Hồ Địa Hỏa, Tâm Hồ Thanh Liên, Hắc Giác Vực'}
+},
+recipes:[
+  {id:'hld',n:'Hồi Linh Đan',g:2,d:'Hồi phục trọn vẹn 100% lượng máu tối đa',need:{ld:3},c:150,s:75,fx:'hp',v:100,tx:6},
+  {id:'tvt',n:'Tam Văn Thanh Linh Đan',g:3,d:'Đại đan dược nổi danh, tăng 150% đấu khí và 25% công kích',need:{ld:3,hl:2},c:400,s:60,fx:'xp',v:150,dur:300,stk:1,tx:10},
+  {id:'blh',n:'Băng Linh Hàn Tuyền',g:3,d:'Hàn dịch cực phẩm hỗ trợ nuốt Dị hỏa, tăng 35% hỏa sát',need:{ld:4,hl:3},c:700,s:45,fx:'fd',v:35,dur:300,stk:1,tx:5,fire:1},
+  {id:'tld',n:'Thanh Liên Đan',g:3,d:'Gia tăng 100% đấu khí thu được',need:{hl:4,ld:2},c:500,s:40,fx:'xp',v:100,dur:250,stk:1,tx:12,fire:1},
+  {id:'pgd',n:'Phá Giáp Đan',g:2,d:'Tăng 12% Xuyên giáp mỗi tầng (tối đa 3 tầng)',need:{hl:2,ld:2},c:600,s:50,fx:'pn',v:12,dur:250,stk:3,tx:10},
+  {id:'kxd',n:'Khát Huyết Đan',g:2,d:'Tăng 4% Hút máu mỗi tầng',need:{hl:2,ld:3},c:600,s:50,fx:'ls',v:4,dur:250,stk:3,tx:10},
+  {id:'pc2',n:'Phá Sư Đan',g:2,d:'Đan dược ắt có để đột phá Đấu Sư lên Đại Đấu Sư',need:{ld:4,hl:4},c:8000,s:35,pc:1,fire:1}
+],
+mobs:[mk('dtac','Sa Mạc Đạo Tặc Đoàn','🥷',18,1.1),mk('kiemsu','Kiếm Sư Lang Bạt','🗡️',19,1.1),mk('hove','Mặc Gia Thiết Vệ','🛡️',20,1.2),mk('kh','Khôi Lỗi Cơ Quan','🗿',21,1.2),mk('hxa','Hỏa Diễm Mãng Xà','🐍',23,1.2),mk('hthu','Địa Hỏa Song Đầu Thú','🦎',24,1.3),mk('tlh','Thanh Liên Hỏa Linh (Dị Hỏa)','🔥',25,1.75,1),mk('satt','Sát Thủ Hắc Giác','🥷',27,1.3),mk('ma','Bạo Ma Thú Hắc Giác','🐲',28,1.3),mk('hgc','Hắc Giác Vực Chủ','👹',31,1.85,1),mk('vlt','Vân Lam Tông Đại Trưởng Lão','🧙',34,2.0,1)],
+zones:[{id:'gm',mat:'ld',n:'Gia Mã Đế Đô',t:5,req:'q19',mobs:['dtac','kiemsu']},{id:'mg',mat:'ld',n:'Mặc Gia Phủ',t:5,req:'c2q4',mobs:['hove','kh']},{id:'tl',mat:'hl',n:'Hồ Địa Hỏa',t:6,req:'c2q7',mobs:['hxa','hthu']},{id:'tlb',mat:'hl',n:'Tâm Hồ Thanh Liên',t:6,req:'c2q9',mobs:['tlh']},{id:'hg',mat:'hl',n:'Hắc Giác Vực',t:7,req:'c2q12',mobs:['satt','ma']},{id:'hgb',mat:'hl',n:'Tổng Đàn Hắc Giác',t:7,req:'c2q14',mobs:['hgc']},{id:'vl',mat:'hl',n:'Vân Lam Sơn Môn',t:8,req:'c2q16',mobs:['vlt']}],
+quests:[
+q('c2q1','Rời Bến Ô Thản','Đến Gia Mã Đế Đô, đánh tan 20 Sa Mạc Đạo Tặc.',{t:'kill',m:'dtac',n:20},'Lưng đeo Huyền Trọng Xích đen tuyền, Tiêu Viêm một thân một mình bước vào Gia Mã Đế Đô hoa lệ.','Danh tiếng thiếu niên đeo xích bắt đầu lan truyền khắp kinh kỳ.',{gold:1500,exp:X(18),pots:5}),
+q('c2q2','Đấu Khí Hóa Sa','Đột phá Đấu Sư 1 tinh (cấp 18).',{t:'lv',v:18},'Dược Lão: "Đấu khí ngưng tụ thành hạt cát lấp lánh bao bọc kinh mạch. Đột phá Đấu Sư!"','Đấu khí hóa sa, kình lực bộc phát mạnh mẽ vô cùng!',{gold:1800,exp:X(18),sk:'pvc'}),
+q('c2q3','Cổ Đồ Cửa Hàng','Đánh tan 20 Kiếm Sư Lang Bạt, tìm tàn đồ Dị Hỏa.',{t:'kill',m:'kiemsu',n:20},'Tại một cửa tiệm bản đồ cũ kỹ sa mạc, Tiêu Viêm tao ngộ một lão giả phong ấn tu vi: Băng Hoàng Hải Ba Đông!','Đoạt được tấm tàn đồ Dị Hỏa thứ hai, mở đường vào sa mạc.',{gold:2000,exp:X(19),rec:'tvt',item:{s:'w',t:5,q:2}}),
+q('c2q4','Điều Tra Mặc Gia','Hạ 20 Mặc Gia Thiết Vệ bảo hộ phủ đệ.',{t:'kill',m:'hove',n:20},'Mặc gia mưu đồ bắt cóc Thanh Lân hòng chiếm đoạt Bích Xà Tam Hoa Đồng. Tiêu Viêm lập tức xuất thủ!','Mặc Thừa dùng bí thuật cấy ghép dị đồng, cục diện căng thẳng.',{gold:2200,exp:X(20),rec:'hld',pots:6}),
+q('c2q5','Huyết Tẩy Mặc Gia Phủ','Tiêu diệt 15 Khôi Lỗi Cơ Quan Mặc Gia san bằng phủ đệ.',{t:'kill',m:'kh',n:15},'Tiêu Viêm nộ hỏa xung thiên, vung Huyền Trọng Xích nghiền nát cơ quan khôi lỗi!','Mặc Gia bị quét sạch, giải cứu thành công Thanh Lân.',{gold:2400,exp:X(20),pots:5}),
+q('c2q6','Sa Mạc Tháp Qua Nhĩ','Đạt Đấu Sư 4 tinh (cấp 21) để chống chọi cái nóng sa mạc.',{t:'lv',v:21},'Bão cát ngút trời, sa mạc Tháp Qua Nhĩ nóng như thiêu như đốt. Dị Hỏa đang ẩn giấu dưới đáy cát sâu!','Thân thể chịu nhiệt bền bỉ, đã đủ sức tiến sâu vào lòng đất.',{gold:2800,exp:X(21),rec:'blh',pots:6}),
+q('c2q7','Tiến Vào Hồ Địa Hỏa','Hạ 25 Hỏa Diễm Mãng Xà dưới lòng hồ dung nham.',{t:'kill',m:'hxa',n:25},'Dưới lòng sa mạc là một biển dung nham sôi sùng sục. Bầy rắn lửa canh giữ dị bảo ngàn năm.','Dung nham rẽ lối, khí tức Dị Hỏa ngày càng cận kề.',{gold:3200,exp:X(23),item:{s:'a',t:6,q:2}}),
+q('c2q8','Địa Hỏa Song Đầu Thú','Tiêu diệt Địa Hỏa Song Đầu Thú bảo vệ tâm hồ.',{t:'kill',m:'hthu',n:20},'Ma thú hai đầu khổng lồ vùng vẫy trong biển lửa phun ra từng cột nham thạch nóng bỏng.','Địa thú gục ngã, lộ ra đóa hoa sen xanh ngát giữa lòng hồ!',{gold:3500,exp:X(24),rec:'pgd',pots:6}),
+q('c2q9','Thôn Phệ Thanh Liên Dị Hỏa','Đánh bại Thanh Liên Hỏa Linh, thu phục Dị Hỏa (Boss).',{t:'kill',m:'tlh',n:1},'Đóa sen xanh ngát nở rộ: Thanh Liên Địa Tâm Hỏa! Tiêu Viêm nuốt Băng Linh Hàn Tuyền, cắn răng nuốt ngọn lửa xanh vào đan điền!','Hỏa diễm dung hòa vào kinh mạch. Phần Quyết tiến hóa thành công lên Huyền giai!',{gold:7000,exp:X(25),fire:'tl',sk:'hlt',rec:'tld',item:{s:'c',t:6,q:3}}),
+q('c2q10','Thôn Thiên Mãng Xuất Thế','Đạt Đấu Sư 7 tinh (cấp 24) kết giao Thất Thải Thôn Thiên Mãng.',{t:'lv',v:24},'Sau khi tiến hóa Dị Hỏa thất bại, linh hồn Mỹ Đỗ Toa hóa thành tiểu xà Thất Thải Thôn Thiên Mãng quấn quanh cổ tay Tiêu Viêm.','Có thêm một trợ thủ cấp Đấu Tông tiềm năng bảo hộ!',{gold:3500,exp:X(24),pots:6}),
+q('c2q11','Luyện Dược Sư Đại Hội','Luyện thành 2 viên Tam Văn Thanh Linh Đan chấn động kinh thành.',{t:'craft',n:2},'Đại hội Luyện Dược Sư đế quốc quy tụ anh tài. Tiêu Viêm dùng Thanh Liên Địa Tâm Hỏa nung chảy đan dược ba đường vân!','Đoạt Quán Quân Đại Hội! Danh tiếng Nham Kiêu vang dội khắp Gia Mã.',{gold:4000,exp:X(26),pots:8}),
+q('c2q12','Khử Độc Nạp Lan Kiệt','Tiến vào Hắc Giác Vực hạ 25 Sát Thủ tìm linh dược.',{t:'kill',m:'satt',n:25},'Nạp Lan lão gia tử trúng Lạc Độc chí mạng. Tiêu Viêm dùng Dị Hỏa thanh lọc độc tố để đoạt lấy Thất Huyễn Thanh Linh Diên.','Độc tố tiêu trừ, linh hồn Dược Lão được hồi phục một phần quan trọng.',{gold:4500,exp:X(27),item:{s:'w',t:7,q:2}}),
+q('c2q13','Đột Phá Đại Đấu Sư','Đạt Đại Đấu Sư 1 tinh (cấp 27).',{t:'lv',v:27},'Dược Lão: "Đấu khí hóa thành chất lỏng tụ trong đan điền. Ngươi đã chính thức bước vào Đại Đấu Sư!"','Đấu khí lỏng ngưng tụ, khí tức uy mãnh vô song!',{gold:6000,exp:X(27),sk:'pnhl'}),
+q('c2q14','Trảm Sát Hắc Giác Vực Chủ','Hạ gục Hắc Giác Vực Chủ (Boss hung hãn).',{t:'kill',m:'hgc',n:1},'Vực Chủ thống lĩnh hắc bang vung cự đao chém tới, đấu khí cuồng bạo ngập trời.','Phật Nộ Hỏa Liên sơ khai bộc phát! Vực Chủ tan biến thành tro bụi.',{gold:10000,exp:X(31),rec:'pc2',item:{s:'a',t:7,q:3}}),
+q('c2q15','Ba Năm Chi Ước - Quyết Chiến','Hạ 20 Ma Thú Hắc Giác chuẩn bị lên đỉnh Vân Lam.',{t:'kill',m:'ma',n:20},'Hạn định ba năm đã tới. Thiếu niên năm xưa vác Huyền Trọng Xích từng bước bước lên thềm đá Vân Lam Tông!','Nạp Lan Yên Nhiên bại trận dưới tay Phật Nộ Hỏa Liên, lời thề ba năm rửa sạch!',{gold:8000,exp:X(32),pots:10}),
+q('c2q16','Vân Lăng Giở Trò','Hạ gục Vân Lam Tông Đại Trưởng Lão chặn đường (Đại Boss).',{t:'kill',m:'vlt',n:1},'Đại Trưởng Lão Vân Lăng thẹn quá hóa giận kết trận vây giết Tiêu Viêm!','Vân Lăng trọng thương! Tiêu Viêm một mình náo loạn toàn bộ tông môn!',{gold:18000,exp:X(34),item:{s:'c',t:8,q:4}}),
+q('c2q17','Lão Tổ Vân Sơn Xuất Quan','Đạt Đại Đấu Sư 9 tinh (cấp 35), khép lại Chương 2.',{t:'lv',v:35},'Đấu Tông Vân Sơn xuất hiện phong tỏa không gian. Dược Lão hao tổn linh hồn phá vây đưa Tiêu Viêm rời đi!','Hết Chương 2! Trốn chạy ngàn dặm hướng về Già Nam Học Viện.',{gold:25000,exp:0,pots:15})
+]});})();
+</script>
+
+<!-- ========================================================== -->
+<!-- 7. CHƯƠNG 3: GIÀ NAM HỌC VIỆN & VẪN LẠC TÂM VIÊM           -->
+<!-- ========================================================== -->
+<script id="chapter3">
+(()=>{
+const mk = G.mk, X = G.X;
+const q=(id,t,d,goal,i,o,rw)=>({id,t,d,goal,intro:[['',i]],outro:[['',o]],rw});
+const S3=[['Già Nam Tân Sinh',9],['Hắc Sát Chiến Đội',9],['Bàn Môn Tinh Anh',10],['Tâm Hỏa Khổ Tu',10],['Cường Giả Bảng',11],['Bá Thương Liễu Bang',11],['Thiên Phần Luyện Ngục',12],['Hắc Minh Kiêu Hùng',12],['Vẫn Lạc Viêm Khải',13],['Song Hỏa Đế Bào',14]];
+
+G.addChapter({
+id:'c3',order:3,cap:62,name:'Chương 3 · Già Nam Học Viện & Vẫn Lạc Tâm Viêm',
+sets:S3.map(a=>({n:a[0],t:a[1]})),
+skills:[
+  {id:'ttl',n:'Tam Thiên Lôi Động',g:3,mp:50,m:1.2,t:'sh',cd:6,u:2500},
+  {id:'dpp',n:'Diễm Phân Phệ Lãng Xích',g:3,mp:75,m:10.5,cd:4,t:'d',u:4500},
+  {id:'lhd',n:'Lục Hợp Du Thân Xích',g:3,mp:80,m:14,cd:5,t:'d',u:6000}, /* Địa Giai */
+  {id:'daq',n:'Đế Ấn Quyết',g:4,mp:120,m:20,cd:6,t:'br',u:15000}, /* Thiên Giai Đê Cấp */
+  {id:'vhh',n:'Vô Hình Hỏa Mãng',g:3,mp:70,m:6,t:'dot',cd:4,u:5000},
+  {id:'shl',n:'Song Hỏa · Phật Nộ Hỏa Liên',g:4,mp:110,m:22,cd:7,t:'d',u:10000}, /* Thiên Giai */
+  {id:'htc',n:'Hoàng Tuyền Chỉ',g:4,mp:150,m:30,cd:8,t:'cc',u:25000}, /* Thiên Giai */
+  {id:'hxd',n:'Hủy Diệt Hỏa Liên',g:5,mp:250,m:50,cd:10,t:'d',u:80000} /* Thần Giai */
+],
+mats:{
+  tc:{n:'Thiên Cương Thảo',g:4,d:'Cỏ linh hấp thụ cương khí trời đất, rèn đúc kinh mạch dẻo dai.',drop:'Cổng Ngoại Viện, Hỏa Năng Liệp Tái'},
+  vh:{n:'Vạn Hỏa Mộc',g:4,d:'Gỗ cổ thụ hấp thụ hỏa linh vạn năm không cháy trong tháp lửa.',drop:'Thiên Phần Luyện Khí Tháp, Lôi Đài Cường Giả Bảng'},
+  dt:{n:'Địa Tâm Nhũ',g:4,d:'Tinh hoa ngọc dịch vạn năm cô đọng dưới lòng nham thạch sâu thẳm.',drop:'Đáy Vực Nham Thạch, Chiến Trường Hắc Minh, Phong Thành'}
+},
+recipes:[
+  {id:'tcd',n:'Thanh Chấn Đan',g:3,d:'Tẩy sạch toàn bộ đan độc tích tụ trong cơ thể',need:{tc:3,vh:2},c:1000,s:70,fx:'cl',v:100,tx:0},
+  {id:'plt',n:'Phục Linh Thanh Đan',g:4,d:'Hồi phục linh hồn lực Dược Lão, tăng 35% kháng tính',need:{tc:3,vh:3},c:2500,s:60,fx:'kn',v:35,dur:300,stk:1,tx:8,fire:1},
+  {id:'dld',n:'Đấu Linh Đan',g:4,d:'Đan dược ngũ phẩm gia tăng 150% đấu khí thu được',need:{tc:4,vh:3},c:3500,s:50,fx:'xp',v:150,dur:300,stk:1,tx:10,fire:1},
+  {id:'lld',n:'Long Lực Đan',g:4,d:'Công kích +25%, bạo thương +30%',need:{vh:4,dt:2},c:5000,s:45,fx:'at',v:25,dur:250,stk:2,tx:15,fire:1},
+  {id:'dtn',n:'Địa Tâm Nhũ Tán',g:5,d:'Hồi phục trọn vẹn 100% máu và tăng 50% Kháng tính',need:{dt:4,tc:4},c:8000,s:40,fx:'kn',v:50,dur:200,stk:1,tx:8,fire:1},
+  {id:'scd',n:'Sinh Cốt Dung Huyết Đan',g:6,d:'Cực phẩm đan dược phục hồi thương thế, tăng 50% toàn bộ chỉ số',need:{dt:5,vh:4,tc:4},c:15000,s:35,fx:'at',v:50,dur:250,stk:1,tx:5,fire:1},
+  {id:'pbd',n:'Phá Bát Đan',g:7,d:'Linh đan thất truyền bát phẩm, gia tăng kinh hoàng bạo kích và bạo thương 200%.',need:{dt:8,tc:6},c:30000,s:25,fx:'cd',v:200,dur:400,tx:15,fire:1},
+  {id:'cdd',n:'Cửu Chuyển Đan',g:8,d:'Thần đan cửu phẩm đoạt thiên địa tạo hóa, tái tạo chân thân, hồi toàn bộ mọi trạng thái vĩnh hằng.',need:{dt:10,vh:10},c:80000,s:15,fx:'at',v:200,dur:600,tx:0,fire:1},
+  {id:'pc3',n:'Phá Linh Đan',g:3,d:'Cần để đột phá Đại Đấu Sư lên Đấu Linh',need:{tc:4,vh:4},c:15000,s:40,pc:1,fire:1},
+  {id:'pc4',n:'Hoàng Cực Đan',g:5,d:'Cần để đột phá Đấu Vương lên Đấu Hoàng',need:{dt:5,vh:5},c:35000,s:30,pc:1,fire:1},
+  {id:'pc5',n:'Phá Tông Đan',g:6,d:'Đan dược cực phẩm lục giai hỗ trợ đột phá Đấu Tông',need:{dt:6,vh:6},c:70000,s:25,pc:1,fire:1}
+],
+mobs:[
+  mk('ts_gn','Tân Sinh Già Nam','🥋',36,1.2),mk('ls_hs','Lão Sinh Hắc Sát','🥷',38,1.25),
+  mk('sathe','Hắc Sát Đội Trưởng · Sa Thiết','🛡️',40,1.6,1),mk('lahau','Bạch Sát Lĩnh Đội · La Hầu','🗡️',42,1.65,1),
+  mk('th_tt','Tâm Hỏa Thực Thể','🔥',44,1.3),mk('bachtr','Bạch Bang Chủ · Bạch Trình','⚔️',47,1.7,1),
+  mk('lieuk','Bá Thương · Liễu Kình','🔱',50,1.8,1),mk('tunhien','Man Lực Vương · Tử Nghiên','👧',53,2.1,1),
+  mk('phamlao','Huyết Tông Tông Chủ · Phạm Lao','🧛',55,1.8,1),mk('kimgn','Kim Ngân Song Lão','👥',58,2.0,1),
+  mk('hanphong','Dược Hoàng · Hàn Phong','🧙',60,2.3,1),mk('hm_vl','Vẫn Lạc Hỏa Mãng (Dị Hỏa)','🐉',62,2.6,1)
+],
+zones:[
+  {id:'gn_cv',mat:'tc',n:'Cổng Ngoại Viện Già Nam',t:9,req:'c2q17',mobs:['ts_gn']},
+  {id:'hn_lt',mat:'tc',n:'Rừng Rậm Hỏa Năng Liệp Tái',t:9,req:'c3q3',mobs:['ls_hs']},
+  {id:'hn_bs',mat:'vh',n:'Doanh Trại Song Sát',t:10,req:'c3q4',mobs:['sathe','lahau']},
+  {id:'tp_t1',mat:'vh',n:'Thiên Phần Luyện Khí Tháp',t:10,req:'c3q7',mobs:['th_tt']},
+  {id:'cg_ld',mat:'vh',n:'Lôi Đài Cường Giả Bảng',t:11,req:'c3q10',mobs:['bachtr','lieuk']},
+  {id:'tn_dn',mat:'dt',n:'Động Phủ Man Lực Vương',t:11,req:'c3q12',mobs:['tunhien']},
+  {id:'hm_tk',mat:'dt',n:'Chiến Trường Hắc Minh',t:12,req:'c3q14',mobs:['phamlao','kimgn']},
+  {id:'tp_day',mat:'dt',n:'Đáy Vực Nham Thạch Vạn Trượng',t:13,req:'c3q16',mobs:['hm_vl']},
+  {id:'hp_td',mat:'dt',n:'Phong Thành · Tổng Đàn Hàn Phong',t:14,req:'c3q18',mobs:['hanphong']}
+],
+quests:[
+q('c3q1','Đến Già Nam Học Viện','Đến cổng viện, giao đấu 25 Tân Sinh để khảo nghiệm.',{t:'kill',m:'ts_gn',n:25},'Vượt vạn dặm trốn chạy sự truy lùng của Vân Lam Tông, Tiêu Viêm đặt chân tới Già Nam Học Viện lừng danh.','Thực lực thâm sâu của thiếu niên làm kinh ngạc toàn thể tân sinh!',{gold:10000,exp:X(36),rec:'pc3',pots:5}),
+q('c3q2','Đoạt Tam Thiên Lôi Động','Đạt Đấu Linh 1 tinh (cấp 36), tu luyện Địa giai thân pháp.',{t:'lv',v:36},'Đoạt được thân pháp tàn quyển từ cuộc đấu giá Hắc Ấn Thành, Tiêu Viêm mượn lôi đình tu luyện thành công!','Thân ảnh như sấm chớp xé gió, tốc độ kinh hoàng!',{gold:12000,exp:X(36),sk:'ttl'}),
+q('c3q3','Hỏa Năng Liệp Tái','Tiến vào rừng rậm, hạ 25 Lão Sinh Hắc Sát để đoạt thẻ Hỏa Năng.',{t:'kill',m:'ls_hs',n:25},'Hỏa Năng Liệp Tái bắt đầu. Lão sinh cậy thế cướp bóc tân sinh, nhưng Tiêu Viêm quyết định liên thủ phản kích!','Tân sinh đồng lòng, từng bước đẩy lui các đợt tập kích của lão sinh.',{gold:15000,exp:X(38),pots:6}),
+q('c3q4','Đánh Bại Sa Thiết','Hạ Đội Trưởng Hắc Sát Sa Thiết (Boss).',{t:'kill',m:'sathe',n:1},'Sa Thiết khoác chiến giáp nặng ngàn cân, kình lực bá đạo chặn ngay lối ra rừng rậm.','Bát Cực Băng ám kình bộc phát làm nứt toác giáp sắt! Đoạt trọn vẹn Hỏa Năng của Lão Sinh!',{gold:20000,exp:X(40),item:{s:'w',t:10,q:2}}),
+q('c3q5','Bạch Sát La Hầu','Đánh bại Bạch Sát Lĩnh Đội La Hầu đoạt cờ quán quân.',{t:'kill',m:'lahau',n:1},'La Hầu với hàn băng đấu khí sắc lẹm nghênh chiến thiếu niên mang xích đen.','Cả hai đại đội Hắc Bạch Song Sát đều thất thủ trước Tiêu Viêm!',{gold:22000,exp:X(41),rec:'plt',pots:6}),
+q('c3q6','Khai Sáng Bàn Môn','Luyện 3 viên Thanh Chấn Đan thiết lập căn cơ bang phái.',{t:'craft',n:3},'Tiến vào Nội Viện, Tiêu Viêm cùng Huân Nhi, Ngô Hạo, Hổ Gia cùng sáng lập thế lực riêng: Bàn Môn!','Bàn Môn danh chấn tứ phương, đệ tử gia nhập đông như trẩy hội.',{gold:18000,exp:X(42),rec:'tcd',pots:8}),
+q('c3q7','Thiên Phần Khổ Tu','Xuống tháp luyện khí, hạ 30 Tâm Hỏa Thực Thể.',{t:'kill',m:'th_tt',n:30},'Thiên Phần Luyện Khí Tháp có Tâm Hỏa rèn luyện đấu khí không ngừng nghỉ. Đây chính là dấu vết ngọn Dị Hỏa thứ hai!','Vượt qua Tâm Hỏa Kiếp, đấu khí tinh thuần và cô đặc gấp bội phần.',{gold:22000,exp:X(44),item:{s:'a',t:10,q:2}}),
+q('c3q8','Luyện Chế Đấu Linh Đan','Luyện 2 viên Đấu Linh Đan gia tăng tu vi.',{t:'craft',n:2},'Dược Lão nhắc nhở: "Nội Viện cao thủ như mây, cần dùng đan dược ngũ phẩm đẩy nhanh tiến độ."','Đan thành lóng lánh, tỏa ra dược lực dồi dào.',{gold:25000,exp:X(44),rec:'dld',pots:6}),
+q('c3q9','Đột Phá Đấu Vương · Hóa Dực','Đạt Đấu Vương 1 tinh (cấp 45).',{t:'lv',v:45},'Đấu khí sau lưng bùng cháy, ngưng tụ thành đôi cánh đại bàng rực lửa: Đấu Khí Hóa Dực! Ngươi đã là Đấu Vương!','Đôi cánh lửa vỗ mạnh bay vút lên bầu trời! Lĩnh ngộ Diễm Phân Phệ Lãng Xích.',{gold:32000,exp:X(45),sk:'dpp'}),
+q('c3q10','Khiêu Chiến Bạch Bang','Đánh bại Bạch Bang Chủ Bạch Trình trên lôi đài.',{t:'kill',m:'bachtr',n:1},'Bạch Trình đố kỵ với thanh danh của Bàn Môn, công khai khiêu chiến sinh tử trên lôi đài.','Bạch Trình thảm bại trước Huyền Trọng Xích! Vị thế Bàn Môn vững như bàn thạch.',{gold:36000,exp:X(47),item:{s:'g',t:11,q:3}}),
+q('c3q11','Bá Thương Liễu Kình','Hạ gục Bá Thương Liễu Kình, bước vào Thập Cường Nội Viện.',{t:'kill',m:'lieuk',n:1},'Liễu Kình vung cây trường thương xé rách hư không, là kình địch mạnh nhất giải đấu.','Trận đại chiến long trời lở đất khép lại, Tiêu Viêm chính thức ghi danh vào Cường Giả Bảng!',{gold:45000,exp:X(50),rec:'lld',item:{s:'w',t:11,q:3}}),
+q('c3q12','Giao Hảo Man Lực Vương','Đánh bại Man Lực Vương Tử Nghiên (Boss trâu bò).',{t:'kill',m:'tunhien',n:1},'Đệ Nhất Cường Giả Bảng là tiểu cô nương Thái Hư Cổ Long nắm đấm vỡ núi non nhưng cực kỳ hảo ngọt đan dược.','Tử Nghiên vui vẻ ăn kẹo đan dược, dẫn Tiêu Viêm đi đào Địa Tâm Nhũ!',{gold:55000,exp:X(53),item:{s:'c',t:11,q:4}}),
+q('c3q13','Luyện Đan Địa Tâm Nhũ','Luyện 2 bình Địa Tâm Nhũ Tán chuẩn bị đại chiến.',{t:'craft',n:2},'Có Địa Tâm Nhũ cực phẩm, đan dược hộ thể đã hoàn thiện ở mức tối đa.','Dược lực dạt dào bảo hộ tâm mạch.',{gold:50000,exp:X(53),rec:'dtn',pots:8}),
+q('c3q14','Hắc Minh Đại Loạn','Hạ gục Huyết Tông Tông Chủ Phạm Lao bảo vệ sơn môn.',{t:'kill',m:'phamlao',n:1},'Dược Hoàng Hàn Phong liên thủ Kim Ngân Song Lão và tà đạo Hắc Giác Vực tấn công cướp Dị Hỏa!','Phạm Lao đền mạng! Chiến trường ngập tràn biển lửa.',{gold:65000,exp:X(55),item:{s:'b',t:12,q:3}}),
+q('c3q15','Dị Hỏa Phá Phong Ấn','Đánh lui Kim Ngân Song Lão (Boss khó).',{t:'kill',m:'kimgn',n:1},'Kim Ngân Song Lão thừa cơ phá hoại trận pháp khiến ngọn lửa Vẫn Lạc Tâm Viêm bùng phát dữ dội!','Song lão ôm đầu tháo chạy, nhưng mãng xà lửa khổng lồ đã ngoạm lấy Tiêu Viêm lôi xuống vực sâu!',{gold:75000,exp:X(58),rec:'pc4',pots:10}),
+q('c3q16','Đáy Nham Thạch Vạn Trượng','Đánh bại Vẫn Lạc Hỏa Mãng dưới đáy nham thạch (Đại Boss).',{t:'kill',m:'hm_vl',n:1},'Bị vây dưới đáy dung nham cùng Mỹ Đỗ Toa (Thải Lân). Dược Lão kiệt sức ngủ say, Tiêu Viêm liều mình thuần phục Dị Hỏa!','Thuần phục thành công! Ngọn Dị Hỏa thứ hai chính thức dung hòa vào đan điền!',{gold:120000,exp:X(60),fire:'vl',sk:'vhh',rec:'scd',item:{s:'c',t:13,q:4}}),
+q('c3q17','Song Hỏa Xuất Thế','Đột phá Đấu Hoàng 1 tinh (cấp 54).',{t:'lv',v:54},'Thanh Liên cùng Vẫn Lạc Tâm Viêm dung hợp hoàn mỹ! Phần Quyết tiến hóa Địa giai cao cấp, phá cảnh Đấu Hoàng!','Đấu Hoàng xuất thế! Lĩnh ngộ tuyệt kỹ hủy diệt: Song Hỏa Phật Nộ Hỏa Liên!',{gold:150000,exp:X(54),sk:'shl'}),
+q('c3q18','Quyết Chiến Dược Hoàng','Tiến về Phong Thành, tiêu diệt kẻ phản nghịch Hàn Phong (Chung Cực Boss).',{t:'kill',m:'hanphong',n:1},'Tiêu Viêm phá tan nham thạch trở lại nhân gian, tung đóa sen lửa hai màu báo thù rửa hận cho Dược Lão!','Hàn Phong hồn phi phách tán! Đoạt Hải Tâm Diễm, Tiêu Viêm chấn nhiếp toàn cõi Hắc Giác Vực!',{gold:250000,exp:X(60),rec:'pc5',item:{s:'w',t:14,q:4}}),
+q('c3q17a','Lục Hợp Du Thân Xích','Hạ 30 Bạo Ma Thú Hắc Giác để rèn luyện cực hạn xích pháp.',{t:'kill',m:'ma',n:30},'Xích pháp bạo liệt cần kình lực dẻo dai. Dược Lão truyền lại Lục Hợp Du Thân Xích!','Công thủ toàn diện, kình lực cuồn cuộn không dứt!',{gold:180000,exp:X(56),sk:'lhd'}),
+
+q('c3q17b','Huân Nhi Lưu Biệt - Đế Ấn Quyết','Đạt Đấu Hoàng 4 tinh (cấp 57), nhận quà chia tay của Huân Nhi.',{t:'lv',v:57},'Cổ Tộc phái người đón Huân Nhi về. Trước lúc đi, nàng để lại quyển trục Địa giai cao cấp: Đế Ấn Quyết!','Khai Sơn, Phiên Hải, Phúc Địa, Yên Thiên, Cổ Đế! Uy lực rung chuyển Hắc Giác Vực!',{gold:200000,exp:X(57),sk:'daq'}),
+
+q('c3q17c','Hoàng Tuyền Huyết Chỉ','Hạ 40 Sát Thủ Hắc Giác để lĩnh ngộ sát ý.',{t:'kill',m:'satt',n:40},'Bí pháp Hoàng Tuyền Chỉ - Thiên giai đê cấp, một chỉ điểm xuất, vạn vật tĩnh lặng.','Chỉ lực phá không, ngưng đọng thời gian, chấn nhiếp cường giả!',{gold:220000,exp:X(59),sk:'htc'}),
+
+q('c3q18a','Hủy Diệt Hỏa Liên','Luyện thành công 3 viên Cửu Chuyển Đan làm mồi dẫn.',{t:'craft',n:3},'Dung hợp cực hạn hỏa diễm đòi hỏi sự tinh vi của một Dược Tôn Giả. Hãy luyện Cửu Chuyển Đan để lĩnh ngộ.','Bốn màu lửa quyện vào nhau, Hủy Diệt Hỏa Liên mang uy lực của Đấu Thánh giáng thế!',{gold:300000,exp:X(61),sk:'hxd'}),
+q('c3q19','Đỉnh Phong Đấu Hoàng','Đạt Đấu Hoàng 9 tinh (cấp 62), kết thúc Chương 3.',{t:'lv',v:62},'Thống nhất Tiêu Môn, hiệu triệu ngàn vạn cường giả Hắc Giác Vực. Giờ là lúc trở về Gia Mã rửa hận Vân Lam Tông!','Hết Chương 3! Hãy đón chờ hành trình Tiêu Diệt Vân Lam Tông & Hồn Điện ở Chương 4.',{gold:400000,exp:0,pots:20})
+]});})();
+</script>
+
+<!-- ========================================================== -->
+<!-- 8. KHỞI CHẠY HỆ THỐNG TRÒ CHƠI (BOOT)                     -->
+<!-- ========================================================== -->
+<script id="boot">
+G.start();
+</script>
+</body></html>
