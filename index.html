@@ -723,65 +723,72 @@ function tick(){
   if(psn>0){psn--;const d=Math.round(s.h*.02*(1-realKc));php-=d;fx('p','☠'+d,'md')}
   
   if(stn>0){stn--;fx('p','💫','md')}else{
-    let k=1,hits=1;
-    for(const id of S.eq){
-      const sk=SK[id],l=S.skl[id]||1;if(!sk||pmp<sk.mp||CD[id]>0)continue;
-      pmp-=sk.mp;CD[id]=sk.cd||0;const mm=sk.m*(1+.15*(l-1)),T=sk.t;
-      if(T=='h'){const h=s.h*mm;php=Math.min(s.h,php+h);fx('p','+'+Math.round(h),'hl')}
-      else if(T=='sh'){sh=s.h*mm;fx('p','🛡'+Math.round(sh),'hl')}
-      else{k=T=='mh'?mm/(sk.n||3)*1.2:mm;if(T=='mh')hits=sk.n||3;if(T=='dot')mob.burn={n:4,d:Math.round(s.a*.35*k)};if(T=='cc')mob.stun=2;if(T=='br')mob.brk=1}
-      break;
-    }
-    const md0=mob.d*(tr.ar?1.5:1)*(1-realPn)*(mob.brk?.6:1);
-    for(let h=0;h<hits;h++){
-      if(Math.random()<(tr.dg||0)/100){fx('m','Né','hl');continue}
-      const cr=Math.random()<.1+E.cr/100;
-      let dm=Math.max(1,Math.round((s.a*k*(.85+Math.random()*.3)-md0)*(cr?1.5+E.cd/100:1)*(1+E.fd/100)));
-
-      // --- LOGIC THỦ HẠ LƯU TÌNH KHI BẮT THÚ (Chỉ khi BẬT) ---
-      if (S.zone === 'vanthu' && S.catchMode && (S.cages || 0) > 0 && mob.hp - dm <= 0 && !mob.mercy) {
-          dm = mob.hp - 1; // Đánh chừa 1 máu
-          mob.mercy = true;
-          mob.stun = 6; // Đánh ngất quái 6 nhịp để ném lồng
-          fx('m', 'Lưu tình!', 'hl');
-          toast('💡 Đã đánh ngất ma thú! Ném lồng bắt ngay!');
-      }
-
-      mob.hp-=dm;
-      if (dm > 0 && !mob.mercy) fx('m',(k>1?'💥':'')+dm,cr?'cr':'');
-      if(cr){snd('crit');shake();}else{snd('hit');}
-      if(E.ls)php=Math.min(s.h,php+dm*realLs);
-      
-      if(mob.hp <= 0) break;
-    }
-    
-    if(S.actPet && mob.hp > 0){
-      const p=S.pets.find(x=>x.id==S.actPet);
-      if(p&&Math.random()<(p.rate/100)){
-        let pDmg=Math.max(1,Math.round(p.atk*(.8+Math.random()*.4)));
-        
-        // Thú cưng cũng biết thủ hạ lưu tình nếu BẬT chế độ
-        if (S.zone === 'vanthu' && S.catchMode && (S.cages || 0) > 0 && mob.hp - pDmg <= 0 && !mob.mercy) {
-            pDmg = mob.hp - 1; mob.mercy = true; mob.stun = 6;
-            fx('m', 'Lưu tình!', 'hl');
+    // --- BẮT ĐẦU: LƯỢT CỦA NGƯỜI CHƠI ---
+    if (mob.mercy) {
+        // Nếu quái đang bị ngất (Lưu tình) -> Dừng toàn bộ sát thương
+        if (mob.stun > 0) { mob.stun--; fx('m','💫'); }
+        else { mob.mercy = false; fx('m','Tỉnh Lại','md'); }
+    } else {
+        let k=1,hits=1;
+        for(const id of S.eq){
+          const sk=SK[id],l=S.skl[id]||1;if(!sk||pmp<sk.mp||CD[id]>0)continue;
+          pmp-=sk.mp;CD[id]=sk.cd||0;const mm=sk.m*(1+.15*(l-1)),T=sk.t;
+          if(T=='h'){const h=s.h*mm;php=Math.min(s.h,php+h);fx('p','+'+Math.round(h),'hl')}
+          else if(T=='sh'){sh=s.h*mm;fx('p','🛡'+Math.round(sh),'hl')}
+          else{k=T=='mh'?mm/(sk.n||3)*1.2:mm;if(T=='mh')hits=sk.n||3;if(T=='dot')mob.burn={n:4,d:Math.round(s.a*.35*k)};if(T=='cc')mob.stun=2;if(T=='br')mob.brk=1}
+          break;
         }
+        const md0=mob.d*(tr.ar?1.5:1)*(1-realPn)*(mob.brk?.6:1);
+        for(let h=0;h<hits;h++){
+          if(Math.random()<(tr.dg||0)/100){fx('m','Né','hl');continue}
+          const cr=Math.random()<.1+E.cr/100;
+          let dm=Math.max(1,Math.round((s.a*k*(.85+Math.random()*.3)-md0)*(cr?1.5+E.cd/100:1)*(1+E.fd/100)));
 
-        mob.hp-=pDmg;
-        if(pDmg > 0 && !mob.mercy) fx('m','🐾'+pDmg,'hl');
+          // LOGIC THỦ HẠ LƯU TÌNH CHÍNH XÁC
+          if (S.zone === 'vanthu' && S.catchMode && (S.cages || 0) > 0 && mob.hp - dm <= 0) {
+              dm = mob.hp - 1; mob.mercy = true; mob.stun = 6;
+              fx('m', 'Lưu tình!', 'hl'); toast('💡 Đã đánh ngất ma thú! Ném lồng bắt ngay!');
+          }
+
+          mob.hp-=dm;
+          if (dm > 0 && !mob.mercy) fx('m',(k>1?'💥':'')+dm,cr?'cr':'');
+          if(cr){snd('crit');shake();}else{snd('hit');}
+          if(E.ls)php=Math.min(s.h,php+dm*realLs);
+          
+          if(mob.hp <= 0 || mob.mercy) break; // Dừng combo nếu quái chết hoặc ngất
+        }
         
-        p.exp+=2;
-        if(p.exp>=p.maxExp&&p.lv<(5+p.q*15)){p.lv++;p.exp=0;p.maxExp=Math.round(p.maxExp*1.35);p.atk=Math.round(p.atk*1.15);p.hp=Math.round(p.hp*1.15);toast(`🐾 Ma Thú ${p.n} thăng cấp Lv.${p.lv}!`);}
-      }
+        // --- BẮT ĐẦU: LƯỢT CỦA MA THÚ TRỢ CHIẾN ---
+        if(S.actPet && mob.hp > 0 && !mob.mercy){
+          const p=S.pets.find(x=>x.id==S.actPet);
+          if(p&&Math.random()<(p.rate/100)){
+            let pDmg=Math.max(1,Math.round(p.atk*(.8+Math.random()*.4)));
+            
+            if (S.zone === 'vanthu' && S.catchMode && (S.cages || 0) > 0 && mob.hp - pDmg <= 0) {
+                pDmg = mob.hp - 1; mob.mercy = true; mob.stun = 6; fx('m', 'Lưu tình!', 'hl');
+            }
+
+            mob.hp-=pDmg;
+            if(pDmg > 0 && !mob.mercy) fx('m','🐾'+pDmg,'hl');
+            
+            p.exp+=2;
+            if(p.exp>=p.maxExp&&p.lv<(5+p.q*15)){p.lv++;p.exp=0;p.maxExp=Math.round(p.maxExp*1.35);p.atk=Math.round(p.atk*1.15);p.hp=Math.round(p.hp*1.15);toast(`🐾 Ma Thú ${p.n} thăng cấp Lv.${p.lv}!`);}
+          }
+        }
+        
+        // Bỏ qua Thiêu đốt nếu quái đang ngất
+        if(mob.burn&&mob.burn.n-->0 && mob.hp > 1 && !mob.mercy){
+          mob.hp-=mob.burn.d;fx('m','🔥'+mob.burn.d);
+        }
     }
-    
-    if(mob.burn&&mob.burn.n-->0 && mob.hp > 1){mob.hp-=mob.burn.d;fx('m','🔥'+mob.burn.d)}
   }
   
   if(tr.rg && mob.hp > 0 && !mob.mercy) mob.hp=Math.min(mob.max,mob.hp+mob.max*tr.rg/100);
   
   if(mob.hp<=0){kill(); syncTab(); return;}
   
-  if(mob.stun>0){mob.stun--;fx('m','💫')}else if(Math.random()<realDs)fx('p','Né!','hl');else{
+  // --- BẮT ĐẦU: LƯỢT CỦA QUÁI VẬT ---
+  if(mob.stun>0 && !mob.mercy){mob.stun--;fx('m','💫')}else if(Math.random()<realDs && !mob.mercy)fx('p','Né!','hl');else if(!mob.mercy){
     let a=mob.a;if(tr.en&&mob.hp<mob.max*.4)a*=1.4;
     const c=Math.random()<(tr.cr||0)/100;
     let md=Math.max(1,Math.round((a*(.85+Math.random()*.3)*(c?1.8:1)-s.d)*(1-Math.min(.6,E.kn/100))));
@@ -1169,6 +1176,7 @@ pet(){
       <div style="text-align:right">
         <button data-a="callpet" data-v="${p.id}">${S.actPet==p.id?'Đang chiến':'Xuất chiến'}</button><br>
         <button data-a="evopet" data-v="${p.id}" style="margin-top:4px">Tiến Giai</button>
+        <button data-a="salvage_pet" data-v="${p.id}" style="margin-top:4px; color:var(--hp); border-color:var(--hp)">Luyện Hóa</button>
       </div>
     </div>`).join(''):'<br><small>Chưa bắt được Ma Thú nào. Hãy đến Vạn Thú Cốc dùng Lồng Bắt Thú để săn!</small>'}
   </div>`;
@@ -1364,9 +1372,34 @@ document.addEventListener('click',e=>{
     const rate = mob.mercy ? 65 : 25 + (hpPct < 0.3 ? 20 : hpPct < 0.6 ? 10 : 0);
 
     if(Math.random() * 100 < rate){
-      // Random phẩm giai từ Hoàng Giai (2) đến Thiên Giai (5). Thần Giai (6) cấm rớt.
-      const petQuality = Math.floor(Math.random() * 4) + 2; 
-      
+      // LOGIC TỶ LỆ RANDOM PHẨM GIAI
+      const isElite = mob.n.includes('Cường Hóa') || mob.n.includes('Bầy Đàn');
+      let petQuality = 2; // Mặc định Hoàng giai
+      const r = Math.random();
+
+      if (isElite) {
+          // Quái Tinh Anh nghiêng về Địa (35%), Huyền (35%) và Thiên (15%)
+          if (r < 0.15) petQuality = 5; 
+          else if (r < 0.50) petQuality = 4; 
+          else if (r < 0.85) petQuality = 3; 
+          else petQuality = 2; 
+      } else {
+          // Quái Thường nghiêng về Hoàng (58%), Huyền (30%)
+          if (r < 0.02) petQuality = 5; // Thiên (2%)
+          else if (r < 0.12) petQuality = 4; // Địa (10%)
+          else if (r < 0.42) petQuality = 3; // Huyền (30%)
+          else petQuality = 2; // Hoàng (58%)
+      }
+
+      // LOGIC CHỈ SỐ THEO PHẨM GIAI & TIER QUÁI
+      const mobTier = mob.g[0] || 1;
+      const scale = 1 + (mobTier * 0.15); // Quái map càng cao stat gốc càng to
+      let bAtk = 0, bHp = 0;
+      if(petQuality == 2) { bAtk = rnd(25, 45); bHp = rnd(150, 300); }
+      else if(petQuality == 3) { bAtk = rnd(70, 120); bHp = rnd(400, 700); }
+      else if(petQuality == 4) { bAtk = rnd(180, 280); bHp = rnd(1000, 1600); }
+      else if(petQuality == 5) { bAtk = rnd(400, 650); bHp = rnd(2200, 3500); }
+
       const petObj = {
         id: S.uid++,
         n: mob.n.replace(/<[^>]*>?/gm, '').replace(' (Ấu)','').replace(' (Ấu Thú)','').replace('Bầy Đàn ','').replace('Cường Hóa ','').trim(),
@@ -1374,10 +1407,11 @@ document.addEventListener('click',e=>{
         lv: 1,
         exp: 0,
         maxExp: 100,
-        atk: Math.round(mob.max * 0.5), // Chuẩn: Lấy max HP của quái làm Atk
-        hp: Math.round(mob.max * 0.35), // Chuẩn: Lấy max HP của quái làm HP
-        rate: 30 + (petQuality * 2) // Tỷ lệ trợ chiến phụ thuộc phẩm
+        atk: Math.round(bAtk * scale),
+        hp: Math.round(bHp * scale),
+        rate: 30 + (petQuality * 3) // Trợ chiến: Hoàng 36%, Huyền 39%, Địa 42%, Thiên 45%
       };
+      
       if(!S.pets) S.pets = [];
       S.pets.push(petObj);
       if(!S.actPet) S.actPet = petObj.id;
@@ -1470,6 +1504,44 @@ document.addEventListener('click',e=>{
         toast('💥 Tiến giai thất bại! Nguyên liệu đã hóa thành tro bụi.');
     }
     syncTab();
+  }
+  else if (a=='salvage_pet'){
+      const pIdx = S.pets.findIndex(x=>x.id==+v);
+      if(pIdx < 0) return;
+      const p = S.pets[pIdx];
+      if(S.actPet == p.id) return toast('Không thể luyện hóa Ma Thú đang xuất chiến! Hãy thu hồi trước.');
+
+      const ov=$('ov'); ov.hidden=false;
+      ov.innerHTML=`<div class="box">
+          <b>🔥 Luyện Hóa Ma Thú: <span class="txt-q${Math.min(5, p.q)}">${p.n}</span></b>
+          <p>Quá trình này sẽ vĩnh viễn luyện hóa Ma Thú thành nguyên liệu. Phẩm giai càng cao, tài nguyên nhận được càng quý hiếm!</p>
+          <div style="margin-top:12px; display:flex; gap:6px;">
+              <button class="pri" data-a="do_salvage" data-v="${p.id}" style="background:var(--hp)">Xác Nhận Luyện Hóa</button>
+              <button data-a="clsov">Hủy Bỏ</button>
+          </div>
+      </div>`;
+  }
+  else if (a=='do_salvage'){
+      const pIdx = S.pets.findIndex(x=>x.id==+v);
+      if(pIdx < 0) return $('ov').hidden=true;
+      const p = S.pets[pIdx];
+
+      let mh = 0, tl = 0, tv = 0;
+      // Công thức rớt đồ theo Phẩm
+      mh = rnd(2, 5) + (p.q * 2); // Càng cao rớt càng nhiều Ma Hạch
+      if (p.q >= 3 && Math.random() < 0.5 + (p.q*0.1)) tl = rnd(1, p.q - 1); // Huyền+ rớt Thú Linh Đan
+      if (p.q >= 4 && Math.random() < 0.3 + (p.q*0.15)) tv = rnd(1, p.q - 3); // Địa+ rớt Thú Vương Huyết
+      if (p.q >= 5) { tl += 2; tv += 1; } // Thiên giai chắc chắn rớt đồ ngon
+
+      S.mat['mahach'] = (S.mat['mahach']||0) + mh;
+      if(tl>0) S.mat['thudan'] = (S.mat['thudan']||0) + tl;
+      if(tv>0) S.mat['tvh'] = (S.mat['tvh']||0) + tv;
+
+      S.pets.splice(pIdx, 1);
+      $('ov').hidden=true;
+      toast(`Luyện hóa thành công! Nhận: ${mh} Ma Hạch${tl>0?', '+tl+' Linh Đan':''}${tv>0?', '+tv+' Huyết':''}`);
+      snd('craft');
+      syncTab();
   }
   else if(a=='craft'){
     const r=RC.find(x=>x.id==v), F=Object.keys(S.fire).length;
