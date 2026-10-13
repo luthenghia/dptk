@@ -1106,7 +1106,7 @@ pet(){
   </div>`;
 },
 quest(){
-  const q=Q[S.qi],g=q&&q.goal,p=q?g.t=='craft'?`Luyện ${Math.min(S.pr,g.n)}/${g.n} viên đan`:g.t=='kill'?`Hạ ${Math.min(S.pr,g.n)}/${g.n} ${M[g.m].n}`:`Đạt ${lv(g.v)} (hiện tại: ${lv(S.L)})`:'';
+  const q=Q[S.qi],g=q&&q.goal,p=q?g.t=='craft'?`Luyện ${Math.min(S.pr,g.n)}/${g.n} ${g.m ? (RC.find(x=>x.id==g.m)?.n || 'viên đan') : 'viên đan'}`:g.t=='kill'?`Hạ ${Math.min(S.pr,g.n)}/${g.n} ${M[g.m].n}`:`Đạt ${lv(g.v)} (hiện tại: ${lv(S.L)})`:'';
   const cur=q?`<div class="card"><small>${q.ch}</small><h3 style="margin:4px 0">${q.t}</h3><p>${q.d}</p><p>🎯 ${S.qs=='new'?'Chưa nhận':p}</p>${S.qs=='ready'?'<button class="pri" data-a="claim">Hoàn thành &amp; Nhận thưởng</button>':''}<small>Thưởng: ${rw(q.rw)}</small></div>`:`<div class="card"><b>${G.end}</b></div>`;
   
   const chProgress=G.ch.map(c=>{
