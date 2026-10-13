@@ -289,7 +289,7 @@ const newS=()=>({
   fire:{},pq:0,bg:0,sbg:0,tox:0,skl:{dkq:1},eq:['dkq'],mat:{},pl:{},bf:{},cfa:'',al:0,al_r:0,al_e:0,crafted:{},
   L:2,exp:0,gold:1000,pots:10,gear:{},inv:[],qi:0,qs:'new',pr:0,done:{},fl:{},zone:'dvt',
   uid:1,kills:0,snd:1,diff:1,cursor:'default',recipes:{hq:1,tkt:1,tcl:1},storyLog:[],afkStash:[],lastT:Date.now(),
-  pets:[],actPet:null,cages:3,catchMode:0,sideDone:{},sidePr:{},actPoint:0,actClaimed:0,lastDay:new Date().toDateString(),dailyQuests:[]
+  pets:[],actPet:null,cages:3,catchMode:0,autoEq:1,sideDone:{},sidePr:{},actPoint:0,actClaimed:0,lastDay:new Date().toDateString(),dailyQuests:[]
 });
 const save=()=>{try{S.lastT=Date.now();localStorage.setItem(SAVE,JSON.stringify(S))}catch(e){}};
 const cap=()=>Math.max(...G.ch.map(c=>c.cap));
@@ -414,6 +414,7 @@ const mtip=k=>{
 const gs=it=>{if(!it)return {a:0,d:0,h:0};const m=1+.1*it.e;return{a:Math.round((it.a||0)*m),d:Math.round((it.d||0)*m),h:Math.round((it.h||0)*m)}};
 const st=()=>{const E=ex(),r=1+.2*Math.floor(S.L/9),tx=1-Math.max(0,(S.tox||0)-40)/150;let a=(8+S.L*3)*r,d=(2+S.L)*r,h=(100+S.L*25)*r;for(const k in S.gear){const g=gs(S.gear[k]);a+=g.a;d+=g.d;h+=g.h}return{a:Math.round(a*pm('atk')*(1+E.at/100)*tx),d:Math.round(d),h:Math.round(h*pm('hp')),m:30+S.L*5}};
 const sc=it=>{if(!it)return -1;const g=gs(it);return g.a*2+g.d*2+g.h*.2+Object.keys(it.x||{}).length*6+(it.set!=null?12:0)+(it.q*15)};
+const scBase=it=>{if(!it)return -1;return (it.a||0)*2+(it.d||0)*2+(it.h||0)*0.2+Object.keys(it.x||{}).length*6+(it.set!=null?12:0)+(it.q*15)};
 const val=it=>Math.round(4*QM[it.q]*it.t*(1+it.e));
 const ec=it=>Math.round(25*(it.e+1)*it.t*(1+it.q*.5));
 const rnd=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
@@ -456,11 +457,13 @@ function gen(t,slot,minq){
 
 function give(it,isAfk){
   const cu=S.gear[it.s];
-  if(!isAfk&&(!cu||sc(it)>sc(cu))){
+  // CHỈ tự mặc nếu đang BẬT autoEq và chỉ số gốc (scBase) cao hơn
+  if(!isAfk && S.autoEq && (!cu||scBase(it)>scBase(cu))){
     if(cu)S.inv.push(cu);S.gear[it.s]=it;log('🎁 Tự mặc đồ mạnh hơn: '+it.n);snd('drop');
   }else if(S.inv.length<bagC()){
     S.inv.push(it);if(!isAfk){log('🎒 Nhặt: '+it.n);snd('drop');}
   }else{
+      // ... giữ nguyên ...
     if(it.set!=null||it.q>=2){
       if(!S.afkStash)S.afkStash=[];
       if(S.afkStash.length<stashC()){
@@ -707,44 +710,60 @@ function tick(){
   // --- TÍNH TOÁN TRẦN CHỈ SỐ (STAT CAPS) ---
   const isDe = Math.floor(S.L / 9) >= 11; // Đấu Đế gỡ bỏ mọi giới hạn
   const actP = S.actPet ? S.pets.find(x => x.id == S.actPet) : null;
-  const isThanPet = actP && actP.q >= 6; // Thú Thần Giai tăng trần né tránh
+  const isThanPet = actP && actP.q >= 6; 
 
-  const maxDs = isDe ? 1 : (isThanPet ? 0.8 : 0.7); // Né tránh max 70% (Thần thú 80%)
-  const maxPn = isDe ? 1 : 0.7; // Xuyên giáp max 70%
-  const maxKc = isDe ? 1 : 0.8; // Kháng choáng/độc max 80%
-  const maxLs = isDe ? 1 : 0.7; // Hút máu max 70%
+  const maxDs = isDe ? 1 : (isThanPet ? 0.8 : 0.7); // Né tránh
+  const maxPn = isDe ? 1 : 0.7; // Xuyên giáp
+  const maxKc = isDe ? 1 : 0.8; // Kháng choáng/độc
+  const maxLs = isDe ? 1 : 0.7; // Hút máu
+  const maxKn = isDe ? 1 : 0.6; // KHÁNG TÍNH (Giảm sát thương nhận)
   
   const realPn = Math.min(maxPn, E.pn / 100);
   const realDs = Math.min(maxDs, E.ds / 100);
   const realKc = Math.min(maxKc, E.kc / 100);
   const realLs = Math.min(maxLs, E.ls / 100);
+  const realKn = Math.min(maxKn, E.kn / 100);
 
   if(php<s.h*.35&&S.pots>0){S.pots--;php=Math.min(s.h,php+s.h*.45*pm('heal'));fx('p','+'+Math.round(s.h*.45*pm('heal')),'hl')}
   if(psn>0){psn--;const d=Math.round(s.h*.02*(1-realKc));php-=d;fx('p','☠'+d,'md')}
   
   if(stn>0){stn--;fx('p','💫','md')}else{
-    // --- BẮT ĐẦU: LƯỢT CỦA NGƯỜI CHƠI ---
+    // --- LƯỢT NGƯỜI CHƠI ---
     if (mob.mercy) {
-        // Nếu quái đang bị ngất (Lưu tình) -> Dừng toàn bộ sát thương
         if (mob.stun > 0) { mob.stun--; fx('m','💫'); }
         else { mob.mercy = false; fx('m','Tỉnh Lại','md'); }
     } else {
-        let k=1,hits=1;
+        let k=1, hits=1, actSk=null;
+        
+        // KIỂM TRA ĐẤU KỸ (Skill)
         for(const id of S.eq){
-          const sk=SK[id],l=S.skl[id]||1;if(!sk||pmp<sk.mp||CD[id]>0)continue;
-          pmp-=sk.mp;CD[id]=sk.cd||0;const mm=sk.m*(1+.15*(l-1)),T=sk.t;
+          const sk=SK[id],l=S.skl[id]||1;
+          if(!sk || pmp<sk.mp || CD[id]>0) continue; // Nếu thiếu MP hoặc đang CD thì bỏ qua, tìm skill tiếp theo
+          
+          pmp-=sk.mp; CD[id]=sk.cd||0; actSk=sk;
+          const mm=sk.m*(1+.15*(l-1)), T=sk.t;
+          
           if(T=='h'){const h=s.h*mm;php=Math.min(s.h,php+h);fx('p','+'+Math.round(h),'hl')}
           else if(T=='sh'){sh=s.h*mm;fx('p','🛡'+Math.round(sh),'hl')}
-          else{k=T=='mh'?mm/(sk.n||3)*1.2:mm;if(T=='mh')hits=sk.n||3;if(T=='dot')mob.burn={n:4,d:Math.round(s.a*.35*k)};if(T=='cc')mob.stun=2;if(T=='br')mob.brk=1}
-          break;
+          else{
+              k=T=='mh'?mm/(sk.n||3)*1.2:mm; 
+              if(T=='mh') hits=sk.n||3;
+              if(T=='dot') mob.burn={n:4,d:Math.round(s.a*.35*k)};
+              if(T=='cc') mob.stun=2;
+              if(T=='br') mob.brk=4; // Phá giáp duy trì 4 nhịp
+          }
+          fx('p', sk.n, 'xp'); // Hiển thị tên Đấu Kỹ vừa dùng
+          break; // Chỉ tung 1 Đấu Kỹ mỗi nhịp
         }
-        const md0=mob.d*(tr.ar?1.5:1)*(1-realPn)*(mob.brk?.6:1);
+        
+        // NẾU KHÔNG CÓ ĐẤU KỸ NÀO ĐƯỢC TUNG RA -> Mặc định là k=1, hits=1 (Đánh thường)
+        const md0 = mob.d * (tr.ar?1.5:1) * (1-realPn) * (mob.brk>0?0.6:1);
+        
         for(let h=0;h<hits;h++){
           if(Math.random()<(tr.dg||0)/100){fx('m','Né','hl');continue}
           const cr=Math.random()<.1+E.cr/100;
           let dm=Math.max(1,Math.round((s.a*k*(.85+Math.random()*.3)-md0)*(cr?1.5+E.cd/100:1)*(1+E.fd/100)));
 
-          // LOGIC THỦ HẠ LƯU TÌNH CHÍNH XÁC
           if (S.zone === 'vanthu' && S.catchMode && (S.cages || 0) > 0 && mob.hp - dm <= 0) {
               dm = mob.hp - 1; mob.mercy = true; mob.stun = 6;
               fx('m', 'Lưu tình!', 'hl'); toast('💡 Đã đánh ngất ma thú! Ném lồng bắt ngay!');
@@ -755,28 +774,24 @@ function tick(){
           if(cr){snd('crit');shake();}else{snd('hit');}
           if(E.ls)php=Math.min(s.h,php+dm*realLs);
           
-          if(mob.hp <= 0 || mob.mercy) break; // Dừng combo nếu quái chết hoặc ngất
+          if(mob.hp <= 0 || mob.mercy) break;
         }
         
-        // --- BẮT ĐẦU: LƯỢT CỦA MA THÚ TRỢ CHIẾN ---
+        // --- MA THÚ TRỢ CHIẾN ---
         if(S.actPet && mob.hp > 0 && !mob.mercy){
           const p=S.pets.find(x=>x.id==S.actPet);
           if(p&&Math.random()<(p.rate/100)){
             let pDmg=Math.max(1,Math.round(p.atk*(.8+Math.random()*.4)));
-            
             if (S.zone === 'vanthu' && S.catchMode && (S.cages || 0) > 0 && mob.hp - pDmg <= 0) {
                 pDmg = mob.hp - 1; mob.mercy = true; mob.stun = 6; fx('m', 'Lưu tình!', 'hl');
             }
-
             mob.hp-=pDmg;
             if(pDmg > 0 && !mob.mercy) fx('m','🐾'+pDmg,'hl');
-            
             p.exp+=2;
             if(p.exp>=p.maxExp&&p.lv<(5+p.q*15)){p.lv++;p.exp=0;p.maxExp=Math.round(p.maxExp*1.35);p.atk=Math.round(p.atk*1.15);p.hp=Math.round(p.hp*1.15);toast(`🐾 Ma Thú ${p.n} thăng cấp Lv.${p.lv}!`);}
           }
         }
         
-        // Bỏ qua Thiêu đốt nếu quái đang ngất
         if(mob.burn&&mob.burn.n-->0 && mob.hp > 1 && !mob.mercy){
           mob.hp-=mob.burn.d;fx('m','🔥'+mob.burn.d);
         }
@@ -784,14 +799,16 @@ function tick(){
   }
   
   if(tr.rg && mob.hp > 0 && !mob.mercy) mob.hp=Math.min(mob.max,mob.hp+mob.max*tr.rg/100);
-  
   if(mob.hp<=0){kill(); syncTab(); return;}
   
-  // --- BẮT ĐẦU: LƯỢT CỦA QUÁI VẬT ---
+  // --- LƯỢT CỦA QUÁI VẬT ---
+  if(mob.brk>0) mob.brk--; // Trừ nhịp hiệu ứng phá giáp
+
   if(mob.stun>0 && !mob.mercy){mob.stun--;fx('m','💫')}else if(Math.random()<realDs && !mob.mercy)fx('p','Né!','hl');else if(!mob.mercy){
     let a=mob.a;if(tr.en&&mob.hp<mob.max*.4)a*=1.4;
     const c=Math.random()<(tr.cr||0)/100;
-    let md=Math.max(1,Math.round((a*(.85+Math.random()*.3)*(c?1.8:1)-s.d)*(1-Math.min(.6,E.kn/100))));
+    // Đã thêm realKn để bảo vệ người chơi theo trần kháng tính (Max 60% hoặc 100% nếu là Đấu Đế)
+    let md=Math.max(1,Math.round((a*(.85+Math.random()*.3)*(c?1.8:1)-s.d)*(1-realKn)));
     if(sh>0){const ab=Math.min(sh,md);sh-=ab;md-=ab}
     php-=md;fx('p',(c?'⚡':'-')+md,'md');if(c)shake();
     if(tr.ps&&Math.random()<.3*(1-realKc))psn=4;
@@ -826,7 +843,13 @@ function upd(){
 
   set('me',e=>e.textContent=mob?mob.e:'💤');
   updateInner('mn', mob ? mob.n : '');
-  updateInner('mtr', mob ? Object.keys(mob.tr||{}).map(k=>`<span data-tip="<b>${TRI[k][1]}</b>: ${TRI[k][2]}">${TRI[k][0]}</span>`).join(' ') : '');
+  let mtrHtml = Object.keys(mob?mob.tr||{}:{}).map(k=>`<span data-tip="<b>${TRI[k][1]}</b>: ${TRI[k][2]}">${TRI[k][0]}</span>`).join(' ');
+  if (mob) {
+      if (mob.burn && mob.burn.n > 0) mtrHtml += ` <span data-tip="Đang bị thiêu đốt">🔥</span>`;
+      if (mob.stun > 0) mtrHtml += ` <span data-tip="Đang bị choáng">💫</span>`;
+      if (mob.brk > 0) mtrHtml += ` <span data-tip="Giảm 40% phòng thủ">🛡️↓</span>`;
+  }
+  updateInner('mtr', mtrHtml);
   set('mh',e=>e.style.width=mob?mob.hp/mob.max*100+'%':'0');set('mt',e=>e.textContent=mob?Math.max(0,mob.hp)+'/'+mob.max:'');
 
   set('btn_toggle_catch', e => { 
@@ -984,7 +1007,7 @@ hero(){
   <div class="card"><b>Căn bản</b><br><span data-tip="Công kích">⚔️ ${s.a}</span> · <span data-tip="Phòng thủ">🛡️ ${s.d}</span> · <span data-tip="Máu tối đa">❤️ ${s.h}</span> · <span data-tip="Đấu khí nội tức">🔷 ${s.m}</span>${S.tox>1?`<br><span data-tip="Đan độc cao >40 giảm công kích, dùng Thanh Chấn Đan để tẩy sạch">☠️ Đan độc ${S.tox|0}/100</span>`:''}</div>
   ${c.map(x=>`<div class="card"><b>${x[0]}</b>${x[1].map(k=>stl(k,E)).join('')}</div>`).join('')}
   <div class="card"><b>Công pháp &amp; Dị hỏa</b><br>${cfTxt()}<br>${fireHtml}${Object.keys(S.bf).length?'<br><b>Dược lực:</b> '+Object.keys(S.bf).map(k=>`<span data-tip="Còn ${S.bf[k].t*.8|0}s">${STT[k][0]}${STT[k][1]} +${+S.bf[k].v.toFixed(1)}</span>`).join(' · '):''}</div>
-  <div class="card"><b>Trang bị</b>${SLS.split('').map(k=>{const it=S.gear[k];return `<div class="sl"><span>${IC[k]} <b>${SL[k]}</b></span><span>${it?`<span data-tip="${itip(it)}" class="${it.q>=6?'rb-txt':'txt-q'+Math.min(5,it.q)}">${it.n}${it.e?' +'+it.e:''}${it.lock?' 🔒':''}</span> <button data-a="lockit" data-v="${it.id}">${it.lock?'Mở':'Khóa'}</button> ${it.e<12?`<button data-a="enh" data-v="${k}">+ ${ec(it)}🪙</button>`:''}`:'<small>trống</small>'}</span></div>`}).join('')}</div>
+  <div class="card"><b>Trang bị</b>${SLS.split('').map(k=>{const it=S.gear[k];return `<div class="sl"><span>${IC[k]} <b>${SL[k]}</b></span><span>${it?`<span data-tip="${itip(it)}" class="${it.q>=6?'rb-txt':'txt-q'+Math.min(5,it.q)}" style="cursor:pointer" data-a="eq_prompt" data-v="${k}">${it.n}${it.e?' +'+it.e:''}${it.lock?' 🔒':''}</span> <button data-a="lockit" data-v="${it.id}">${it.lock?'Mở':'Khóa'}</button> ${it.e<12?`<button data-a="enh" data-v="${k}">+ ${ec(it)}🪙</button>`:''}`:'<small>trống</small>'}</span></div>`}).join('')}</div>
   <div class="card"><b>Bộ trang bị</b>${setHtml()}</div>
   <div class="card">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;gap:6px;flex-wrap:wrap">
@@ -1281,6 +1304,7 @@ setting(){
   ];
   return `<div class="card">
     <b>⚙️ Thiết Lập Trò Chơi</b><br>
+    <div class="sl"><span>👕 Tự động mặc trang bị nhặt được tốt hơn:</span><button data-a="tgautoeq">${S.autoEq?'Đang bật (✅)':'Đang tắt (❌)'}</button></div>
     <div class="sl"><span>🔊 Hiệu ứng âm thanh:</span><button data-a="tgsnd">${S.snd?'Đang bật (🔊)':'Đang tắt (🔇)'}</button></div>
     <div style="margin-top:10px">
       <b>Biến Thể Con Trỏ Chuột Game:</b><br>
@@ -1340,6 +1364,7 @@ document.addEventListener('click',e=>{
     }
   }
   else if(a=='tgsnd'){S.snd=S.snd?0:1;toast(S.snd?'Đã bật âm thanh':'Đã tắt âm thanh');draw()}
+  else if(a=='tgautoeq'){S.autoEq=S.autoEq?0:1;toast(S.autoEq?'Đã BẬT tự động mặc đồ mạnh hơn':'Đã TẮT tự động mặc đồ');draw()}
   else if(a=='toggle_catch'){
     S.catchMode = S.catchMode ? 0 : 1;
     toast(S.catchMode ? '🎯 BẬT Lưu Tình: Sẽ đánh chừa 1 máu để bắt thú!' : '⚔️ TẮT Lưu Tình: Tiêu diệt quái bình thường');
@@ -1631,6 +1656,26 @@ document.addEventListener('click',e=>{
     }
   }
   else if(a=='buy'){if(S.gold>=30){S.gold-=30;S.pots++;snd('drop');syncTab();}else toast('Không đủ kim tệ')}
+  else if(a=='eq_prompt'){
+    const it=S.gear[v]; if(!it)return;
+    const ov=$('ov');ov.hidden=false;
+    ov.innerHTML=`<div class="box">
+      <div>${itip(it)}</div>
+      <div style="display:flex;gap:6px;margin-top:12px;flex-wrap:wrap">
+        <button class="pri" data-a="uneq" data-v="${v}" style="background:var(--hp)">Tháo trang bị</button>
+        <button data-a="clsov">Đóng</button>
+      </div>
+    </div>`;
+  }
+  else if(a=='uneq'){
+    const it=S.gear[v];
+    if(it){
+      if(S.inv.length>=bagC()) return toast('Nạp Giới đã đầy, không thể tháo!');
+      S.inv.push(it); delete S.gear[v];
+      toast('Đã tháo: '+it.n); snd('drop');
+    }
+    $('ov').hidden=true; syncTab();
+  }
   else if(a=='eq'){
     const i=S.inv.findIndex(x=>x.id==v);if(i<0)return;
     const it=S.inv[i];
@@ -1651,12 +1696,12 @@ document.addEventListener('click',e=>{
     let tempInv = [...S.inv];
     for(let slot of SLS.split('')) {
         let currentEq = S.gear[slot];
-        let bestScore = currentEq ? sc(currentEq) : -1;
+        let bestScore = currentEq ? scBase(currentEq) : -1; // SỬ DỤNG scBase
         let bestIndex = -1;
         for(let i=0; i<tempInv.length; i++) {
             let it = tempInv[i];
             if(it.s === slot && !it.lock) {
-                let itScore = sc(it);
+                let itScore = scBase(it); // SỬ DỤNG scBase
                 if(itScore > bestScore) {
                     bestScore = itScore;
                     bestIndex = i;
@@ -1919,6 +1964,7 @@ G.start=()=>{
   if(!S.sideDone)S.sideDone={};
   if(!S.sidePr)S.sidePr={};
   if(!S.cursor)S.cursor='default';
+  if(S.autoEq===undefined) S.autoEq=1;
   setCursor(S.cursor);
   checkDailyReset();
   php=st().h;pmp=st().m;spawn();draw();begin();checkAfk();
