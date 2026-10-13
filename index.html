@@ -232,6 +232,17 @@ const R=['Đấu Chi Khí','Đấu Giả','Đấu Sư','Đại Đấu Sư','Đ�
 const QN=['Phàm','Hoàng','Huyền','Địa','Thiên','Thần','Thần'],QM=[1,1.4,2.2,3.4,5.2,7.5,10];
 const QC=['#8a8a8a','#16a34a','#8b5cf6','#e11d48','#f59e0b','#ec4899','#ff0000'];
 const PL_QN=['Nhất Phẩm','Nhị Phẩm','Tam Phẩm','Tứ Phẩm','Ngũ Phẩm','Lục Phẩm','Thất Phẩm','Bát Phẩm','Cửu Phẩm']; // Hệ thống 9 Phẩm Đan Dược
+const ALC_EXP = [10, 25, 60, 150, 400, 1000, 2500, 6000, 15000]; // Lượng EXP nhận khi luyện thành công đan từ 1-9 phẩm
+const ALC_REQ = [
+  { exp: 150, L: 8, crafts: 10, pill: 'tcl', p_amt: 3 }, // Lên Nhị Phẩm
+  { exp: 400, L: 18, crafts: 30, pill: 'tvt', p_amt: 2 }, // Lên Tam Phẩm
+  { exp: 1200, L: 27, crafts: 60, pill: 'pgd', p_amt: 3 }, // Lên Tứ Phẩm
+  { exp: 3500, L: 36, crafts: 100, pill: 'plt', p_amt: 3 }, // Lên Ngũ Phẩm
+  { exp: 8000, L: 45, crafts: 150, pill: 'dtn', p_amt: 2 }, // Lên Lục Phẩm
+  { exp: 20000, L: 54, crafts: 250, pill: 'scd', p_amt: 2 }, // Lên Thất Phẩm
+  { exp: 50000, L: 63, crafts: 400, pill: 'pbd', p_amt: 2 }, // Lên Bát Phẩm
+  { exp: 120000, L: 72, crafts: 600, pill: 'cdd', p_amt: 2 } // Lên Cửu Phẩm
+];
 const SL={w:'Vũ khí',h:'Mũ',a:'Giáp',g:'Găng',b:'Giày',t:'Đai',n:'Dây chuyền',c:'Nhẫn'},NM={w:['Mộc Côn','Thiết Kiếm','Trường Đao','Huyền Trọng Xích'],h:['Khăn Vải','Mũ Da','Mũ Thiết','Thần Hỏa Quán'],a:['Bố Y','Da Giáp','Thiết Giáp','Đoán Viêm Bào'],g:['Găng Vải','Găng Da','Găng Thiết','Lôi Đình Thủ'],b:['Giày Vải','Ủng Da','Chiến Ngoa','Hóa Dực Hài'],t:['Dây Vải','Đai Da','Đai Thiết','Thanh Liên Đới'],n:['Hạt Gỗ','Ngọc Bội','Huyền Liên','Tâm Hỏa Tỏa'],c:['Nhẫn Đồng','Nhẫn Bạc','Giới Chỉ','U Hồn Giới']},IC={w:'🗡️',h:'🪖',a:'🛡️',g:'🧤',b:'👢',t:'🎗️',n:'📿',c:'💍'};
 const G=window.G={ch:[],end:'Đã hết nội dung hiện có. Hãy chờ đón các chương kế tiếp!',addChapter(c){this.ch.push(c);this.ch.sort((a,b)=>a.order-b.order)}};
 
@@ -273,7 +284,7 @@ function snd(t){
 }
 
 const newS=()=>({
-  fire:{},pq:0,bg:0,sbg:0,tox:0,skl:{dkq:1},eq:['dkq'],mat:{},pl:{},bf:{},cfa:'',al:0,
+  fire:{},pq:0,bg:0,sbg:0,tox:0,skl:{dkq:1},eq:['dkq'],mat:{},pl:{},bf:{},cfa:'',al:0,al_r:0,al_e:0,crafted:{},
   L:2,exp:0,gold:1000,pots:10,gear:{},inv:[],qi:0,qs:'new',pr:0,done:{},fl:{},zone:'dvt',
   uid:1,kills:0,snd:1,diff:1,cursor:'default',recipes:{hq:1,tkt:1,tcl:1},storyLog:[],afkStash:[],lastT:Date.now(),
   pets:[],actPet:null,cages:3,sideDone:{},sidePr:{},actPoint:0,actClaimed:0,lastDay:new Date().toDateString(),dailyQuests:[]
@@ -932,21 +943,57 @@ skl(){
 },
 alc(){
   const F=Object.keys(S.fire).length;
-  return `<div class="card">
-    <b>Luyện Dược Sư Cấp ${1+(S.al/6|0)}</b> (${S.al} lần luyện) · 🪙${S.gold}${F?' · 🔥 '+F+' Dị hỏa':''}<br>
-    ${S.tox>1?`<span data-tip="Đan độc cao giảm công kích">☠️ Đan độc: ${S.tox|0}/100</span><br>`:''}
-    <b>Dược thảo hiện có (chạm để xem nơi tìm):</b><br>
-    ${Object.keys(MT).map(k=>`<span class="mat-tag" data-tip="${mtip(k).replace(/"/g,'&quot;')}" style="border-color:${MT[k]?(QC?.[MT[k].g]||'#ccc'):'#ccc'}">${MT[k]?MT[k].n:k} ×${S.mat[k]||0}</span>`).join(' ')}
+  const rk=S.al_r||0;
+  const req=ALC_REQ[rk];
+  const exp=S.al_e||0;
+  const maxExp=req?req.exp:'Max';
+  const pct=req?Math.min(100,(exp/maxExp)*100):100;
+  
+  let advHtml='';
+  if(req){
+      const okL = S.L >= req.L;
+      const okC = S.al >= req.crafts;
+      const okP = (S.crafted && S.crafted[req.pill] >= req.p_amt);
+      const isReady = okL && okC && okP && exp >= req.exp;
+      
+      advHtml = `<div class="card" style="border: 2px solid var(--gd); background: rgba(180,120,24,.05)">
+          <b style="color:var(--gd)">📜 Nhiệm Vụ Thăng Phẩm Luyện Dược Sư</b><br>
+          <small>Điều kiện đột phá lên <b>${PL_QN[rk+1]}</b>:</small><br>
+          <small>${exp>=req.exp?'✅':'⬜'} Kinh nghiệm: ${exp}/${req.exp}</small><br>
+          <small>${okL?'✅':'⬜'} Tu vi: Yêu cầu đạt ${lv(req.L)}</small><br>
+          <small>${okC?'✅':'⬜'} Luyện đan thành công: ${S.al}/${req.crafts} lần</small><br>
+          <small>${okP?'✅':'⬜'} Chế tác khảo nghiệm: Luyện thành công ${req.p_amt} ${RC.find(x=>x.id==req.pill)?.n} (Đã luyện: ${(S.crafted&&S.crafted[req.pill])||0})</small><br>
+          <button data-a="al_up" class="${isReady?'pri':'ghost'}" ${isReady?'':'disabled'}>Đột Phá Cảnh Giới Luyện Dược Sư</button>
+      </div>`;
+  }
+
+  let html = `<div class="card">
+    <h3 style="margin:0 0 6px 0" class="p-txt${rk}">Luyện Dược Sư · ${PL_QN[rk]}</h3>
+    <small>Đan độc: ${S.tox|0}/100 · 🪙${S.gold}${F?' · 🔥 '+F+' Dị hỏa':''}</small><br>
+    <div class="bar"><i style="background:var(--gd);width:${pct}%"></i></div>
+    <small>Kinh nghiệm luyện dược: ${exp}/${maxExp}</small><br>
+    <small style="color:#2a9d4a; font-weight:bold;">Đặc quyền: Tỷ lệ Thượng Phẩm +${rk*2}%, Tỷ lệ ra Đúp (2 viên) +${rk*1.5}%</small><br>
+    <div style="margin-top:8px"><b>Dược thảo hiện có (chạm xem chi tiết):</b><br>
+    ${Object.keys(MT).map(k=>`<span class="mat-tag" data-tip="${mtip(k).replace(/"/g,'&quot;')}" style="border-color:${MT[k]?(QC?.[MT[k].g]||'#ccc'):'#ccc'}">${MT[k]?MT[k].n:k} ×${S.mat[k]||0}</span>`).join(' ')}</div>
   </div>
-  ${RC.map(r=>{
-    const unl=S.recipes[r.id];
-    return `<div class="card" style="${unl?'':'opacity:.6'}" data-tip="${rtip(r).replace(/"/g,'&quot;')}">
+  ${advHtml}`;
+
+  html += RC.map(r=>{
+    const unl = S.recipes[r.id];
+    const isHighPill = r.g >= 6; // Thất Phẩm trở lên
+    const reqAlR = r.g - 1; // Lục Phẩm mới luyện được Thất Phẩm
+    const lockedRank = isHighPill && rk < reqAlR;
+
+    return `<div class="card" style="${unl&&!lockedRank?'':'opacity:.6'}" data-tip="${rtip(r).replace(/"/g,'&quot;')}">
       <b class="p-txt${r.g}">${r.n}</b> <small>${PL_QN[r.g]} · ${r.d}</small><br>
       <small>${Object.keys(r.need).map(k=>(MT[k]?MT[k].n:k)+' ×'+r.need[k]).join(', ')} + ${r.c}🪙 · tỉ lệ ${crate(r)}%${r.fire?' · Cần dị hỏa':''}</small><br>
-      ${unl?`<button data-a="craft" data-v="${r.id}">Luyện đan</button>`:'<small style="color:var(--hp)">🔒 Chưa có Đan Phương</small>'}
+      ${!unl ? '<small style="color:var(--hp)">🔒 Chưa có Đan Phương</small>' : 
+        lockedRank ? `<small style="color:var(--hp)">🔒 Yêu cầu Luyện Dược Sư tối thiểu ${PL_QN[reqAlR]}</small>` : 
+        `<button data-a="craft" data-v="${r.id}">Luyện đan</button>`}
       ${r.pc?`<small>Có: ${S.pl[r.id]||0} viên</small>`:[r.id,r.id+'*'].filter(i=>S.pl[i]>0).map(i=>`<button data-a="use" data-v="${i}">${i.endsWith('*')?'Thượng phẩm':'Dùng'} ×${S.pl[i]}</button>`).join(' ')}
     </div>`;
-  }).join('')}`;
+  }).join('');
+  return html;
 },
 fire(){
   const f=P.phanquyet, ownedCount=Object.keys(S.fire||{}).length;
@@ -1300,38 +1347,72 @@ document.addEventListener('click',e=>{
     syncTab();
   }
   else if(a=='craft'){
-    const r=RC.find(x=>x.id==v),F=Object.keys(S.fire).length;
-    if(!S.recipes[r.id])toast('Chưa có Đan Phương, không thể luyện!');
-    else if(r.fire&&!F)toast('Cần sở hữu Dị Hỏa mới có thể luyện đan này');
-    else if(S.gold<r.c||Object.keys(r.need).some(k=>(S.mat[k]||0)<r.need[k]))toast('Thiếu dược liệu hoặc kim tệ');
-    else{
-      S.gold-=r.c;for(const k in r.need)S.mat[k]-=r.need[k];S.al++;
+    const r=RC.find(x=>x.id==v), F=Object.keys(S.fire).length;
+    const alRnk = S.al_r || 0;
+
+    if(!S.recipes[r.id]) toast('Chưa có Đan Phương, không thể luyện!');
+    else if(r.fire && !F) toast('Cần sở hữu Dị Hỏa mới có thể luyện đan này');
+    else if(r.g >= 6 && alRnk < r.g - 1) toast(`Cảnh giới Luyện Dược Sư quá thấp! Yêu cầu tối thiểu ${PL_QN[r.g - 1]}.`);
+    else if(S.gold<r.c || Object.keys(r.need).some(k=>(S.mat[k]||0)<r.need[k])) toast('Thiếu dược liệu hoặc kim tệ');
+    else {
+      S.gold-=r.c; for(const k in r.need) S.mat[k]-=r.need[k];
       
-      // BẮT ĐẦU XÉT TỶ LỆ THÀNH CÔNG
-      if(Math.random()*100<crate(r)){
-          
-        // CHUYỂN 2 HÀM CHECK NHIỆM VỤ VÀO ĐÂY: Chỉ khi thành công mới đếm
-        chkSide('craft_pill',r.id,1); 
-        chkSide('craft_any',null,1);  
+      if(Math.random()*100 < crate(r)) {
+        S.al++;
+        if(!S.crafted) S.crafted = {};
+        S.crafted[r.id] = (S.crafted[r.id] || 0) + 1; // Lưu tiến trình đan chỉ định
         
-        const fine=r.fx&&Math.random()<.12+S.al*.004+ex().lk/400,id=r.id+(fine?'*':'');
-        S.pl[id]=(S.pl[id]||0)+1;
+        // Cộng EXP Luyện Dược Sư
+        const maxExp = ALC_REQ[alRnk] ? ALC_REQ[alRnk].exp : Infinity;
+        S.al_e = Math.min(maxExp, (S.al_e || 0) + ALC_EXP[r.g]);
+
+        chkSide('craft_pill', r.id, 1); 
+        chkSide('craft_any', null, 1);  
         
-        // Bật hiệu ứng Đan dược bậc cao (Ngũ Phẩm trở lên tương đương g >= 4)
+        // Đặc quyền Cấp Bậc: Tỷ lệ x2 Đan
+        const doubleChance = alRnk * 1.5;
+        const isDouble = Math.random() * 100 < doubleChance;
+        const amt = isDouble ? 2 : 1;
+
+        // Đặc quyền Cấp Bậc: Tỷ lệ Thượng Phẩm
+        const fineChance = 12 + S.al*0.004 + ex().lk/400 + (alRnk*2);
+        const fine = r.fx && Math.random()*100 < fineChance;
+        const id = r.id + (fine ? '*' : '');
+        
+        S.pl[id] = (S.pl[id] || 0) + amt;
+        
         if (r.g >= 4) {
             epicCraftFx(r.g, r.n, fine);
         } else {
-            toast('Luyện thành công'+(fine?' (Thượng phẩm!)':'')+': '+r.n);
+            toast(`Luyện thành công ${isDouble?'x2':''} ${r.n}${fine?' (Thượng phẩm!)':''}`);
             snd('craft');
         }
 
         const q=Q[S.qi];
-        // Logic cho Nhiệm Vụ Chính cũng đã an toàn nằm trong đây
         if (S.qs=='active' && q.goal.t=='craft' && (!q.goal.m || q.goal.m == r.id)) {
-            S.pr++; chk();
+            S.pr += amt; chk();
         }
-      }else toast('Luyện đan thất bại! Đan dược hóa tro tàn'); // Rớt đan -> Bỏ qua phần đếm
+      } else toast('Luyện đan thất bại! Đan dược hóa tro tàn');
       syncTab();
+    }
+  }
+  else if(a=='al_up'){
+    const rk = S.al_r || 0;
+    const req = ALC_REQ[rk];
+    if (req) {
+        const okL = S.L >= req.L;
+        const okC = S.al >= req.crafts;
+        const okP = (S.crafted && S.crafted[req.pill] >= req.p_amt);
+        const exp = S.al_e || 0;
+        
+        if (okL && okC && okP && exp >= req.exp) {
+            S.al_r = rk + 1;
+            S.al_e = 0; // Đặt lại EXP cho cấp mới
+            toast(`🎉 Khai mở huyết mạch! Thăng cấp Luyện Dược Sư ${PL_QN[S.al_r]}!`);
+            snd('up');
+            flash();
+            syncTab();
+        }
     }
   }
   else if(a=='use'){
