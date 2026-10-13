@@ -1306,9 +1306,14 @@ document.addEventListener('click',e=>{
     else if(S.gold<r.c||Object.keys(r.need).some(k=>(S.mat[k]||0)<r.need[k]))toast('Thiếu dược liệu hoặc kim tệ');
     else{
       S.gold-=r.c;for(const k in r.need)S.mat[k]-=r.need[k];S.al++;
-      chkSide('craft_pill',r.id,1);
-      chkSide('craft_any',null,1);
+      
+      // BẮT ĐẦU XÉT TỶ LỆ THÀNH CÔNG
       if(Math.random()*100<crate(r)){
+          
+        // CHUYỂN 2 HÀM CHECK NHIỆM VỤ VÀO ĐÂY: Chỉ khi thành công mới đếm
+        chkSide('craft_pill',r.id,1); 
+        chkSide('craft_any',null,1);  
+        
         const fine=r.fx&&Math.random()<.12+S.al*.004+ex().lk/400,id=r.id+(fine?'*':'');
         S.pl[id]=(S.pl[id]||0)+1;
         
@@ -1321,10 +1326,11 @@ document.addEventListener('click',e=>{
         }
 
         const q=Q[S.qi];
+        // Logic cho Nhiệm Vụ Chính cũng đã an toàn nằm trong đây
         if (S.qs=='active' && q.goal.t=='craft' && (!q.goal.m || q.goal.m == r.id)) {
             S.pr++; chk();
         }
-      }else toast('Luyện đan thất bại! Đan dược hóa tro tàn');
+      }else toast('Luyện đan thất bại! Đan dược hóa tro tàn'); // Rớt đan -> Bỏ qua phần đếm
       syncTab();
     }
   }
