@@ -327,7 +327,7 @@ const ALL_FIRES = G.ALL_FIRES = [
 
 const SLS='whagbtnc',KS={w:[4,0,0],h:[0,1,6],a:[0,2,10],g:[2,0,0],b:[0,1.5,5],t:[0,1,8],n:[1,0,6],c:[1.5,0,5]};
 const AF=[['cr',1.5],['cd',4],['lk',2],['ds',1.2],['kn',1.5],['ls',1],['xp',3],['gp',3],['rg',.8],['at',2],['pn',2],['kc',3],['mg',.4]],STK=AF.map(a=>a[0]),SBV=[4,10,6,3,4,3,8,8,2,6,5,8,1];
-const STT={at:['⚔️','Công kích %','Tăng % sát thương gây ra','%'],cr:['🎯','Bạo kích','Xác suất bạo kích (gốc 10%)','%'],cd:['💢','Bạo thương','Sát thương khi bạo kích (gốc 150%)','%'],pn:['🗡️','Xuyên giáp','Bỏ qua % phòng thủ của quái (tối đa 70%)','%'],ls:['🩸','Hút máu','Hồi máu bằng % sát thương gây ra','%'],fd:['🔥','Hỏa sát','Tăng % toàn bộ sát thương (từ dị hỏa)','%'],kn:['🛡️','Kháng tính','Giảm % sát thương nhận (tối đa 60%)','%'],ds:['💨','Né tránh','Xác suất né hoàn toàn đòn của quái','%'],kc:['🧿','Kháng choáng/độc','Giảm xác suất bị choáng và sát thương độc (tối đa 80%)','%'],rg:['💚','Hồi phục','Mỗi nhịp hồi (giá trị/2)% máu tối đa',''],lk:['🍀','May mắn','Tăng tỉ lệ rơi đồ, phẩm chất, dược liệu; tăng tỉ lệ luyện đan và đột phá',''],xp:['📖','Ngộ tính','Tăng % đấu khí nhận được','%'],gp:['🪙','Tài lộc','Tăng % kim tệ nhận được','%'],mg:['🔷','Hồi đấu khí','Hồi thêm đấu khí mỗi nhịp để tung đấu kỹ','']};
+const STT={at:['⚔️','Công kích %','Tăng % sát thương gây ra','%'],cr:['🎯','Bạo kích','Xác suất bạo kích (gốc 10%)','%'],cd:['💢','Bạo thương','Sát thương khi bạo kích (gốc 150%)','%'],pn:['🗡️','Xuyên giáp','Bỏ qua % phòng thủ của quái (tối đa 70%, Đấu Đế gỡ trần)','%'],ls:['🩸','Hút máu','Hồi máu bằng % sát thương gây ra (tối đa 70%, Đấu Đế gỡ trần)','%'],fd:['🔥','Hỏa sát','Tăng % toàn bộ sát thương (từ dị hỏa)','%'],kn:['🛡️','Kháng tính','Giảm % sát thương nhận (tối đa 60%, Đấu Đế gỡ trần)','%'],ds:['💨','Né tránh','Xác suất né hoàn toàn đòn của quái (tối đa 70%, Thần thú 80%, Đấu Đế gỡ trần)','%'],kc:['🧿','Kháng choáng/độc','Giảm xác suất bị choáng và sát thương độc (tối đa 80%, Đấu Đế gỡ trần)','%'],rg:['💚','Hồi phục','Mỗi nhịp hồi (giá trị/2)% máu tối đa',''],lk:['🍀','May mắn','Tăng tỉ lệ rơi đồ, phẩm chất, dược liệu; tăng tỉ lệ luyện đan và đột phá',''],xp:['📖','Ngộ tính','Tăng % đấu khí nhận được','%'],gp:['🪙','Tài lộc','Tăng % kim tệ nhận được','%'],mg:['🔷','Hồi đấu khí','Hồi thêm đấu khí mỗi nhịp để tung đấu kỹ','']};
 const TRI={dg:['💨','Né tránh','Có xác suất né đòn của bạn'],ar:['🛡️','Giáp dày','Phòng thủ ×1.5 (xuyên giáp giảm tác dụng)'],rg:['💚','Hồi phục','Tự hồi máu mỗi nhịp'],cr:['⚡','Bạo kích','Có thể đánh bạo kích 180% sát thương'],ps:['☠️','Độc','Có thể gây độc 4 nhịp'],st:['💫','Choáng','Có thể làm bạn choáng 1 nhịp'],en:['😡','Cuồng nộ','Dưới 40% máu: tấn công +40%']};
 
 const bagC=()=>50+10*Math.min(20,S.bg||0);
@@ -376,7 +376,23 @@ const itip=it=>{
   const g=gs(it),x=Object.keys(it.x||{}).map(k=>STT[k][0]+' '+STT[k][1]+' +'+it.x[k]+STT[k][3]).join('<br>'),t=it.set!=null?SETS[it.set]:null;
   return `<b class="${it.q>=6?'rb-txt':'txt-q'+it.q}">${it.n}${it.e?' +'+it.e:''}${it.lock?' 🔒':''}</b><br>${SL[it.s]} · Bậc ${it.t} · ${QN[it.q]} giai<br>${[g.a?'⚔️ Công '+g.a:'',g.d?'🛡️ Thủ '+g.d:'',g.h?'❤️ Máu '+g.h:''].filter(Boolean).join(' · ')}${x?'<br>'+x:''}${t?'<br>🧩 Bộ '+t.n+': '+[0,1,2].map(j=>{const b=SB(it.set,j);return 2*(j+1)+' món '+STT[b[0]][1]+' +'+b[1]+STT[b[0]][3]}).join(' · '):''}<br>Giá bán ${val(it)}🪙`.replace(/"/g,'&quot;');
 };
-const stl=(k,E)=>{const d=STT[k],v=(k=='cr'?10:k=='cd'?150:0)+E[k],src=(E.src[k]||[]).join('<br>');return `<div data-tip="<b>${d[1]}</b><br>${d[2]}${src?'<br><small>Nguồn:<br>'+src+'</small>':''}">${d[0]} ${d[1]}: <b>${+(k=='kn'?Math.min(60,v):v).toFixed(1)}${d[3]}</b></div>`};
+const stl=(k,E)=>{
+    const isDe = Math.floor(S.L / 9) >= 11;
+    const actP = S.actPet ? S.pets.find(x => x.id == S.actPet) : null;
+    const isThanPet = actP && actP.q >= 6; 
+    const d=STT[k], v=(k=='cr'?10:k=='cd'?150:0)+E[k], src=(E.src[k]||[]).join('<br>');
+    
+    // Xử lý hiển thị thật cho giao diện (áp dụng y hệt trần của Combat)
+    let finalV = v;
+    if (!isDe) {
+        if (k == 'kn') finalV = Math.min(60, v);
+        if (k == 'pn' || k == 'ls') finalV = Math.min(70, v);
+        if (k == 'kc') finalV = Math.min(80, v);
+        if (k == 'ds') finalV = Math.min(isThanPet ? 80 : 70, v);
+    }
+    
+    return `<div data-tip="<b>${d[1]}</b><br>${d[2]}${src?'<br><small>Nguồn:<br>'+src+'</small>':''}">${d[0]} ${d[1]}: <b>${+(finalV).toFixed(1)}${d[3]}</b></div>`;
+};
 const cfTxt = () => {
     const f = P.phanquyet;
     if (!f || !S.fl.phanquyet) return '<small>Chưa học công pháp</small>';
@@ -701,7 +717,10 @@ function tick(){
   if(!$('ov').hidden)return;
   const s=st(),E=ex();addExp(.6*pm('exp')*(1+E.xp/100));
   for(const i in S.bf)if(--S.bf[i].t<=0)delete S.bf[i];
+  
+  // Trừ Cooldown (Hồi chiêu) của tất cả Đấu kỹ
   for(const i in CD)if(CD[i]>0)CD[i]--;
+  
   S.tox=Math.max(0,(S.tox||0)-.06);
   if(dead>0){if(--dead==0){php=s.h;spawn()} syncTab(); return}
   if(!mob)spawn();
@@ -735,46 +754,51 @@ function tick(){
     } else {
         let k=1, hits=1, actSk=null;
         
-        // KIỂM TRA ĐẤU KỸ (Skill)
+        // KIỂM TRA TUNG ĐẤU KỸ (Skill)
         for(const id of S.eq){
           const sk=SK[id],l=S.skl[id]||1;
-          if(!sk || pmp<sk.mp || CD[id]>0) continue; // Nếu thiếu MP hoặc đang CD thì bỏ qua, tìm skill tiếp theo
+          if(!sk || pmp<sk.mp || CD[id]>0) continue; // Bỏ qua nếu thiếu MP hoặc đang CD
           
           pmp-=sk.mp; CD[id]=sk.cd||0; actSk=sk;
           const mm=sk.m*(1+.15*(l-1)), T=sk.t;
           
+          // Áp dụng sát thương/hiệu ứng Đấu Kỹ
           if(T=='h'){const h=s.h*mm;php=Math.min(s.h,php+h);fx('p','+'+Math.round(h),'hl')}
           else if(T=='sh'){sh=s.h*mm;fx('p','🛡'+Math.round(sh),'hl')}
           else{
               k=T=='mh'?mm/(sk.n||3)*1.2:mm; 
               if(T=='mh') hits=sk.n||3;
-              if(T=='dot') mob.burn={n:4,d:Math.round(s.a*.35*k)};
+              if(T=='dot') mob.burn={n:4,d:Math.round(s.a*.35*k)}; // Gây sát thương nổ ban đầu
               if(T=='cc') mob.stun=2;
-              if(T=='br') mob.brk=4; // Phá giáp duy trì 4 nhịp
+              if(T=='br') mob.brk=4;
           }
-          fx('p', sk.n, 'xp'); // Hiển thị tên Đấu Kỹ vừa dùng
-          break; // Chỉ tung 1 Đấu Kỹ mỗi nhịp
+          fx('p', sk.n, 'xp'); 
+          break; // Chỉ dùng 1 skill 1 nhịp
         }
         
-        // NẾU KHÔNG CÓ ĐẤU KỸ NÀO ĐƯỢC TUNG RA -> Mặc định là k=1, hits=1 (Đánh thường)
+        // NẾU KHÔNG CÓ ĐẤU KỸ (k=1, hits=1) -> ĐÁNH THƯỜNG
         const md0 = mob.d * (tr.ar?1.5:1) * (1-realPn) * (mob.brk>0?0.6:1);
         
-        for(let h=0;h<hits;h++){
-          if(Math.random()<(tr.dg||0)/100){fx('m','Né','hl');continue}
-          const cr=Math.random()<.1+E.cr/100;
-          let dm=Math.max(1,Math.round((s.a*k*(.85+Math.random()*.3)-md0)*(cr?1.5+E.cd/100:1)*(1+E.fd/100)));
-
-          if (S.zone === 'vanthu' && S.catchMode && (S.cages || 0) > 0 && mob.hp - dm <= 0) {
-              dm = mob.hp - 1; mob.mercy = true; mob.stun = 6;
-              fx('m', 'Lưu tình!', 'hl'); toast('💡 Đã đánh ngất ma thú! Ném lồng bắt ngay!');
-          }
-
-          mob.hp-=dm;
-          if (dm > 0 && !mob.mercy) fx('m',(k>1?'💥':'')+dm,cr?'cr':'');
-          if(cr){snd('crit');shake();}else{snd('hit');}
-          if(E.ls)php=Math.min(s.h,php+dm*realLs);
-          
-          if(mob.hp <= 0 || mob.mercy) break;
+        // Vòng lặp xuất quyền (Hits > 1 nếu là Đấu kỹ liên kích)
+        // Nếu Đấu kỹ T=h (Hồi máu) hoặc sh (Tạo khiên) -> Không gây DMG đánh thường (trừ khi bạn muốn vừa thủ vừa công)
+        if (!actSk || (actSk.t !== 'h' && actSk.t !== 'sh')) {
+            for(let h=0;h<hits;h++){
+              if(Math.random()<(tr.dg||0)/100){fx('m','Né','hl');continue}
+              const cr=Math.random()<.1+E.cr/100;
+              let dm=Math.max(1,Math.round((s.a*k*(.85+Math.random()*.3)-md0)*(cr?1.5+E.cd/100:1)*(1+E.fd/100)));
+    
+              if (S.zone === 'vanthu' && S.catchMode && (S.cages || 0) > 0 && mob.hp - dm <= 0) {
+                  dm = mob.hp - 1; mob.mercy = true; mob.stun = 6;
+                  fx('m', 'Lưu tình!', 'hl'); toast('💡 Đã đánh ngất ma thú! Ném lồng bắt ngay!');
+              }
+    
+              mob.hp-=dm;
+              if (dm > 0 && !mob.mercy) fx('m',(k>1?'💥':'')+dm,cr?'cr':'');
+              if(cr){snd('crit');shake();}else{snd('hit');}
+              if(E.ls)php=Math.min(s.h,php+dm*realLs);
+              
+              if(mob.hp <= 0 || mob.mercy) break;
+            }
         }
         
         // --- MA THÚ TRỢ CHIẾN ---
@@ -792,6 +816,7 @@ function tick(){
           }
         }
         
+        // Áp dụng sát thương Thiêu Đốt từ Đấu kỹ hệ Hỏa
         if(mob.burn&&mob.burn.n-->0 && mob.hp > 1 && !mob.mercy){
           mob.hp-=mob.burn.d;fx('m','🔥'+mob.burn.d);
         }
@@ -802,12 +827,12 @@ function tick(){
   if(mob.hp<=0){kill(); syncTab(); return;}
   
   // --- LƯỢT CỦA QUÁI VẬT ---
-  if(mob.brk>0) mob.brk--; // Trừ nhịp hiệu ứng phá giáp
+  if(mob.brk>0) mob.brk--; // Trừ nhịp hiệu ứng phá giáp của người chơi
 
   if(mob.stun>0 && !mob.mercy){mob.stun--;fx('m','💫')}else if(Math.random()<realDs && !mob.mercy)fx('p','Né!','hl');else if(!mob.mercy){
     let a=mob.a;if(tr.en&&mob.hp<mob.max*.4)a*=1.4;
     const c=Math.random()<(tr.cr||0)/100;
-    // Đã thêm realKn để bảo vệ người chơi theo trần kháng tính (Max 60% hoặc 100% nếu là Đấu Đế)
+    // Đã thay thế E.kn thành realKn để tuân thủ luật tháo trần
     let md=Math.max(1,Math.round((a*(.85+Math.random()*.3)*(c?1.8:1)-s.d)*(1-realKn)));
     if(sh>0){const ab=Math.min(sh,md);sh-=ab;md-=ab}
     php-=md;fx('p',(c?'⚡':'-')+md,'md');if(c)shake();
@@ -831,8 +856,7 @@ function upd(){
   // Realtime cập nhật trạng thái Icon Âm Thanh trên Header
   set('btn_snd', e => { const t = S.snd ? '🔊' : '🔇'; if(e.textContent !== t) e.textContent = t; });
 
-  $('rl').textContent=lv(S.L);$('xb').style.width=Math.min(100,S.exp/n*100)+'%';
-  $('xt').textContent=S.exp>=n&&S.L<cap()?'✅ Đủ đấu khí, đột phá ngay':`Đấu khí ${Math.floor(S.exp)}/${n}`;
+  $('rl').textContent=lv(S.L);$('xb').style.width=Math.min(100,S.exp/n*100)+'\%';$('xt').textContent=S.exp>=n&&S.L<cap()?'✅ Đủ đấu khí, đột phá ngay':`Đấu khí ${Math.floor(S.exp)}/${n}`;
   
   $('gd').innerHTML=`<span data-tip='Kim tệ'>🪙${S.gold}</span> · <span data-tip='Hồi Huyết Tán'>🧪×${S.pots}</span> <button data-a="buy" data-tip="<b>Hồi Huyết Tán</b><br>Giá: 30🪙<br>Hồi 45% máu tối đa ngay lập tức" style="font-size:10px;padding:1px 5px">+Mua</button>`;
   
@@ -843,7 +867,17 @@ function upd(){
 
   set('me',e=>e.textContent=mob?mob.e:'💤');
   updateInner('mn', mob ? mob.n : '');
-  let mtrHtml = Object.keys(mob?mob.tr||{}:{}).map(k=>`<span data-tip="<b>${TRI[k][1]}</b>: ${TRI[k][2]}">${TRI[k][0]}</span>`).join(' ');
+  
+  // HIỂN THỊ ĐẶC TÍNH QUÁI (THÊM BÁO ĐỎ CUỒNG NỘ)
+  let mtrHtml = Object.keys(mob?mob.tr||{}:{}).map(k=>{
+      let activeStr = '';
+      // Nếu có đặc tính Cuồng Nộ và HP < 40%, bôi đỏ rực icon
+      if (k === 'en' && mob && mob.hp < mob.max * 0.4) {
+          activeStr = 'style="color:red; font-size:14px; text-shadow: 0 0 5px red; animation: pulse-f5 1s infinite alternate;"';
+      }
+      return `<span data-tip="<b>${TRI[k][1]}</b>: ${TRI[k][2]}" ${activeStr}>${TRI[k][0]}</span>`;
+  }).join(' ');
+
   if (mob) {
       if (mob.burn && mob.burn.n > 0) mtrHtml += ` <span data-tip="Đang bị thiêu đốt">🔥</span>`;
       if (mob.stun > 0) mtrHtml += ` <span data-tip="Đang bị choáng">💫</span>`;
@@ -867,8 +901,17 @@ function upd(){
   const heroQ = rankToQ[rIdx];
   const cls = heroQ >= 6 ? 'rb-txt' : 'txt-q' + Math.min(5, heroQ);
   
+  // HIỂN THỊ TRẠNG THÁI (BUFF/DEBUFF) CỦA TIÊU VIÊM
+  let heroFx = '';
+  if (sh > 0) heroFx += ` <span data-tip="Khiên chắn: ${Math.round(sh)} điểm">🛡️</span>`;
+  if (psn > 0) heroFx += ` <span data-tip="Đang trúng độc (${psn} nhịp)">☠️</span>`;
+  if (stn > 0) heroFx += ` <span data-tip="Đang bị choáng (${stn} nhịp)">💫</span>`;
+
   set('hero_av', e => e.textContent = AV[rIdx] || '🧒');
-  set('hero_name', e => { if(e.className !== cls) e.className = cls; });
+  set('hero_name', e => { 
+      if(e.className !== cls) e.className = cls; 
+      e.innerHTML = `Tiêu Viêm${heroFx}`; // Ghép icon vào cạnh tên
+  });
   set('hdr_name', e => { if(e.className !== cls) e.className = cls; });
 
   if(tab=='hero'){
