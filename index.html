@@ -76,7 +76,7 @@ button:active{transform:scale(.97)}
 }
 
 .txt-q0 { color: #8a8a8a; }
-.txt-q1 { background: linear-gradient(90deg, #d97706, #fcd34d, #d97706); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700; }
+.txt-q1 { background: linear-gradient(90deg, #16a34a, #4ade80, #16a34a); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700; }
 .txt-q2 { background: linear-gradient(90deg, #8b5cf6, #c4b5fd, #8b5cf6); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700; }
 .txt-q3 { background: linear-gradient(90deg, #e11d48, #fda4af, #e11d48); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700; }
 .txt-q4 { background: linear-gradient(90deg, #f59e0b, #fde047, #f59e0b); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700; }
@@ -145,7 +145,7 @@ button:active{transform:scale(.97)}
 .box b{color:var(--gd)}
 
 /* Tooltip (Hover) bám chuột */
-#tp{position:fixed; z-index:9999; background:var(--pn); border:2px solid var(--gd); border-radius:8px; padding:9px 12px; font-size:12.5px; line-height:1.5; pointer-events:none; box-shadow:0 6px 20px rgba(0,0,0,.35); max-width:300px; width:max-content}
+#tp{position:fixed; z-index:9999; background:var(--pn); border:2px solid var(--gd); border-radius:8px; padding:9px 12px; font-size:12.5px; line-height:1.5; pointer-events:none; box-shadow:0 6px 20px rgba(0,0,0,.35); width:max-content; max-width:calc(100vw - 20px); word-wrap:break-word}
 #tp[hidden]{display:none}
 [data-tip]{cursor:help}
 
@@ -230,7 +230,7 @@ requestAnimationFrame(runGradientAnim);
 const $=id=>document.getElementById(id);
 const R=['Đấu Chi Khí','Đấu Giả','Đấu Sư','Đại Đấu Sư','Đấu Linh','Đấu Vương','Đấu Hoàng','Đấu Tông','Đấu Tôn','Bán Thánh','Đấu Thánh','Đấu Đế'];
 const QN=['Phàm','Hoàng','Huyền','Địa','Thiên','Thần','Thần'],QM=[1,1.4,2.2,3.4,5.2,7.5,10];
-const QC=['#8a8a8a','#d97706','#8b5cf6','#e11d48','#f59e0b','#ec4899','#ff0000'];
+const QC=['#8a8a8a','#16a34a','#8b5cf6','#e11d48','#f59e0b','#ec4899','#ff0000'];
 const PL_QN=['Nhất Phẩm','Nhị Phẩm','Tam Phẩm','Tứ Phẩm','Ngũ Phẩm','Lục Phẩm','Thất Phẩm','Bát Phẩm','Cửu Phẩm']; // Hệ thống 9 Phẩm Đan Dược
 const SL={w:'Vũ khí',h:'Mũ',a:'Giáp',g:'Găng',b:'Giày',t:'Đai',n:'Dây chuyền',c:'Nhẫn'},NM={w:['Mộc Côn','Thiết Kiếm','Trường Đao','Huyền Trọng Xích'],h:['Khăn Vải','Mũ Da','Mũ Thiết','Thần Hỏa Quán'],a:['Bố Y','Da Giáp','Thiết Giáp','Đoán Viêm Bào'],g:['Găng Vải','Găng Da','Găng Thiết','Lôi Đình Thủ'],b:['Giày Vải','Ủng Da','Chiến Ngoa','Hóa Dực Hài'],t:['Dây Vải','Đai Da','Đai Thiết','Thanh Liên Đới'],n:['Hạt Gỗ','Ngọc Bội','Huyền Liên','Tâm Hỏa Tỏa'],c:['Nhẫn Đồng','Nhẫn Bạc','Giới Chỉ','U Hồn Giới']},IC={w:'🗡️',h:'🪖',a:'🛡️',g:'🧤',b:'👢',t:'🎗️',n:'📿',c:'💍'};
 const G=window.G={ch:[],end:'Đã hết nội dung hiện có. Hãy chờ đón các chương kế tiếp!',addChapter(c){this.ch.push(c);this.ch.sort((a,b)=>a.order-b.order)}};
@@ -1188,6 +1188,7 @@ function draw(){
 
 document.addEventListener('click',e=>{
   const b=e.target.closest('[data-a]');if(!b)return;
+  $('tp').hidden = true;
   const a=b.dataset.a,v=b.dataset.v;
   if(a=='nx')return $('ov')._n();
   if(a=='clsov')return $('ov').hidden=true;
@@ -1319,7 +1320,10 @@ document.addEventListener('click',e=>{
             snd('craft');
         }
 
-        const q=Q[S.qi];if(S.qs=='active'&&q.goal.t=='craft'){S.pr++;chk()}
+        const q=Q[S.qi];
+        if (S.qs=='active' && q.goal.t=='craft' && (!q.goal.m || q.goal.m == r.id)) {
+            S.pr++; chk();
+        }
       }else toast('Luyện đan thất bại! Đan dược hóa tro tàn');
       syncTab();
     }
@@ -1575,18 +1579,31 @@ else if(a=='adm'){
 // Tooltip (Hover) bám chuột
 const TP=()=>$('tp');
 document.addEventListener('mousemove', e => {
+  const tp = TP();
+  // KHẮC PHỤC CHỒNG CHÉO: Nếu Pop-up/Overlay đang mở, cấm hiển thị Tooltip
+  if (!$('ov').hidden) {
+    tp.hidden = true;
+    return;
+  }
+
   const t = e.target.closest('[data-tip]');
   const btn = e.target.closest('button');
-  const tp = TP();
 
   // Khử nhiễu: Nếu trỏ vào vùng nút không có tooltip, thì tắt
   if (t && (!btn || btn === t)) {
     if (tp.innerHTML !== t.dataset.tip) tp.innerHTML = t.dataset.tip;
     tp.hidden = false;
+    
     let x = e.clientX + 15;
     let y = e.clientY + 15;
-    if (x + tp.offsetWidth > window.innerWidth) x = e.clientX - tp.offsetWidth - 10;
-    if (y + tp.offsetHeight > window.innerHeight) y = e.clientY - tp.offsetHeight - 10;
+    
+    // Thuật toán giữ Tooltip luôn nằm gọn trong màn hình Mobile
+    if (x + tp.offsetWidth > window.innerWidth) x = window.innerWidth - tp.offsetWidth - 10;
+    if (x < 10) x = 10; // Chặn lấn mép trái
+    
+    if (y + tp.offsetHeight > window.innerHeight) y = e.clientY - tp.offsetHeight - 15; // Nếu lấn mép dưới, dời lên trên ngón tay
+    if (y < 10) y = 10; // Chặn lấn mép trên
+    
     tp.style.left = x + 'px';
     tp.style.top = y + 'px';
   } else {
@@ -1724,12 +1741,12 @@ zones:[
 quests:[
 q('q1','Kiểm Định Đấu Khí','Ra Diễn Võ Trường, đánh 10 Mộc Nhân thử quyền.',{t:'kill',m:'moc',n:10},[['','Ô Thản Thành, Tiêu gia. Tiếng người huyên náo bên bia đá trắc nghiệm.'],['Trắc Nghiệm Viên','Tiêu Viêm... Đấu Chi Khí: Tam Đoạn! Cấp bậc: Hạ đẳng!'],['Tộc nhân','Ha ha, thiên tài ngày xưa nay đúng thật chỉ là một tên phế vật.'],[V,'(Mười năm trước ta vang danh toàn thành, ba năm nay đấu khí lại không cánh mà bay... Không cam lòng!)']],[['V','Mộc nhân không biết nhạo báng. Nắm đấm này ta nhất định phải luyện lại!']],{gold:50,exp:X(2),pots:2}),
 q('q2','Bí Mật Chiếc Nhẫn Đen','Lên Hậu Sơn Tiêu Gia tu luyện, săn 15 Dã Lang.',{t:'kill',m:'lang',n:15},[['','Đêm khuya thanh vắng, Tiêu Viêm một mình ngồi trên đỉnh núi ngắm trăng sao.'],[V,'Chiếc nhẫn mẫu thân để lại... vì sao mỗi lần ta tụ khí nó đều hút sạch không còn một giọt?']],[['','Một làn khói trắng bay ra từ chiếc nhẫn, hóa thành một lão giả râu tóc bạc phơ.'],[D,'Khà khà, tiểu tử, ba năm qua nhờ có đấu khí của ngươi tẩm bổ mà linh hồn ta mới hồi phục được.'],[V,'Tên khốn kiếp! Ngươi hại ta trở thành trò cười cho thiên hạ suốt ba năm!'],[D,'Bái ta làm sư phụ, ta sẽ đền bù cho ngươi gấp trăm lần!']],{gold:90,exp:X(3),fl:'phanquyet',item:{s:'w',t:1,q:1}}),
-q('q3','Trúc Cơ Ngâm Thể','Luyện 2 bình Trúc Cơ Linh Dịch tôi rèn kinh mạch.',{t:'craft',n:2},[[D,'Ngươi thân thể suy nhược, phải ngâm Trúc Cơ Linh Dịch mới bù đắp được ba năm hao tổn. Bắt tay luyện chế đi!']],[[V,'Toàn thân ấm áp, kinh mạch được tẩy trừ tạp chất, sảng khoái vô cùng!']],{gold:100,exp:X(3),rec:'btd',pots:3}),
+q('q3','Trúc Cơ Ngâm Thể','Luyện 2 bình Trúc Cơ Linh Dịch tôi rèn kinh mạch.',{t:'craft',m:'tcl',n:2},[[D,'Ngươi thân thể suy nhược, phải ngâm Trúc Cơ Linh Dịch mới bù đắp được ba năm hao tổn. Bắt tay luyện chế đi!']],[[V,'Toàn thân ấm áp, kinh mạch được tẩy trừ tạp chất, sảng khoái vô cùng!']],{gold:100,exp:X(3),rec:'btd',pots:3}),
 q('q4','Đấu Giá Hội Mễ Đặc Nhĩ','Vào phố Ô Thản hạ 12 Hắc Bang Côn Đồ, mang Trúc Cơ Linh Dịch đi bán.',{t:'kill',m:'bang',n:12},[['','Phòng đấu giá Mễ Đặc Nhĩ. Nữ tổng quản Nhã Phi kiều diễm tuyệt trần tiếp đón hắc bào thần bí.'],['Nhã Phi','Dược dịch thần kỳ bực này quả là tác phẩm của Luyện Dược Đại Sư, Mễ Đặc Nhĩ chúng ta xin nhận đấu giá!']],[['V','Có tiền tài mua dược liệu rồi, Dược Lão quả nhiên không lừa ta!']],{gold:180,exp:X(4),pots:3}),
 q('q5','Nhập Môn Phần Quyết','Vận chuyển Phần Quyết, đạt Đấu Chi Khí 5 đoạn.',{t:'lv',v:4},[[D,'Phần Quyết là kỳ công cái thế, muốn tiến hóa phải nuốt Dị Hỏa. Cứ vững vàng đắp móng trước đã.']],[[V,'Kinh mạch ấm áp, tốc độ hấp thu đấu khí đã nhanh hơn gấp đôi!']],{gold:120,exp:X(4),pots:3}),
 q('q6','Thu Thập Xà Đảm','Hạ 15 Thanh Văn Độc Xà gom nguyên liệu luyện đan.',{t:'kill',m:'xa',n:15},[[D,'Muốn học luyện đan thì tay chân phải nhanh nhẹn. Đi lấy độc đảm Thanh Văn Xà về đây.']],[[D,'Tốt lắm! Độc đảm xanh biếc, hỏa hầu khống chế rất khá.']],{gold:150,exp:X(5),fl:'luyen',sk:'ptc'}),
-q('q7','Luyện Chế Tụ Khí Tán','Dùng dược thảo luyện thành 2 viên Tụ Khí Tán.',{t:'craft',n:2},[[D,'Luyện dược cần linh hồn cảm giác lực tinh vi. Ngươi hãy thử nhóm lửa đan lô.']],[[D,'Đan hương ngào ngạt, ngươi đích thực có thiên phú của Luyện Dược Sư!']],{gold:160,exp:X(5),pots:3}),
-q('q8','Đấu Chi Khí Bát Đoạn','Cố gắng khổ tu, đạt Đấu Chi Khí 8 đoạn.',{t:'lv',v:7},[[D,'Đấu khí ngưng tụ thành hình. Khí thế của ngươi đã bắt đầu lộ rõ rồi đó.']],[[V,'Tám đoạn! Ta đã bỏ xa đám tộc nhân cùng trang lứa!']],{gold:200,exp:X(7),pots:4}),
+q('q7','Luyện Chế Tụ Khí Tán','Dùng dược thảo luyện thành 2 viên Tụ Khí Tán.',{t:'craft',m:'tkt',n:2},[[D,'Luyện dược cần linh hồn cảm giác lực tinh vi. Ngươi hãy thử nhóm lửa đan lô.']],[[D,'Đan hương ngào ngạt, ngươi đích thực có thiên phú của Luyện Dược Sư!']],{gold:160,exp:X(5),pots:3}),
+q('q8','Đấu Chi Khí Bát Đoạn','Cố gắng khổ tu, đạt Đấu Chi Khí 8 đoạn.',{t:'lv',v:7},[[D,'Đấu khí ngưng tụ thành hình. Khí thế của ngươi đã bắt đầu lộ rõ rồi đó.']],[[V,'Tám đoạn! Ta đã bỏ xa đám tộc nhân cùng trang lứa!']],{gold:200,exp:X(7),rec:'pc0',pots:4}),
 q('q9','Nạp Lan Yên Nhiên Thối Hôn','Hạ 15 Hắc Bang Côn Đồ trong phố giải tỏa uất ức.',{t:'kill',m:'bang',n:15},[['','Đại sảnh Tiêu gia. Thiếu nữ kiêu kỳ khoác áo bào Vân Lam Tông ngạo nghễ bước vào.'],['Nạp Lan Yên Nhiên','Tiêu Viêm, ngươi là kẻ tàn phế không xứng với ta. Hôn ước này... hủy bỏ!'],[V,'Nạp Lan tiểu thư, hôm nay không phải ngươi hưu ta, mà là ta Tiêu Viêm hưu chi!'],[V,'Ba mươi năm Hà Đông, ba mươi năm Hà Tây, đừng khinh thiếu niên nghèo! Ba năm sau ta sẽ đích thân bước lên Vân Lam Tông!']],[['V','Ba năm chi ước... mối nhục hôm nay ta sẽ rửa sạch bằng nắm đấm!']],{gold:300,exp:X(8),rec:'cth',item:{s:'c',t:2,q:1}}),
 q('q10','Trở Lại Đấu Giả','Đạt Đấu Giả 1 tinh, ngưng tụ đấu khí lốc xoáy.',{t:'lv',v:9},[[D,'Đấu khí hóa thành vòng xoáy lốc xoáy trong đan điền. Đột phá Đấu Giả đi!']],[['','Khí xoáy thành hình! Tiêu Viêm chân chính trở lại cảnh giới Đấu Giả!']],{gold:350,exp:X(9),pots:5}),
 q('q11','Đại Náo Tộc Thí Đài','Đánh bại Tiêu Ninh trên lôi đài Tiêu Gia (Boss).',{t:'kill',m:'ninh',n:1},[['Tiêu Ninh','Tiêu Viêm! Huân Nhi muội muội không thuộc về ngươi, cút xuống lôi đài cho ta!']],[['Tiêu Ninh','Làm sao có thể... Thiết Sơn Quyền của ta sao lại thua một chưởng của hắn?'],['Tộc nhân','Tiêu Viêm... hắn thật sự đã trở lại thời kỳ hoàng kim!']],{gold:600,exp:X(9),item:{s:'w',t:3,q:2}}),
@@ -1737,7 +1754,7 @@ q('q12','Tiến Vào Ma Thú Sơn Mạch','Hạ 20 Phong Lang Tốc Độ mở �
 q('q13','Gặp Gỡ Tiểu Y Tiên','Thu thập 15 Hắc Giáp Trùng bảo vệ đoàn hái thuốc.',{t:'kill',m:'htrung',n:15},[['','Thanh Sơn trấn. Tiêu Viêm tình cờ kết giao cùng thiếu nữ áo trắng thanh nhã Tiểu Y Tiên.'],['Tiểu Y Tiên','Ngươi cũng muốn vào sơn mạch hái thuốc sao? Đi cùng ta đi, ta biết một sơn động thần bí...']],[['V','Sơn động trên vách đá cheo leo, bên trong quả nhiên có bảo vật!']],{gold:500,exp:X(11),pots:4}),
 q('q14','Bát Cực Băng Nhập Môn','Đạt Đấu Giả 4 tinh, Dược Lão truyền trao Huyền giai đấu kỹ.',{t:'lv',v:12},[[D,'Bát Cực Băng: Cận chiến ám kình, quyền phát kình thấu xương tủy. Tiếp nhận khẩu quyết!']],[[V,'Quyền kình ẩn sâu tám tầng ám kình, uy lực kinh hồn!']],{gold:500,exp:X(12),fl:'batcuc',sk:'bcb'}),
 q('q15','Huyết Chiến Lang Đầu','Tiến vào nội vi, hạ 20 Huyết Văn Bạo Hổ.',{t:'kill',m:'huyet',n:20},[['','Lang Đầu Binh Đoàn đuổi giết đến sơn động hòng cướp đoạt Huyền Trọng Xích và Tử Vân Dực.'],[V,'Muốn cướp đồ của Tiêu Viêm ta? Đem mạng các ngươi ở lại đây!']],[['V','Đoàn trưởng Mục Xà đã đền tội, uy danh Ma Thú Sơn Mạch chấn động.']],{gold:700,exp:X(13),rec:'vkd',item:{s:'a',t:3,q:2}}),
-q('q16','Luyện Đan Vận Khí','Dùng Huyết Vân Thảo luyện 2 viên Vận Khí Đan.',{t:'craft',n:2},[[D,'Đan dược trung giai cần khống chế hỏa hầu cực chuẩn. Thử tài đi đồ nhi.']],[[V,'Đan dược thành hình, tỏa ra hào quang nhàn nhạt.']],{gold:600,exp:X(13),pots:4}),
+q('q16','Luyện Đan Vận Khí','Dùng Huyết Vân Thảo luyện 2 viên Vận Khí Đan.',{t:'craft',m:'vkd',n:2},[[D,'Đan dược trung giai cần khống chế hỏa hầu cực chuẩn. Thử tài đi đồ nhi.']],[[V,'Đan dược thành hình, tỏa ra hào quang nhàn nhạt.']],{gold:600,exp:X(13),pots:4}),
 q('q17','Dấu Vết Thú Vương','Hạ 15 Tam Nhãn Kim Cương Viên dọn đường tới sào huyệt.',{t:'kill',m:'kim',n:15},[['','Mặt đất rung chuyển dữ dội. Thú Vương trong hang đang gầm thét thị uy.']],[[D,'Cẩn thận, con súc sinh này phòng ngự cực dày, phải dùng ám kình phá giáp!']],{gold:900,exp:X(14),pots:6}),
 q('q18','Trảm Sát Thú Vương','Đánh bại Tam Đầu Hắc Giáp Thú Vương (Đại Boss).',{t:'kill',m:'vong',n:1},[['','Thú Vương ba đầu toàn thân bọc giáp đen trồi lên từ lòng đất!']],[[V,'Phá cho ta! Bát Cực Băng ám kình bộc phát!'],['','Thú Vương ầm ầm gục ngã, máu tươi nhuộm đỏ đất rừng.']],{gold:1800,exp:X(15),rec:'pc1',item:{s:'c',t:4,q:3}}),
 q('q19','Đỉnh Phong Đấu Giả','Đạt Đấu Giả 9 tinh (cấp 17), hoàn thành Chương 1.',{t:'lv',v:17},[[D,'Khổ tu Ma Thú Sơn Mạch đã viên mãn. Phía trước là Gia Mã Đế Quốc rộng lớn, sẵn sàng chưa đồ nhi?'],[V,'Vân Lam Tông, Nạp Lan Yên Nhiên... Tiêu Viêm ta sắp đến rồi!']],[['','Hết Chương 1! Tiến vào Gia Mã Đế Quốc.']],{gold:2500,exp:0,pots:10})
@@ -1783,10 +1800,10 @@ q('c2q7','Tiến Vào Hồ Địa Hỏa','Hạ 25 Hỏa Diễm Mãng Xà dưới
 q('c2q8','Địa Hỏa Song Đầu Thú','Tiêu diệt Địa Hỏa Song Đầu Thú bảo vệ tâm hồ.',{t:'kill',m:'hthu',n:20},'Ma thú hai đầu khổng lồ vùng vẫy trong biển lửa phun ra từng cột nham thạch nóng bỏng.','Địa thú gục ngã, lộ ra đóa hoa sen xanh ngát giữa lòng hồ!',{gold:3500,exp:X(24),rec:'pgd',pots:6}),
 q('c2q9','Thôn Phệ Thanh Liên Dị Hỏa','Đánh bại Thanh Liên Hỏa Linh, thu phục Dị Hỏa (Boss).',{t:'kill',m:'tlh',n:1},'Đóa sen xanh ngát nở rộ: Thanh Liên Địa Tâm Hỏa! Tiêu Viêm nuốt Băng Linh Hàn Tuyền, cắn răng nuốt ngọn lửa xanh vào đan điền!','Hỏa diễm dung hòa vào kinh mạch. Phần Quyết tiến hóa thành công lên Huyền giai!',{gold:7000,exp:X(25),fire:'tl',sk:'hlt',rec:'tld',item:{s:'c',t:6,q:3}}),
 q('c2q10','Thôn Thiên Mãng Xuất Thế','Đạt Đấu Sư 7 tinh (cấp 24) kết giao Thất Thải Thôn Thiên Mãng.',{t:'lv',v:24},'Sau khi tiến hóa Dị Hỏa thất bại, linh hồn Mỹ Đỗ Toa hóa thành tiểu xà Thất Thải Thôn Thiên Mãng quấn quanh cổ tay Tiêu Viêm.','Có thêm một trợ thủ cấp Đấu Tông tiềm năng bảo hộ!',{gold:3500,exp:X(24),pots:6}),
-q('c2q11','Luyện Dược Sư Đại Hội','Luyện thành 2 viên Tam Văn Thanh Linh Đan chấn động kinh thành.',{t:'craft',n:2},'Đại hội Luyện Dược Sư đế quốc quy tụ anh tài. Tiêu Viêm dùng Thanh Liên Địa Tâm Hỏa nung chảy đan dược ba đường vân!','Đoạt Quán Quân Đại Hội! Danh tiếng Nham Kiêu vang dội khắp Gia Mã.',{gold:4000,exp:X(26),pots:8}),
-q('c2q12','Khử Độc Nạp Lan Kiệt','Tiến vào Hắc Giác Vực hạ 25 Sát Thủ tìm linh dược.',{t:'kill',m:'satt',n:25},'Nạp Lan lão gia tử trúng Lạc Độc chí mạng. Tiêu Viêm dùng Dị Hỏa thanh lọc độc tố để đoạt lấy Thất Huyễn Thanh Linh Diên.','Độc tố tiêu trừ, linh hồn Dược Lão được hồi phục một phần quan trọng.',{gold:4500,exp:X(27),item:{s:'w',t:7,q:2}}),
+q('c2q11','Luyện Dược Sư Đại Hội','Luyện thành 2 viên Tam Văn Thanh Linh Đan chấn động kinh thành.',{t:'craft',m:'tvt',n:2},'Đại hội Luyện Dược Sư đế quốc quy tụ anh tài. Tiêu Viêm dùng Thanh Liên Địa Tâm Hỏa nung chảy đan dược ba đường vân!','Đoạt Quán Quân Đại Hội! Danh tiếng Nham Kiêu vang dội khắp Gia Mã.',{gold:4000,exp:X(26),pots:8}),
+q('c2q12','Khử Độc Nạp Lan Kiệt','Tiến vào Hắc Giác Vực hạ 25 Sát Thủ tìm linh dược.',{t:'kill',m:'satt',n:25},'Nạp Lan lão gia tử trúng Lạc Độc chí mạng. Tiêu Viêm dùng Dị Hỏa thanh lọc độc tố để đoạt lấy Thất Huyễn Thanh Linh Diên.','Độc tố tiêu trừ, linh hồn Dược Lão được hồi phục một phần quan trọng.',{gold:4500,exp:X(27),rec:'pc2',item:{s:'w',t:7,q:2}}),
 q('c2q13','Đột Phá Đại Đấu Sư','Đạt Đại Đấu Sư 1 tinh (cấp 27).',{t:'lv',v:27},'Dược Lão: "Đấu khí hóa thành chất lỏng tụ trong đan điền. Ngươi đã chính thức bước vào Đại Đấu Sư!"','Đấu khí lỏng ngưng tụ, khí tức uy mãnh vô song!',{gold:6000,exp:X(27),sk:'pnhl'}),
-q('c2q14','Trảm Sát Hắc Giác Vực Chủ','Hạ gục Hắc Giác Vực Chủ (Boss hung hãn).',{t:'kill',m:'hgc',n:1},'Vực Chủ thống lĩnh hắc bang vung cự đao chém tới, đấu khí cuồng bạo ngập trời.','Phật Nộ Hỏa Liên sơ khai bộc phát! Vực Chủ tan biến thành tro bụi.',{gold:10000,exp:X(31),rec:'pc2',item:{s:'a',t:7,q:3}}),
+q('c2q14','Trảm Sát Hắc Giác Vực Chủ','Hạ gục Hắc Giác Vực Chủ (Boss hung hãn).',{t:'kill',m:'hgc',n:1},'Vực Chủ thống lĩnh hắc bang vung cự đao chém tới, đấu khí cuồng bạo ngập trời.','Phật Nộ Hỏa Liên sơ khai bộc phát! Vực Chủ tan biến thành tro bụi.',{gold:10000,exp:X(31),item:{s:'a',t:7,q:3}}),
 q('c2q15','Ba Năm Chi Ước - Quyết Chiến','Hạ 20 Ma Thú Hắc Giác chuẩn bị lên đỉnh Vân Lam.',{t:'kill',m:'ma',n:20},'Hạn định ba năm đã tới. Thiếu niên năm xưa vác Huyền Trọng Xích từng bước bước lên thềm đá Vân Lam Tông!','Nạp Lan Yên Nhiên bại trận dưới tay Phật Nộ Hỏa Liên, lời thề ba năm rửa sạch!',{gold:8000,exp:X(32),pots:10}),
 q('c2q16','Vân Lăng Giở Trò','Hạ gục Vân Lam Tông Đại Trưởng Lão chặn đường (Đại Boss).',{t:'kill',m:'vlt',n:1},'Đại Trưởng Lão Vân Lăng thẹn quá hóa giận kết trận vây giết Tiêu Viêm!','Vân Lăng trọng thương! Tiêu Viêm một mình náo loạn toàn bộ tông môn!',{gold:18000,exp:X(34),item:{s:'c',t:8,q:4}}),
 q('c2q17','Lão Tổ Vân Sơn Xuất Quan','Đạt Đại Đấu Sư 9 tinh (cấp 35), khép lại Chương 2.',{t:'lv',v:35},'Đấu Tông Vân Sơn xuất hiện phong tỏa không gian. Dược Lão hao tổn linh hồn phá vây đưa Tiêu Viêm rời đi!','Hết Chương 2! Trốn chạy ngàn dặm hướng về Già Nam Học Viện.',{gold:25000,exp:0,pots:15})
@@ -1830,8 +1847,8 @@ recipes:[
   {id:'pbd',n:'Phá Bát Đan',g:7,d:'Linh đan thất truyền bát phẩm, gia tăng kinh hoàng bạo kích và bạo thương 200%.',need:{dt:8,tc:6},c:30000,s:25,fx:'cd',v:200,dur:400,tx:15,fire:1},
   {id:'cdd',n:'Cửu Chuyển Đan',g:8,d:'Thần đan cửu phẩm đoạt thiên địa tạo hóa, tái tạo chân thân, hồi toàn bộ mọi trạng thái vĩnh hằng.',need:{dt:10,vh:10},c:80000,s:15,fx:'at',v:200,dur:600,tx:0,fire:1},
   {id:'pc3',n:'Phá Linh Đan',g:3,d:'Cần để đột phá Đại Đấu Sư lên Đấu Linh',need:{tc:4,vh:4},c:15000,s:40,pc:1,fire:1},
-  {id:'pc4',n:'Hoàng Cực Đan',g:5,d:'Cần để đột phá Đấu Vương lên Đấu Hoàng',need:{dt:5,vh:5},c:35000,s:30,pc:1,fire:1},
-  {id:'pc5',n:'Phá Tông Đan',g:6,d:'Đan dược cực phẩm lục giai hỗ trợ đột phá Đấu Tông',need:{dt:6,vh:6},c:70000,s:25,pc:1,fire:1}
+  {id:'pc4',n:'Hoàng Cực Đan',g:5,d:'Cần để đột phá Đấu Linh lên Đấu Vương',need:{tc:6,vh:6},c:35000,s:30,pc:1,fire:1},
+  {id:'pc5',n:'Phá Hoàng Đan',g:6,d:'Đan dược cực phẩm lục giai hỗ trợ đột phá Đấu Hoàng',need:{dt:6,vh:6},c:70000,s:25,pc:1,fire:1}
 ],
 mobs:[
   mk('ts_gn','Tân Sinh Già Nam','🥋',36,1.2),mk('ls_hs','Lão Sinh Hắc Sát','🥷',38,1.25),
@@ -1858,26 +1875,26 @@ q('c3q2','Đoạt Tam Thiên Lôi Động','Đạt Đấu Linh 1 tinh (cấp 36)
 q('c3q3','Hỏa Năng Liệp Tái','Tiến vào rừng rậm, hạ 25 Lão Sinh Hắc Sát để đoạt thẻ Hỏa Năng.',{t:'kill',m:'ls_hs',n:25},'Hỏa Năng Liệp Tái bắt đầu. Lão sinh cậy thế cướp bóc tân sinh, nhưng Tiêu Viêm quyết định liên thủ phản kích!','Tân sinh đồng lòng, từng bước đẩy lui các đợt tập kích của lão sinh.',{gold:15000,exp:X(38),pots:6}),
 q('c3q4','Đánh Bại Sa Thiết','Hạ Đội Trưởng Hắc Sát Sa Thiết (Boss).',{t:'kill',m:'sathe',n:1},'Sa Thiết khoác chiến giáp nặng ngàn cân, kình lực bá đạo chặn ngay lối ra rừng rậm.','Bát Cực Băng ám kình bộc phát làm nứt toác giáp sắt! Đoạt trọn vẹn Hỏa Năng của Lão Sinh!',{gold:20000,exp:X(40),item:{s:'w',t:10,q:2}}),
 q('c3q5','Bạch Sát La Hầu','Đánh bại Bạch Sát Lĩnh Đội La Hầu đoạt cờ quán quân.',{t:'kill',m:'lahau',n:1},'La Hầu với hàn băng đấu khí sắc lẹm nghênh chiến thiếu niên mang xích đen.','Cả hai đại đội Hắc Bạch Song Sát đều thất thủ trước Tiêu Viêm!',{gold:22000,exp:X(41),rec:'plt',pots:6}),
-q('c3q6','Khai Sáng Bàn Môn','Luyện 3 viên Thanh Chấn Đan thiết lập căn cơ bang phái.',{t:'craft',n:3},'Tiến vào Nội Viện, Tiêu Viêm cùng Huân Nhi, Ngô Hạo, Hổ Gia cùng sáng lập thế lực riêng: Bàn Môn!','Bàn Môn danh chấn tứ phương, đệ tử gia nhập đông như trẩy hội.',{gold:18000,exp:X(42),rec:'tcd',pots:8}),
-q('c3q7','Thiên Phần Khổ Tu','Xuống tháp luyện khí, hạ 30 Tâm Hỏa Thực Thể.',{t:'kill',m:'th_tt',n:30},'Thiên Phần Luyện Khí Tháp có Tâm Hỏa rèn luyện đấu khí không ngừng nghỉ. Đây chính là dấu vết ngọn Dị Hỏa thứ hai!','Vượt qua Tâm Hỏa Kiếp, đấu khí tinh thuần và cô đặc gấp bội phần.',{gold:22000,exp:X(44),item:{s:'a',t:10,q:2}}),
-q('c3q8','Luyện Chế Đấu Linh Đan','Luyện 2 viên Đấu Linh Đan gia tăng tu vi.',{t:'craft',n:2},'Dược Lão nhắc nhở: "Nội Viện cao thủ như mây, cần dùng đan dược ngũ phẩm đẩy nhanh tiến độ."','Đan thành lóng lánh, tỏa ra dược lực dồi dào.',{gold:25000,exp:X(44),rec:'dld',pots:6}),
+q('c3q6','Khai Sáng Bàn Môn','Luyện 3 viên Thanh Chấn Đan thiết lập căn cơ bang phái.',{t:'craft',m:'tcd',n:3},'Tiến vào Nội Viện, Tiêu Viêm cùng Huân Nhi, Ngô Hạo, Hổ Gia cùng sáng lập thế lực riêng: Bàn Môn!','Bàn Môn danh chấn tứ phương, đệ tử gia nhập đông như trẩy hội.',{gold:18000,exp:X(42),rec:'tcd',pots:8}),
+q('c3q7','Thiên Phần Khổ Tu','Xuống tháp luyện khí, hạ 30 Tâm Hỏa Thực Thể.',{t:'kill',m:'th_tt',n:30},'Thiên Phần Luyện Khí Tháp có Tâm Hỏa rèn luyện đấu khí không ngừng nghỉ. Đây chính là dấu vết ngọn Dị Hỏa thứ hai!','Vượt qua Tâm Hỏa Kiếp, đấu khí tinh thuần và cô đặc gấp bội phần.',{gold:22000,exp:X(44),rec:'pc4',item:{s:'a',t:10,q:2}}),
+q('c3q8','Luyện Chế Đấu Linh Đan','Luyện 2 viên Đấu Linh Đan gia tăng tu vi.',{t:'craft',m:'dld',n:2},'Dược Lão nhắc nhở: "Nội Viện cao thủ như mây, cần dùng đan dược ngũ phẩm đẩy nhanh tiến độ."','Đan thành lóng lánh, tỏa ra dược lực dồi dào.',{gold:25000,exp:X(44),rec:'dld',pots:6}),
 q('c3q9','Đột Phá Đấu Vương · Hóa Dực','Đạt Đấu Vương 1 tinh (cấp 45).',{t:'lv',v:45},'Đấu khí sau lưng bùng cháy, ngưng tụ thành đôi cánh đại bàng rực lửa: Đấu Khí Hóa Dực! Ngươi đã là Đấu Vương!','Đôi cánh lửa vỗ mạnh bay vút lên bầu trời! Lĩnh ngộ Diễm Phân Phệ Lãng Xích.',{gold:32000,exp:X(45),sk:'dpp'}),
 q('c3q10','Khiêu Chiến Bạch Bang','Đánh bại Bạch Bang Chủ Bạch Trình trên lôi đài.',{t:'kill',m:'bachtr',n:1},'Bạch Trình đố kỵ với thanh danh của Bàn Môn, công khai khiêu chiến sinh tử trên lôi đài.','Bạch Trình thảm bại trước Huyền Trọng Xích! Vị thế Bàn Môn vững như bàn thạch.',{gold:36000,exp:X(47),item:{s:'g',t:11,q:3}}),
 q('c3q11','Bá Thương Liễu Kình','Hạ gục Bá Thương Liễu Kình, bước vào Thập Cường Nội Viện.',{t:'kill',m:'lieuk',n:1},'Liễu Kình vung cây trường thương xé rách hư không, là kình địch mạnh nhất giải đấu.','Trận đại chiến long trời lở đất khép lại, Tiêu Viêm chính thức ghi danh vào Cường Giả Bảng!',{gold:45000,exp:X(50),rec:'lld',item:{s:'w',t:11,q:3}}),
 q('c3q12','Giao Hảo Man Lực Vương','Đánh bại Man Lực Vương Tử Nghiên (Boss trâu bò).',{t:'kill',m:'tunhien',n:1},'Đệ Nhất Cường Giả Bảng là tiểu cô nương Thái Hư Cổ Long nắm đấm vỡ núi non nhưng cực kỳ hảo ngọt đan dược.','Tử Nghiên vui vẻ ăn kẹo đan dược, dẫn Tiêu Viêm đi đào Địa Tâm Nhũ!',{gold:55000,exp:X(53),item:{s:'c',t:11,q:4}}),
-q('c3q13','Luyện Đan Địa Tâm Nhũ','Luyện 2 bình Địa Tâm Nhũ Tán chuẩn bị đại chiến.',{t:'craft',n:2},'Có Địa Tâm Nhũ cực phẩm, đan dược hộ thể đã hoàn thiện ở mức tối đa.','Dược lực dạt dào bảo hộ tâm mạch.',{gold:50000,exp:X(53),rec:'dtn',pots:8}),
+q('c3q13','Luyện Đan Địa Tâm Nhũ','Luyện 2 bình Địa Tâm Nhũ Tán chuẩn bị đại chiến.',{t:'craft',m:'dtn',n:2},'Có Địa Tâm Nhũ cực phẩm, đan dược hộ thể đã hoàn thiện ở mức tối đa.','Dược lực dạt dào bảo hộ tâm mạch.',{gold:50000,exp:X(53),rec:'dtn',pots:8}),
 q('c3q14','Hắc Minh Đại Loạn','Hạ gục Huyết Tông Tông Chủ Phạm Lao bảo vệ sơn môn.',{t:'kill',m:'phamlao',n:1},'Dược Hoàng Hàn Phong liên thủ Kim Ngân Song Lão và tà đạo Hắc Giác Vực tấn công cướp Dị Hỏa!','Phạm Lao đền mạng! Chiến trường ngập tràn biển lửa.',{gold:65000,exp:X(55),item:{s:'b',t:12,q:3}}),
-q('c3q15','Dị Hỏa Phá Phong Ấn','Đánh lui Kim Ngân Song Lão (Boss khó).',{t:'kill',m:'kimgn',n:1},'Kim Ngân Song Lão thừa cơ phá hoại trận pháp khiến ngọn lửa Vẫn Lạc Tâm Viêm bùng phát dữ dội!','Song lão ôm đầu tháo chạy, nhưng mãng xà lửa khổng lồ đã ngoạm lấy Tiêu Viêm lôi xuống vực sâu!',{gold:75000,exp:X(58),rec:'pc4',pots:10}),
+q('c3q15','Dị Hỏa Phá Phong Ấn','Đánh lui Kim Ngân Song Lão (Boss khó).',{t:'kill',m:'kimgn',n:1},'Kim Ngân Song Lão thừa cơ phá hoại trận pháp khiến ngọn lửa Vẫn Lạc Tâm Viêm bùng phát dữ dội!','Song lão ôm đầu tháo chạy, nhưng mãng xà lửa khổng lồ đã ngoạm lấy Tiêu Viêm lôi xuống vực sâu!',{gold:75000,exp:X(58),rec:'pc5',pots:10}),
 q('c3q16','Đáy Nham Thạch Vạn Trượng','Đánh bại Vẫn Lạc Hỏa Mãng dưới đáy nham thạch (Đại Boss).',{t:'kill',m:'hm_vl',n:1},'Bị vây dưới đáy dung nham cùng Mỹ Đỗ Toa (Thải Lân). Dược Lão kiệt sức ngủ say, Tiêu Viêm liều mình thuần phục Dị Hỏa!','Thuần phục thành công! Ngọn Dị Hỏa thứ hai chính thức dung hòa vào đan điền!',{gold:120000,exp:X(60),fire:'vl',sk:'vhh',rec:'scd',item:{s:'c',t:13,q:4}}),
 q('c3q17','Song Hỏa Xuất Thế','Đột phá Đấu Hoàng 1 tinh (cấp 54).',{t:'lv',v:54},'Thanh Liên cùng Vẫn Lạc Tâm Viêm dung hợp hoàn mỹ! Phần Quyết tiến hóa Địa giai cao cấp, phá cảnh Đấu Hoàng!','Đấu Hoàng xuất thế! Lĩnh ngộ tuyệt kỹ hủy diệt: Song Hỏa Phật Nộ Hỏa Liên!',{gold:150000,exp:X(54),sk:'shl'}),
-q('c3q18','Quyết Chiến Dược Hoàng','Tiến về Phong Thành, tiêu diệt kẻ phản nghịch Hàn Phong (Chung Cực Boss).',{t:'kill',m:'hanphong',n:1},'Tiêu Viêm phá tan nham thạch trở lại nhân gian, tung đóa sen lửa hai màu báo thù rửa hận cho Dược Lão!','Hàn Phong hồn phi phách tán! Đoạt Hải Tâm Diễm, Tiêu Viêm chấn nhiếp toàn cõi Hắc Giác Vực!',{gold:250000,exp:X(60),rec:'pc5',item:{s:'w',t:14,q:4}}),
+q('c3q18','Quyết Chiến Dược Hoàng','Tiến về Phong Thành, tiêu diệt kẻ phản nghịch Hàn Phong (Chung Cực Boss).',{t:'kill',m:'hanphong',n:1},'Tiêu Viêm phá tan nham thạch trở lại nhân gian, tung đóa sen lửa hai màu báo thù rửa hận cho Dược Lão!','Hàn Phong hồn phi phách tán! Đoạt Hải Tâm Diễm, Tiêu Viêm chấn nhiếp toàn cõi Hắc Giác Vực!',{gold:250000,exp:X(60),item:{s:'w',t:14,q:4}}),
 q('c3q17a','Lục Hợp Du Thân Xích','Hạ 30 Bạo Ma Thú Hắc Giác để rèn luyện cực hạn xích pháp.',{t:'kill',m:'ma',n:30},'Xích pháp bạo liệt cần kình lực dẻo dai. Dược Lão truyền lại Lục Hợp Du Thân Xích!','Công thủ toàn diện, kình lực cuồn cuộn không dứt!',{gold:180000,exp:X(56),sk:'lhd'}),
 
 q('c3q17b','Huân Nhi Lưu Biệt - Đế Ấn Quyết','Đạt Đấu Hoàng 4 tinh (cấp 57), nhận quà chia tay của Huân Nhi.',{t:'lv',v:57},'Cổ Tộc phái người đón Huân Nhi về. Trước lúc đi, nàng để lại quyển trục Địa giai cao cấp: Đế Ấn Quyết!','Khai Sơn, Phiên Hải, Phúc Địa, Yên Thiên, Cổ Đế! Uy lực rung chuyển Hắc Giác Vực!',{gold:200000,exp:X(57),sk:'daq'}),
 
 q('c3q17c','Hoàng Tuyền Huyết Chỉ','Hạ 40 Sát Thủ Hắc Giác để lĩnh ngộ sát ý.',{t:'kill',m:'satt',n:40},'Bí pháp Hoàng Tuyền Chỉ - Thiên giai đê cấp, một chỉ điểm xuất, vạn vật tĩnh lặng.','Chỉ lực phá không, ngưng đọng thời gian, chấn nhiếp cường giả!',{gold:220000,exp:X(59),sk:'htc'}),
 
-q('c3q18a','Hủy Diệt Hỏa Liên','Luyện thành công 3 viên Cửu Chuyển Đan làm mồi dẫn.',{t:'craft',n:3},'Dung hợp cực hạn hỏa diễm đòi hỏi sự tinh vi của một Dược Tôn Giả. Hãy luyện Cửu Chuyển Đan để lĩnh ngộ.','Bốn màu lửa quyện vào nhau, Hủy Diệt Hỏa Liên mang uy lực của Đấu Thánh giáng thế!',{gold:300000,exp:X(61),sk:'hxd'}),
+q('c3q18a','Hủy Diệt Hỏa Liên','Luyện thành công 3 viên Cửu Chuyển Đan làm mồi dẫn.',{t:'craft',m:'cdd',n:3},'Dung hợp cực hạn hỏa diễm đòi hỏi sự tinh vi của một Dược Tôn Giả. Hãy luyện Cửu Chuyển Đan để lĩnh ngộ.','Bốn màu lửa quyện vào nhau, Hủy Diệt Hỏa Liên mang uy lực của Đấu Thánh giáng thế!',{gold:300000,exp:X(61),sk:'hxd'}),
 q('c3q19','Đỉnh Phong Đấu Hoàng','Đạt Đấu Hoàng 9 tinh (cấp 62), kết thúc Chương 3.',{t:'lv',v:62},'Thống nhất Tiêu Môn, hiệu triệu ngàn vạn cường giả Hắc Giác Vực. Giờ là lúc trở về Gia Mã rửa hận Vân Lam Tông!','Hết Chương 3! Hãy đón chờ hành trình Tiêu Diệt Vân Lam Tông & Hồn Điện ở Chương 4.',{gold:400000,exp:0,pots:20})
 ]});})();
 </script>
